@@ -1,0 +1,1443 @@
+{
+  "name": "Phase 2 | Prompt",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        420
+      ],
+      "id": "ed94d357-1f6a-48a3-9af8-fc630702b25b",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3920,
+        540
+      ],
+      "id": "dd9300db-5d95-487b-b0a2-d570e2525d6b",
+      "name": "Merge",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4360,
+        840
+      ],
+      "id": "0af6053f-7bf9-495d-95b6-c3d4238da5fb",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5700,
+        1060
+      ],
+      "id": "2b1161fe-7b57-4e52-b31d-abc77657a659",
+      "name": "Merge1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1120,
+        420
+      ],
+      "id": "77784743-e12e-4097-ada7-f1f6899ae93a",
+      "name": "Gets image from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Gen-col": "={{ $json['Gen-col'][0] }}",
+            "Prompt 1": "={{ $json.prompt[0] }}",
+            "Prompt 2": "={{ $json.prompt[1] }}",
+            "Prompt 3": "={{ $json.prompt[2] }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt 1",
+              "displayName": "Prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 2",
+              "displayName": "Prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 3",
+              "displayName": "Prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        6260,
+        1060
+      ],
+      "id": "70644ce7-da20-46e9-a02f-cf2bc6ab902f",
+      "name": "Adds Prompt to sheets",
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2000,
+        400
+      ],
+      "id": "3bbb8692-c056-42ef-8568-3d5ef9b07fdb",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "row_number, Link, id,, Prompt 1,, Gen-col",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        420
+      ],
+      "id": "e51fdb4a-257b-47fc-baa5-14ecd44962b2",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        400
+      ],
+      "id": "db1c7cdf-e914-4b98-966a-66f9f3301355",
+      "name": "Limit"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4460,
+        -200
+      ],
+      "id": "eb25e61c-6960-4421-8d59-71eb558006de",
+      "name": "Prompt Generator",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "amount": 30
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        6500,
+        1060
+      ],
+      "id": "e45705cf-c942-4d66-91f0-827cad60134f",
+      "name": "Wait",
+      "webhookId": "e6f1ce27-f4d2-4823-89e4-b36c36fa8f70",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9957d62a-807c-4356-ab16-5dea547ffb47",
+              "leftValue": "={{ $json['Prompt 1'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        420
+      ],
+      "id": "abb0831c-c15a-45bf-8185-e4883adf29e3",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1520,
+        580
+      ],
+      "id": "4742fecf-2aec-4408-b3a4-61c97d4f99f8",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "content": "# n8n Workflow: AI-Powered Fashion Prompt Generator\n\n## Overview\n\nThis n8n workflow automates the process of generating AI prompts for fashion/clothing images stored in Google Drive. The workflow reads product data from Google Sheets, downloads associated images, and uses Google's Gemini AI model to create descriptive prompts that can be used for various fashion-related applications.\n\n## Workflow Purpose\n\nThe primary goal is to automatically generate multiple creative prompts for fashion items based on their images. This is particularly useful for:\n- E-commerce product descriptions\n- AI image generation training data\n- Fashion catalog automation\n- Content creation for fashion brands\n\n## Key Components\n\n### Data Sources\n- **Google Sheets**: Contains product information including:\n  - Product details (Brand, Gender, Brick category)\n  - Google Drive image links\n  - Generated prompts storage\n- **Google Drive**: Stores the actual product images\n\n### AI Processing\n- **Google Gemini 2.5 Flash**: AI model for prompt generation\n- **Structured Output Parser**: Ensures consistent prompt formatting\n- **Temperature Setting**: 0.7 for balanced creativity and consistency\n\n## Workflow Steps\n\n### 1. Data Retrieval\n- **Trigger**: Manual workflow start\n- **Sheet Reading**: Fetches product data from \"FSN\" sheet\n- **Field Extraction**: Extracts `row_number`, `Link`, `id`, and existing `Prompt 1`\n\n### 2. Conditional Processing\n- **Empty Check**: Only processes items where `Prompt 1` is empty\n- **Skip Logic**: Avoids re-processing items that already have prompts\n\n### 3. Batch Processing\n- **Loop Structure**: Processes items in batches to manage API limits\n- **Image Download**: Downloads images from Google Drive using extracted IDs\n- **System Instructions**: Retrieves AI prompting guidelines from dedicated sheet\n\n### 4. AI Prompt Generation\n- **Data Preparation**: Merges image data with system instructions\n- **Duplication**: Creates 3 copies of each item for prompt variation\n- **AI Processing**: Uses Gemini model to generate creative prompts\n- **Aggregation**: Collects all generated prompts for each item\n\n### 5. Data Storage\n- **Sheet Update**: Writes generated prompts back to Google Sheets\n- **Column Mapping**: Updates `Prompt 1`, `Prompt 2`, and `Prompt 3` columns\n- **Rate Limiting**: 30-second wait between batches to respect API limits\n\n## Technical Features\n\n### Error Handling\n- Conditional logic prevents processing items that already have prompts\n- Batch processing prevents overwhelming API endpoints\n\n### Scalability\n- Loop structure allows processing large datasets\n- Configurable batch sizes and delays\n- Disabled limit node can be enabled for testing\n\n### Data Integrity\n- Row number matching ensures accurate updates\n- Multiple prompt generation provides variety\n- Structured output ensures consistent formatting\n\n\n\n\n",
+        "height": 1860,
+        "width": 2460,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        300,
+        -200
+      ],
+      "id": "8c87dcc0-b976-48ca-ad5c-cda1680b767e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "options": {
+          "columnsToWatch": [
+            "Link"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        620
+      ],
+      "id": "877e3589-6570-4e95-9eb1-8b3706d62fe1",
+      "name": "Google Sheets Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list",
+          "cachedResultName": "gpt-4o"
+        },
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        3320,
+        820
+      ],
+      "id": "442e0e09-4faa-43a9-8dc6-25f76909effc",
+      "name": "OpenAI Chat Model",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "=Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        4780,
+        240
+      ],
+      "id": "22c9204e-7d1c-41a9-b95b-5eb30cc787f3",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7a4f7c5e-fd73-4d86-8ff9-0269fbc8a4b5",
+              "name": "output.Outfit",
+              "value": "={{ $json.output.Outfit }}",
+              "type": "string"
+            },
+            {
+              "id": "7b7c7885-08a1-4d27-9bb2-715cdd4d923f",
+              "name": "output.Accessories",
+              "value": "={{ $json.output.Accessories }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3260,
+        740
+      ],
+      "id": "56434385-1c2c-4dd2-8295-251b8b214bd1",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1c8f66b-d090-42b7-ab02-508587d48f24",
+              "name": "output.Selected_Footwear",
+              "value": "={{ $json.output.Selected_Footwear }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3800,
+        720
+      ],
+      "id": "9477ed4a-1af6-468a-89d4-133cfd8a1e27",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2720,
+        940
+      ],
+      "id": "9a7b835b-dce4-46ff-8b41-c9a3cc742e9a",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Outfit\": \"\",\n\t\"Accessories\": \"\"\n}\n\n\n\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        2900,
+        1080
+      ],
+      "id": "1e5d8732-d1e6-4714-927f-f8a7f7f6be64",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        2840,
+        940
+      ],
+      "id": "ce0b3baf-b72c-44b9-9db2-65a22fc6ebc1",
+      "name": "Auto-fixing Output Parser1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3340,
+        1040
+      ],
+      "id": "42163538-7ed2-4658-b6a1-92dd04e862f4",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please analyze this image and extract only the clothing and accessory details according to the instructions provided. Focus on describing the garments' style, colors, patterns, textures, fit, and any distinctive features. Also include all accessories worn by the model. Remember to ignore the background, pose, lighting, and footwear.\n\nyou must use http node to view the image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Step 1: Clothing Extraction Instructions\n\n## Your Task\nAnalyze clothing in images and extract only the essential garment details needed for fashion photography prompts.\n\n## What to Extract FROM INPUT IMAGE\n\n### Garment Types and Details\n- Identify each piece of clothing (shirt, dress, pants, jacket, etc.)\n- Note specific garment style (button-up, polo, midi dress, skinny jeans, blazer, etc.)\n- Record garment construction details (pleated, fitted, oversized, cropped, etc.)\n\n### Colors, Patterns, and Textures\n- **Colors:** Primary and accent colors, color combinations\n- **Patterns:** Floral, striped, plaid, geometric, solid, etc.\n- **Textures:** Cotton, denim, silk, knit, leather, lace, etc.\n- **Finishes:** Matte, glossy, distressed, washed, etc.\n\n### Specific Garment Features\n- **Necklines:** V-neck, crew neck, scoop neck, off-shoulder, etc.\n- **Sleeves:** Long, short, sleeveless, puffed, bell, rolled, etc.\n- **Length:** Cropped, regular, long, midi, maxi, mini, etc.\n- **Fit:** Fitted, loose, oversized, tailored, relaxed, etc.\n- **Details:** Buttons, zippers, pockets, belts, tucks, etc.\n\n### Accessories Worn by Model\n- Jewelry (necklaces, earrings, bracelets, rings)\n- Bags or purses\n- Belts\n- Hats or headwear\n- Scarves\n- Sunglasses\n- Watches\n\n## What to COMPLETELY IGNORE\n\n### Visual Elements to Skip\n- Background settings or environments\n- Model's pose or body position\n- Model's facial expression or appearance\n- Lighting conditions or mood\n- Camera angles or composition\n- Any people in the background\n\n### Footwear Exception\n- **DO NOT extract footwear from the input image**\n- Footwear will be selected separately based on outfit compatibility\n- Ignore any shoes, boots, sandals, or barefoot styling in the source image\n\n## Output Format\n\nProvide your analysis in the following structured format:\n\n**Outfit:** \"[Complete detailed description of all clothing items with materials, colors, patterns, fit, and styling details]\"\n\n**Accessories:** \"[Complete detailed description of all accessories including jewelry, bags, hats, belts, etc.]\"\n\n## Example Outputs\n\n**Example 1:**\n**Outfit:** \"Crisp white cotton button-up shirt with classic collar and rolled sleeves tucked into high-waisted medium wash blue denim jeans with straight leg fit\"\n**Accessories:** \"Delicate gold chain necklace and small gold hoop earrings\"\n\n**Example 2:**\n**Outfit:** \"Flowing floral print midi dress in coral and white pattern featuring sweetheart neckline and short puffed sleeves with A-line silhouette in lightweight fabric\"\n**Accessories:** \"Wide-brimmed natural straw hat\"\n\n**Example 3:**\n**Outfit:** \"Oversized cream cable-knit sweater with dropped shoulders and ribbed cuffs worn over black high-waisted leather mini skirt\"\n**Accessories:** \"Layered silver chain necklaces, chunky silver rings, and black leather crossbody bag with gold hardware\"\n\n## Quality Check\nBefore finalizing your extraction, ensure you have:\n- ✓ Described every visible garment in detail\n- ✓ Captured all colors and patterns accurately  \n- ✓ Noted fabric textures and finishes\n- ✓ Listed all distinctive features\n- ✓ Included every accessory worn by the model\n- ✓ Ignored background, lighting, pose, and footwear\n- ✓ Used specific, descriptive language rather than generic terms"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        2720,
+        740
+      ],
+      "id": "68f7c799-cc01-4dbc-9886-0c9e2a8c79a3",
+      "name": "Outfit extraction"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Select footwear for:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nChoose the best footwear option that complements this outfit style.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=## Your Task\nSelect footwear that complements and enhances the outfit style, regardless of the photography theme.\n\n**CRITICAL RULE: Footwear must ALWAYS match the outfit style first, before considering theme.**\n\n## Selection Hierarchy\n\n1. **First Priority:** What does the outfit require? (dress = heels/sandals, athletic = sneakers)\n2. **Second Priority:** What variations work with the theme? (beach dress = sandals over heels)\n3. **Never:** Force inappropriate footwear just to match theme\n\n## Why Outfit-First Footwear Matters\n\n- Mismatched footwear destroys outfit credibility\n- Hiking boots with a sundress looks wrong regardless of \"outdoor\" theme\n- Heels with athletic wear is inappropriate even in \"sophisticated\" settings\n- The outfit dictates the footwear possibilities\n- Good footwear choice completes the look; bad choice ruins the entire image\n\n## Footwear Selection by Garment Type\n\n### Dress-Based Selections\n\n**Midi/Maxi Dresses:**\n- Heeled sandals (strappy, block heel, wedge)\n- Wedges (espadrille, cork, platform)\n- Ankle boots (heeled, flat, Western style)\n- Ballet flats (classic, pointed toe, metallic)\n\n**Mini Dresses:**\n- Heels (stiletto, block heel, platform)\n- Ankle boots (combat, Chelsea, heeled)\n- Sneakers (for casual styles only - white leather, canvas)\n- Sandals (heeled, gladiator, strappy)\n\n**Formal Dresses:**\n- Heels (pumps, stilettos, block heel)\n- Strappy sandals (metallic, satin, leather)\n- Elegant flats (pointed toe, embellished)\n\n**Casual Sundresses:**\n- Sandals (flat, low wedge, slides)\n- Espadrilles (rope sole, canvas)\n- White sneakers (leather, canvas, minimal)\n\n### Top & Bottom Combinations\n\n**Formal/Tailored Pieces:**\n- Dress shoes (oxfords, brogues, loafers)\n- Heels (pumps, block heel, pointed toe)\n- Loafers (leather, suede, chain detail)\n- Oxford shoes (classic, platform, patent)\n\n**Jeans + Dressy Top:**\n- Loafers (penny, tassel, horse bit)\n- Ankle boots (heeled, flat, pointed)\n- Heeled sandals (block heel, wedge)\n- Ballet flats (leather, patent, metallic)\n\n**Jeans + Casual Top:**\n- Sneakers (white, canvas, retro)\n- Casual boots (combat, Western, work)\n- Sandals (flat, sporty, slides)\n\n**Shorts:**\n- Sandals (flat, wedge, gladiator)\n- Sneakers (canvas, leather, colorful)\n- Espadrilles (flat, wedge, tie-up)\n- **Never:** Heavy boots with shorts\n\n**Athletic Wear:**\n- Sports shoes (running, training, tennis)\n- Athletic sneakers (performance, lifestyle)\n- **Only athletic footwear with athletic clothing**\n\n### Special Considerations\n\n**Skirts:**\n- Match formality level\n- Formal skirts = heels, dress flats\n- Casual skirts = sneakers, sandals, boots\n\n**Vintage/Retro Outfits:**\n- Period-appropriate footwear\n- 1950s = kitten heels, saddle shoes\n- 1970s = platform sandals, boots\n- 1990s = chunky sneakers, combat boots\n\n**All-White Outfits:**\n- White footwear preferred\n- Nude/tan as secondary choice\n- Avoid dark colors that break the monochrome\n\n## Common Footwear Mistakes to AVOID\n\n❌ **Never Do These:**\n- Hiking boots with dresses/skirts\n- Athletic shoes with formal wear\n- Heavy boots with summer dresses\n- Formal heels with athletic wear\n- Winter boots with summer outfits\n- Flip-flops with formal clothing\n- Stilettos with casual shorts\n\n## Quick Reference Guide\n\n**If Outfit Includes:**\n- **Dress** → Heels, sandals, or flats (based on dress style)\n- **Jeans** → Sneakers, boots, or loafers (based on top formality)\n- **Shorts** → Sandals, sneakers, or espadrilles\n- **Athletic wear** → Athletic shoes only\n- **Formal pieces** → Dress shoes or heels only\n- **Skirts** → Match skirt's formality level\n\n## Footwear Color Guidelines\n\n**Universal Colors:**\n- **Nude/Tan:** Universally flattering, elongates legs\n- **Black:** Classic, works with most colors\n- **White:** Fresh, perfect for casual/summer looks\n- **Metallic:** Special occasions, adds glamour\n\n**Color Matching Rules:**\n- Match shoe color to outfit's dominant neutral\n- Pick up accent colors from the outfit\n- Monochrome outfits = match or contrast thoughtfully\n- Bright outfits = neutral shoes to balance\n\n## Seasonal Considerations\n\n**Summer Outfits:**\n- Open-toe shoes preferred\n- Sandals, espadrilles, canvas sneakers\n- Light colors and breathable materials\n- **No heavy boots with summer clothing**\n\n**Winter Outfits:**\n- Closed-toe shoes required\n- Boots, pumps, loafers\n- Darker colors and substantial materials\n- **No sandals with winter clothing**\n\n**Transitional Weather:**\n- Ankle boots, loafers, low boots\n- Medium weight materials\n- Versatile colors (tan, brown, navy)\n\n## Selection Process\n\n### Step 1: Analyze the Outfit\n- What's the formality level?\n- What's the dominant garment (dress, pants, skirt)?\n- What's the overall style aesthetic?\n- What season/weather does it suggest?\n\n### Step 2: Determine Appropriate Categories\n- List 3-4 footwear types that work with this outfit\n- Consider the outfit's color palette\n- Think about proportions and styling\n\n### Step 3: Make Final Selection\n- Choose the option that best completes the look\n- Consider comfort and practicality for the setting\n- Ensure the choice enhances rather than competes\n\n## Output Format\n\nonly return with one best option!\n\n**Selected Footwear:** \"[Specific shoe description with color, style, and material details]\"\n\n## Example Selections\n\n**Example 1:**\n*Outfit: Crisp white button-up + high-waisted jeans*\n**Selected Footwear:** \"Nude leather ballet flats with pointed toe\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        3440,
+        740
+      ],
+      "id": "d04b8a11-04db-4c65-819f-b200b57703ac",
+      "name": "Footwear"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        3460,
+        920
+      ],
+      "id": "1ec70946-59cb-4f36-91f2-e7b35db40267",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9yxCHdoHv3CEy9Ue",
+          "name": "BR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Selected_Footwear\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        3640,
+        1060
+      ],
+      "id": "19b3de28-41b6-4fe2-af08-37b2c5664cb0",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        3580,
+        920
+      ],
+      "id": "58953a4f-184c-4634-ba2e-260e12b03dd5",
+      "name": "Auto-fixing Output Parser2"
+    },
+    {
+      "parameters": {
+        "jsCode": "  function duplicateItems(items, times = 3) {\n    const duplicated = [];\n    items.forEach(item => {\n      for (let i = 0; i < times; i++) {\n        duplicated.push({\n          json: { ...item.json},\n          // binary: item.binary\n        });\n      }\n    });\n    return duplicated;\n  }\n\n  // For n8n Code node:\n  return duplicateItems(items, 3);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4140,
+        540
+      ],
+      "id": "3c9534e1-015f-45ad-a9cf-07c6caae98a5",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4460,
+        220
+      ],
+      "id": "a43a3f93-6cab-4fcb-a039-eb75e6b6497d",
+      "name": "Prompt Generator1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        4460,
+        560
+      ],
+      "id": "6912bb3e-7471-4b99-bbce-1020de31d136",
+      "name": "Prompt Generator2",
+      "executeOnce": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4280,
+        -200
+      ],
+      "id": "edc89dd5-7642-4012-b64b-c3e21ccbb425",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4300,
+        220
+      ],
+      "id": "5587e8f3-d3be-421c-994b-70038d4b343f",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        4300,
+        560
+      ],
+      "id": "1f61843b-dbf1-4804-bdaa-f1ec0d8f8ed6",
+      "name": "Limit3"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"prompt\": \"California\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        4940,
+        360
+      ],
+      "id": "6bb1be3f-1715-44de-aec3-56d9c23d0079",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4780,
+        380
+      ],
+      "id": "59bfcc3b-673d-4928-982b-caa7248e4361",
+      "name": "Google Gemini Chat Model5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5220,
+        240
+      ],
+      "id": "76b30175-2cd4-4d4e-8d4c-30c78650f180",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4a4f7fd-4561-454c-93ac-f18bbe08f5df",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5480,
+        1080
+      ],
+      "id": "ad4a6377-1338-4f3a-97b1-51a4e4c87f4e",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output.prompt"
+            },
+            {
+              "fieldToAggregate": "Gen-col"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        5920,
+        1060
+      ],
+      "id": "8aee36a6-e7c0-46ea-871b-1ad302cb0ecb",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8c5ba0bd-5f7b-47fa-94f4-70033dfec9fb",
+        "responseMode": "lastNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        920,
+        840
+      ],
+      "id": "3388c4d6-1063-4326-bc66-d59e6aa3c257",
+      "name": "Webhook",
+      "webhookId": "8c5ba0bd-5f7b-47fa-94f4-70033dfec9fb",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        3020,
+        60
+      ],
+      "id": "b3eb679f-6eaf-4974-92d3-a6da580b3aa4",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        3320,
+        80
+      ],
+      "id": "2ebdf8a8-05e7-4c1f-b53e-beeb1503ddd1",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2540,
+        100
+      ],
+      "id": "30839bfa-80ca-4225-8b0f-f42d809c858a",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2220,
+        300
+      ],
+      "id": "31a1bb0e-a30c-4e94-bb00-647da0690b22",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{count: itemCount.toString() }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2180,
+        140
+      ],
+      "id": "571ad41d-5d71-402f-a483-bd26c5b46b2d",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "url": "=https://drive.google.com/uc?export=download&id={{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2560,
+        740
+      ],
+      "id": "27cd0db5-0060-44c5-8620-08486d0c0a9f",
+      "name": "HTTP Request1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gets image from sheet": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adds Prompt to sheets": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Prompt Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator1",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Footwear",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outfit extraction": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Footwear": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Limit3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Prompt Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit3": {
+      "main": [
+        [
+          {
+            "node": "Prompt Generator2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generator1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Prompt Generator2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Adds Prompt to sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1cc068d3-ef0f-47e2-bae1-fe2b319e0d38",
+  "meta": {
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "ZKBT8QmJmWsvVofb",
+  "tags": []
+}

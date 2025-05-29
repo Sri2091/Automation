@@ -1,0 +1,9 @@
+download a file :
+curl -X GET http://localhost:9000/bucket-name/path/image.jpg
+
+upload a file :
+curl -X PUT \
+  --data-binary @image.jpg \
+  -H "Content-Type: image/jpeg" \
+  http://localhost:9000/bucket-name/path/image.jpg
+
