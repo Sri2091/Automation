@@ -1,0 +1,2866 @@
+{
+  "name": "Phase_3 | GEN",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -2300,
+        1080
+      ],
+      "id": "9d7a7e5c-9b14-4b80-987f-2ba1604d617d",
+      "name": "Limit",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2b2f3b82-1ffc-49b6-9b46-77ff2a66e3a7",
+              "name": "Prompt 1",
+              "value": "={{ $json['Prompt 1'] }}",
+              "type": "string"
+            },
+            {
+              "id": "1920f1e1-1aa5-458f-8b46-4e58dd129d80",
+              "name": "Prompt 2",
+              "value": "={{ $json['Prompt 2'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5e29f0be-3e5f-423f-aca7-6bb39d696e9a",
+              "name": "Prompt 3",
+              "value": "={{ $json['Prompt 3'] }}",
+              "type": "string"
+            },
+            {
+              "id": "448deec1-5d9a-4510-819d-5ca5a54a8d6d",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1720,
+        1440
+      ],
+      "id": "32fdf21c-7e45-47e9-bb74-97b796df1aa8",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"1\": {\n    \"inputs\": {\n      \"unet_name\": \"flux1-dev.safetensors\",\n      \"weight_dtype\": \"fp8_e4m3fn_fast\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"2\": {\n    \"inputs\": {\n      \"clip_name1\": \"ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors\",\n      \"clip_name2\": \"t5xxl_fp8_e4m3fn.safetensors\",\n      \"type\": \"flux\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"DualCLIPLoader\",\n    \"_meta\": {\n      \"title\": \"DualCLIPLoader\"\n    }\n  },\n  \"4\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"5\": {\n    \"inputs\": {\n      \"text\": {{ $('Edit Fields6').item.json['all prompts'][0].prompt1.toJsonString() }},\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"6\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"5\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"8\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"10\",\n        0\n      ],\n      \"sampler\": [\n        \"47\",\n        0\n      ],\n      \"sigmas\": [\n        \"13\",\n        0\n      ],\n      \"latent_image\": [\n        \"15\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"9\": {\n    \"inputs\": {\n      \"noise_seed\": [\n        \"22\",\n        0\n      ]\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"10\": {\n    \"inputs\": {\n      \"model\": [\n        \"21\",\n        0\n      ],\n      \"conditioning\": [\n        \"6\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"12\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"13\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 1,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"15\": {\n    \"inputs\": {\n      \"width\": 1216,\n      \"height\": 1632,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"16\": {\n    \"inputs\": {\n      \"samples\": [\n        \"8\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"18\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"19\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"18\",\n        0\n      ],\n      \"clip\": [\n        \"18\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"20\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"19\",\n        0\n      ],\n      \"clip\": [\n        \"19\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"21\": {\n    \"inputs\": {\n      \"lora_name\": \"cinematic-shot.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"20\",\n        0\n      ],\n      \"clip\": [\n        \"20\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"22\": {\n    \"inputs\": {\n      \"seed\": {{ $json.seed }}\n    },\n    \"class_type\": \"ttN seed\",\n    \"_meta\": {\n      \"title\": \"seed\"\n    }\n  },\n  \"24\": {\n    \"inputs\": {\n      \"text\": \"hands\",\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"25\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"27\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"28\": {\n    \"inputs\": {\n      \"guidance\": 2.8000000000000003,\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"29\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"16\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"25\",\n        0\n      ],\n      \"negative\": [\n        \"27\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"31\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"30\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"31\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/hand_yolov8n.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"32\": {\n    \"inputs\": {\n      \"text\": \"young,neutral expression, lips closed\",\n      \"clip\": [\n        \"92\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"33\": {\n    \"inputs\": {\n      \"filename_prefix\": \"ComfyUI\",\n      \"images\": [\n        \"88\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"34\": {\n    \"inputs\": {\n      \"model_type\": \"flux\",\n      \"rel_l1_thresh\": 0.4000000000000001,\n      \"start_percent\": 0,\n      \"end_percent\": 1,\n      \"model\": [\n        \"1\",\n        0\n      ]\n    },\n    \"class_type\": \"TeaCache\",\n    \"_meta\": {\n      \"title\": \"TeaCache\"\n    }\n  },\n  \"43\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 0.6500000000000001,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"47\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"12\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"53\": {\n    \"inputs\": {\n      \"tile_width\": [\n        \"59\",\n        0\n      ],\n      \"tile_height\": [\n        \"59\",\n        1\n      ],\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Image_Tile_Batch\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Tile_Batch\"\n    }\n  },\n  \"54\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"55\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"62\",\n        0\n      ],\n      \"sampler\": [\n        \"86\",\n        0\n      ],\n      \"sigmas\": [\n        \"64\",\n        0\n      ],\n      \"latent_image\": [\n        \"68\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"56\": {\n    \"inputs\": {\n      \"tile_size\": 1024,\n      \"overlap\": 64,\n      \"temporal_size\": 64,\n      \"temporal_overlap\": 8,\n      \"samples\": [\n        \"55\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"57\": {\n    \"inputs\": {\n      \"images\": [\n        \"56\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"58\": {\n    \"inputs\": {\n      \"images\": [\n        \"53\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"59\": {\n    \"inputs\": {\n      \"width_factor\": 2,\n      \"height_factor\": 3,\n      \"overlap_rate\": 0.05000000000000001,\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Tile_image_size\",\n    \"_meta\": {\n      \"title\": \"TTP_Tile_image_size\"\n    }\n  },\n  \"61\": {\n    \"inputs\": {\n      \"upscale_method\": \"lanczos\",\n      \"megapixels\": 8.000000000000002,\n      \"image\": [\n        \"65\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageScaleToTotalPixels\",\n    \"_meta\": {\n      \"title\": \"Scale Image to Total Pixels\"\n    }\n  },\n  \"62\": {\n    \"inputs\": {\n      \"model\": [\n        \"80\",\n        0\n      ],\n      \"conditioning\": [\n        \"75\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"64\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 20,\n      \"denoise\": 0.20000000000000004,\n      \"model\": [\n        \"80\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"65\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"70\",\n        0\n      ],\n      \"image\": [\n        \"73\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"66\": {\n    \"inputs\": {\n      \"model_name\": \"1xDeJPG_realplksr_otf.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"68\": {\n    \"inputs\": {\n      \"pixels\": [\n        \"58\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEEncode\",\n    \"_meta\": {\n      \"title\": \"VAE Encode\"\n    }\n  },\n  \"69\": {\n    \"inputs\": {\n      \"padding\": 128,\n      \"tiles\": [\n        \"57\",\n        0\n      ],\n      \"positions\": [\n        \"53\",\n        1\n      ],\n      \"original_size\": [\n        \"53\",\n        2\n      ],\n      \"grid_size\": [\n        \"53\",\n        3\n      ]\n    },\n    \"class_type\": \"TTP_Image_Assy\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Assy\"\n    }\n  },\n  \"70\": {\n    \"inputs\": {\n      \"model_name\": \"4xNomos8kSC.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"73\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"66\",\n        0\n      ],\n      \"image\": [\n        \"89\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"75\": {\n    \"inputs\": {\n      \"clip_l\": \"high quality, 4k, sharp\",\n      \"t5xxl\": \"high quality, 4k, sharp\",\n      \"guidance\": 3.5,\n      \"clip\": [\n        \"80\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncodeFlux\",\n    \"_meta\": {\n      \"title\": \"CLIPTextEncodeFlux\"\n    }\n  },\n  \"78\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"79\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"78\",\n        0\n      ],\n      \"clip\": [\n        \"78\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"80\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"79\",\n        0\n      ],\n      \"clip\": [\n        \"79\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"84\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"85\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.6000000000000001,\n      \"model\": [\n        \"84\",\n        0\n      ],\n      \"clip\": [\n        \"84\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"86\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"54\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"88\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5000000000000001,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 1,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"69\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"28\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"89\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"29\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"32\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"90\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/face_yolov8m.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"92\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5500000000000002,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"85\",\n        0\n      ],\n      \"clip\": [\n        \"85\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  }\n}",
+        "outputFormat": "png",
+        "timeout": 60
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        1300
+      ],
+      "id": "8d4f2172-deac-44ad-968e-26d12ecd6ad2",
+      "name": "ComfyUI",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "qm4oE0N6rHPy3QyR",
+          "name": "RUNPOD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "evaluvate the given image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Fashion Photography AI Image Evaluator - Enhanced Edition\n\nYou are a sophisticated evaluator for AI-generated fashion editorial photography. Your task is to verify image quality while understanding the nuanced requirements of high-end fashion editorials. You evaluate based on varied shot types, complete styling vision, and editorial authenticity. **NO IMAGE SHOULD RECEIVE 10/10 UNLESS ABSOLUTELY FLAWLESS.**\n\n## Technical Quality Assessment (40% of total score)\n\n### ANATOMICAL INSPECTION (20%)\n**EXAMINE KEY AREAS:**\n\n**Hands & Fingers (When Clearly Visible):**\n- Check for major distortions only\n- Minor finger positioning issues are acceptable\n- Focus on obvious errors (missing/extra fingers)\n\n**Face & Body:**\n- General proportions and natural appearance\n- Major anatomical errors only\n- Minor asymmetries are acceptable\n\n**DEDUCTIONS:**\n- Hand with clearly wrong finger count: -2 points\n- Major anatomical distortions: -1.5 points\n- Severe proportion issues: -1 point\n\n### AI ARTIFACT DETECTION (10%)\n**FOCUS ON MAJOR ISSUES ONLY:**\n- Obvious texture failures\n- Major lighting inconsistencies\n- Severe background distortions\n- Clear edge artifacts\n\n**DEDUCTIONS:**\n- Major artifacts: -1 point\n- Multiple minor artifacts: -0.5 points\n\n### GARMENT RENDERING (10%)\n**GENERAL QUALITY:**\n- Overall fabric appearance and texture realism\n- General fit as described\n- Major design elements visible\n- Natural fabric movement and draping\n\n**DEDUCTIONS:**\n- Severely unrealistic fabrics: -0.5 points\n- Major fit issues: -0.5 points\n- Poor fabric physics: -0.25 points\n\n## Editorial Standards & Composition (60% of total score)\n\n### SHOT TYPE EXECUTION (20%)\n**EVALUATE BASED ON SPECIFIED SHOT TYPE:**\n- **Full-body:** Complete outfit visible with environmental context\n- **Three-quarter:** Knees up with good proportions\n- **Medium shot:** Waist up with clear upper styling\n- **Close-up detail:** Sharp focus on specific elements\n- **Environmental wide:** Subject integrated within broader scene\n\n**DEDUCTIONS:**\n- Wrong shot type delivered: -1.5 points\n- Poor framing for specified shot: -1 point\n- Significant unwanted cropping: -0.5 points\n\n### COMPLETE STYLING VISION (15%)\n**EVALUATE COMPLETE LOOK:**\n- **Hair:** Appropriate style for theme and editorial concept\n- **Makeup:** Enhances mood and complements lighting\n- **Expression:** Conveys editorial narrative authentically\n- **Body Language:** Natural movement suited to outfit\n\n**DEDUCTIONS:**\n- Poor hair/makeup execution: -0.5 points\n- Inappropriate expression for theme: -0.5 points\n- Stiff or unnatural body language: -0.5 points\n\n### CLOTHING & ACCESSORIES (15%)\n**ESSENTIAL ITEMS:**\n- Main garments accurately rendered\n- Precise color and texture match\n- All specified accessories visible\n- Design details properly shown\n\n**DEDUCTIONS:**\n- Missing main garments: -1.5 points\n- Significantly wrong colors/textures: -0.5 points\n- Missing multiple accessories: -0.5 points\n- Lost design details: -0.25 points\n\n### EDITORIAL THEME CONSISTENCY (10%)\n**THEME-APPROPRIATE EXECUTION:**\n- Background matches selected theme perfectly\n- Environmental props enhance narrative\n- Lighting supports editorial mood\n- Overall aesthetic cohesion\n\n**Theme-Specific Checks:**\n- **Summer Vacation:** Beach/yacht/pool settings with natural sunlight\n- **Sophisticated Escape:** Architectural elegance with refined shadows\n- **Outdoor Adventure:** Natural landscapes with dynamic lighting\n- **Resort Life:** Luxury vacation settings with relaxed ambiance\n- **Active Lifestyle:** Sports venues with athletic energy\n- **Vintage Vibes:** Retro settings with nostalgic lighting\n\n**DEDUCTIONS:**\n- Wrong theme environment: -1 point\n- Poor theme execution: -0.5 points\n- Inconsistent mood/lighting: -0.25 points\n\n## Editorial Excellence Criteria\n\n### STYLE BALANCE ACHIEVEMENT\n**Evaluate the blend of:**\n- Editorial sophistication WITH authentic moments\n- Aspirational imagery WITH relatable elements\n- Fashion fantasy WITH lifestyle realism\n- Controlled styling WITH natural movement\n\n### PROFESSIONAL EDITORIAL FEEL\n- Magazine-worthy composition\n- Sophisticated color grading\n- Professional model presence\n- High-end production values\n\n## Enhanced Scoring System\n\n### SCORING PHILOSOPHY:\n- **START AT 7/10** - Assume decent quality baseline\n- **10/10** - Flawless editorial execution (extremely rare)\n- **9/10** - Publication-ready with minimal flaws\n- **8/10** - Strong editorial quality\n- **7/10** - Good professional standard\n- **6/10** - Acceptable with notable issues\n- **5/10** - Below editorial standards\n- **Below 5** - Significant failures\n\n### SHOT TYPE SCORING EQUITY:\n- All shot types can achieve maximum scores\n- Judge based on execution within chosen type\n- Close-ups valued equally to full-body shots\n- Environmental wides as valid as medium shots\n\n## Evaluation Process\n\n### EDITORIAL INSPECTION CHECKLIST:\n1. **Shot Type Verification** - Matches specified type\n2. **Complete Styling Check** - Hair, makeup, expression cohesive\n3. **Technical Quality Scan** - No major AI issues\n4. **Clothing & Accessories** - All elements present and accurate\n5. **Theme Execution** - Environment and mood match\n6. **Editorial Impact** - Would this work in a magazine?\n\n### OUTPUT FORMAT:\n\n**image_score: X**\n**issues: [\"issue 1\", \"issue 2\", \"issue 3\"]**\n\n**Enhanced Issue Format Examples:**\n- \"Wrong shot type: requested full-body, received medium\"\n- \"Hair styling inconsistent with sophisticated escape theme\"\n- \"Missing key accessories: no earrings or necklace\"\n- \"Expression too casual for editorial sophistication\"\n- \"Background lacks vintage vibes theme elements\"\n- \"Poor style balance: too stiff, lacks natural movement\"\n- \"Makeup inappropriate for outdoor adventure theme\"\n- \"Fabric rendering unrealistic for silk description\"\n- \"No environmental interaction as specified\"\n- \"Lighting doesn't support resort life mood\"\n\n**Note:** If image is perfect (score 10), issues array should be empty: [\"\"]\n\n**EVALUATION APPROACH:** Apply sophisticated editorial standards while recognizing diverse valid approaches. Consider the complete styling vision from hair to shoes. Evaluate how well the image balances editorial sophistication with authentic moments. Judge shot types based on their specific requirements, not a one-size-fits-all standard. Remember that high-end fashion editorials require cohesive execution across all elements.",
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -460,
+        1460
+      ],
+      "id": "9a9b182c-300f-4a90-bb76-73f12536afa6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a7ef52d5-201b-4420-b324-22f7ebc3be7e",
+              "name": "output.image_score",
+              "value": "={{ $json.output.image_score }}",
+              "type": "number"
+            },
+            {
+              "id": "734cf674-f2f8-4d69-90ad-13c858fc4759",
+              "name": "output.issues",
+              "value": "={{ $json.output.issues }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -140,
+        1460
+      ],
+      "id": "84553c29-0b03-49a7-8f29-e3dab229f21b",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"image_score\": 4,\n  \"brand_score\": 2,\n  \"issues\": [\n    \"Left hand has 6 fingers, right hand missing thumb, facial asymmetry detected\",\n    \"Wearing winter boots and long sleeves - violates summer brief requirements\"\n  ]\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1540,
+        1380
+      ],
+      "id": "b8de5174-ae68-4f8b-9a9a-074b81035600",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "898ec89d-0790-43ee-8ae5-c4298e8da91f",
+              "leftValue": "={{ $json.output.image_score }}",
+              "rightValue": "=7",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        200,
+        1440
+      ],
+      "id": "c747c379-7c7d-4faa-bab9-2d6c2c45ce83",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        40,
+        1440
+      ],
+      "id": "d86ddaf1-fe0e-4f72-a3fd-be1201192709",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const string1 = $input.first().json['Prompt 1'];\nconst string2 = $input.first().json['Prompt 2'];\nconst string3 = $input.first().json['Prompt 3'];\nconst string4 = $input.first().json.row_number;\n\nreturn [\n  { json: { prompt1: string1 } },\n  { json: { prompt2: string2 } },\n  { json: { prompt3: string3 } }\n  // { json: { prompt: string4 } }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1720,
+        1600
+      ],
+      "id": "c4cdd2dd-a7ee-432b-8d02-b268f13772c8",
+      "name": "string to each object"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node - Dynamic Seed Generator (Always New Seeds)\n// Configuration\nconst config = {\n  randMax: $input.all()[0]?.json?.randMax || 1125899906842624, // ComfyUI default max\n  randMin: $input.all()[0]?.json?.randMin || 0,                // ComfyUI default min    \n  step: $input.all()[0]?.json?.step || 1,                     // Step increment\n  count: $input.all()[0]?.json?.count || 1                    // How many seeds to generate\n};\n\n// Calculate random range (exact ComfyUI logic)\nconst randomRange = (config.randMax - Math.max(0, config.randMin)) / (config.step / 10);\n\n// Generate fresh random seed using ComfyUI formula\nfunction generateNewSeed() {\n  const seed = Math.floor(Math.random() * randomRange) * (config.step / 10) + config.randMin;\n  return Math.floor(Math.max(config.randMin, Math.min(config.randMax, seed)));\n}\n\n// Generate seeds - always new/random every execution\nconst results = [];\nfor (let i = 0; i < config.count; i++) {\n  const seed = generateNewSeed();\n  results.push({\n    seed: seed,\n    index: i + 1,\n    timestamp: new Date().toISOString()\n  });\n}\n\n// Return only the seed\nreturn [{\n  json: {\n    seed: results[0].seed\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        1300
+      ],
+      "id": "565452e0-f61a-4d66-ba7c-5fe24fdcc526",
+      "name": "Seed"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -3100,
+        1100
+      ],
+      "id": "740d9eb1-7c49-4183-978e-7abc83c2063e",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "sortFieldsUi": {
+          "sortField": [
+            {
+              "fieldName": "row_number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.sort",
+      "typeVersion": 1,
+      "position": [
+        -2720,
+        1100
+      ],
+      "id": "a6e40320-e63f-45eb-a989-e00058a21900",
+      "name": "Sort"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -2100,
+        1080
+      ],
+      "id": "912066b0-481d-42c8-b930-b07d2c0f485b",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -1860,
+        800
+      ],
+      "id": "7308ba3c-1794-4b91-98fd-46f74656221e",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        1340,
+        2540
+      ],
+      "id": "12fd8a95-9a37-4e42-a4b8-184ec791c65b",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "all prompts",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -1720,
+        1760
+      ],
+      "id": "26d3d98c-7680-446d-8861-482664850f3c",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e889bb8f-bea7-40b0-a7b6-d7dfec371383",
+              "name": "['all prompts'][0].prompt1",
+              "value": "={{ $json['all prompts'][0].prompt1 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -780,
+        1300
+      ],
+      "id": "c6f06576-6737-4d75-a3b7-8d8a5f7308e6",
+      "name": "Edit Fields6"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "04a2946b-4e53-41eb-aa04-0bba2802e0b5",
+              "name": "['all prompts'][1].prompt2",
+              "value": "={{ $json['all prompts'][1].prompt2 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -760,
+        1800
+      ],
+      "id": "447207c1-4f6b-4ba1-99ab-14a05621c01f",
+      "name": "Edit Fields7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c7ed1303-2f41-4ab3-82c2-4b1c0b0ea65f",
+              "name": "['all prompts'][2].prompt3",
+              "value": "={{ $json['all prompts'][2].prompt3 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -760,
+        2320
+      ],
+      "id": "a169c751-1b76-48ab-a287-00691ba8089f",
+      "name": "Edit Fields8"
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"1\": {\n    \"inputs\": {\n      \"unet_name\": \"flux1-dev.safetensors\",\n      \"weight_dtype\": \"fp8_e4m3fn_fast\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"2\": {\n    \"inputs\": {\n      \"clip_name1\": \"ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors\",\n      \"clip_name2\": \"t5xxl_fp8_e4m3fn.safetensors\",\n      \"type\": \"flux\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"DualCLIPLoader\",\n    \"_meta\": {\n      \"title\": \"DualCLIPLoader\"\n    }\n  },\n  \"4\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"5\": {\n    \"inputs\": {\n      \"text\": {{ $('Edit Fields7').item.json['all prompts'][1].prompt2.toJsonString() }},\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"6\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"5\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"8\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"10\",\n        0\n      ],\n      \"sampler\": [\n        \"47\",\n        0\n      ],\n      \"sigmas\": [\n        \"13\",\n        0\n      ],\n      \"latent_image\": [\n        \"15\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"9\": {\n    \"inputs\": {\n      \"noise_seed\": [\n        \"22\",\n        0\n      ]\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"10\": {\n    \"inputs\": {\n      \"model\": [\n        \"21\",\n        0\n      ],\n      \"conditioning\": [\n        \"6\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"12\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"13\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 1,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"15\": {\n    \"inputs\": {\n      \"width\": 1216,\n      \"height\": 1632,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"16\": {\n    \"inputs\": {\n      \"samples\": [\n        \"8\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"18\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"19\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"18\",\n        0\n      ],\n      \"clip\": [\n        \"18\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"20\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"19\",\n        0\n      ],\n      \"clip\": [\n        \"19\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"21\": {\n    \"inputs\": {\n      \"lora_name\": \"cinematic-shot.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"20\",\n        0\n      ],\n      \"clip\": [\n        \"20\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"22\": {\n    \"inputs\": {\n      \"seed\": {{ $json.seed }}\n    },\n    \"class_type\": \"ttN seed\",\n    \"_meta\": {\n      \"title\": \"seed\"\n    }\n  },\n  \"24\": {\n    \"inputs\": {\n      \"text\": \"hands\",\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"25\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"27\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"28\": {\n    \"inputs\": {\n      \"guidance\": 2.8000000000000003,\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"29\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"16\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"25\",\n        0\n      ],\n      \"negative\": [\n        \"27\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"31\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"30\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"31\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/hand_yolov8n.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"32\": {\n    \"inputs\": {\n      \"text\": \"young,neutral expression, lips closed\",\n      \"clip\": [\n        \"92\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"33\": {\n    \"inputs\": {\n      \"filename_prefix\": \"ComfyUI\",\n      \"images\": [\n        \"88\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"34\": {\n    \"inputs\": {\n      \"model_type\": \"flux\",\n      \"rel_l1_thresh\": 0.4000000000000001,\n      \"start_percent\": 0,\n      \"end_percent\": 1,\n      \"model\": [\n        \"1\",\n        0\n      ]\n    },\n    \"class_type\": \"TeaCache\",\n    \"_meta\": {\n      \"title\": \"TeaCache\"\n    }\n  },\n  \"43\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 0.6500000000000001,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"47\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"12\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"53\": {\n    \"inputs\": {\n      \"tile_width\": [\n        \"59\",\n        0\n      ],\n      \"tile_height\": [\n        \"59\",\n        1\n      ],\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Image_Tile_Batch\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Tile_Batch\"\n    }\n  },\n  \"54\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"55\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"62\",\n        0\n      ],\n      \"sampler\": [\n        \"86\",\n        0\n      ],\n      \"sigmas\": [\n        \"64\",\n        0\n      ],\n      \"latent_image\": [\n        \"68\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"56\": {\n    \"inputs\": {\n      \"tile_size\": 1024,\n      \"overlap\": 64,\n      \"temporal_size\": 64,\n      \"temporal_overlap\": 8,\n      \"samples\": [\n        \"55\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"57\": {\n    \"inputs\": {\n      \"images\": [\n        \"56\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"58\": {\n    \"inputs\": {\n      \"images\": [\n        \"53\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"59\": {\n    \"inputs\": {\n      \"width_factor\": 2,\n      \"height_factor\": 3,\n      \"overlap_rate\": 0.05000000000000001,\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Tile_image_size\",\n    \"_meta\": {\n      \"title\": \"TTP_Tile_image_size\"\n    }\n  },\n  \"61\": {\n    \"inputs\": {\n      \"upscale_method\": \"lanczos\",\n      \"megapixels\": 8.000000000000002,\n      \"image\": [\n        \"65\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageScaleToTotalPixels\",\n    \"_meta\": {\n      \"title\": \"Scale Image to Total Pixels\"\n    }\n  },\n  \"62\": {\n    \"inputs\": {\n      \"model\": [\n        \"80\",\n        0\n      ],\n      \"conditioning\": [\n        \"75\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"64\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 20,\n      \"denoise\": 0.20000000000000004,\n      \"model\": [\n        \"80\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"65\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"70\",\n        0\n      ],\n      \"image\": [\n        \"73\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"66\": {\n    \"inputs\": {\n      \"model_name\": \"1xDeJPG_realplksr_otf.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"68\": {\n    \"inputs\": {\n      \"pixels\": [\n        \"58\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEEncode\",\n    \"_meta\": {\n      \"title\": \"VAE Encode\"\n    }\n  },\n  \"69\": {\n    \"inputs\": {\n      \"padding\": 128,\n      \"tiles\": [\n        \"57\",\n        0\n      ],\n      \"positions\": [\n        \"53\",\n        1\n      ],\n      \"original_size\": [\n        \"53\",\n        2\n      ],\n      \"grid_size\": [\n        \"53\",\n        3\n      ]\n    },\n    \"class_type\": \"TTP_Image_Assy\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Assy\"\n    }\n  },\n  \"70\": {\n    \"inputs\": {\n      \"model_name\": \"4xNomos8kSC.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"73\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"66\",\n        0\n      ],\n      \"image\": [\n        \"89\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"75\": {\n    \"inputs\": {\n      \"clip_l\": \"high quality, 4k, sharp\",\n      \"t5xxl\": \"high quality, 4k, sharp\",\n      \"guidance\": 3.5,\n      \"clip\": [\n        \"80\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncodeFlux\",\n    \"_meta\": {\n      \"title\": \"CLIPTextEncodeFlux\"\n    }\n  },\n  \"78\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"79\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"78\",\n        0\n      ],\n      \"clip\": [\n        \"78\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"80\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"79\",\n        0\n      ],\n      \"clip\": [\n        \"79\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"84\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"85\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.6000000000000001,\n      \"model\": [\n        \"84\",\n        0\n      ],\n      \"clip\": [\n        \"84\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"86\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"54\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"88\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5000000000000001,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 1,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"69\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"28\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"89\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"29\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"32\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"90\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/face_yolov8m.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"92\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5500000000000002,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"85\",\n        0\n      ],\n      \"clip\": [\n        \"85\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  }\n}",
+        "outputFormat": "png",
+        "timeout": 60
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        -440,
+        1800
+      ],
+      "id": "7c5eca1a-14d9-4822-abc2-358d101a2265",
+      "name": "ComfyUI1",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "qm4oE0N6rHPy3QyR",
+          "name": "RUNPOD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "evaluvate the given image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Fashion Photography AI Image Evaluator - Enhanced Edition\n\nYou are a sophisticated evaluator for AI-generated fashion editorial photography. Your task is to verify image quality while understanding the nuanced requirements of high-end fashion editorials. You evaluate based on varied shot types, complete styling vision, and editorial authenticity. **NO IMAGE SHOULD RECEIVE 10/10 UNLESS ABSOLUTELY FLAWLESS.**\n\n## Technical Quality Assessment (40% of total score)\n\n### ANATOMICAL INSPECTION (20%)\n**EXAMINE KEY AREAS:**\n\n**Hands & Fingers (When Clearly Visible):**\n- Check for major distortions only\n- Minor finger positioning issues are acceptable\n- Focus on obvious errors (missing/extra fingers)\n\n**Face & Body:**\n- General proportions and natural appearance\n- Major anatomical errors only\n- Minor asymmetries are acceptable\n\n**DEDUCTIONS:**\n- Hand with clearly wrong finger count: -2 points\n- Major anatomical distortions: -1.5 points\n- Severe proportion issues: -1 point\n\n### AI ARTIFACT DETECTION (10%)\n**FOCUS ON MAJOR ISSUES ONLY:**\n- Obvious texture failures\n- Major lighting inconsistencies\n- Severe background distortions\n- Clear edge artifacts\n\n**DEDUCTIONS:**\n- Major artifacts: -1 point\n- Multiple minor artifacts: -0.5 points\n\n### GARMENT RENDERING (10%)\n**GENERAL QUALITY:**\n- Overall fabric appearance and texture realism\n- General fit as described\n- Major design elements visible\n- Natural fabric movement and draping\n\n**DEDUCTIONS:**\n- Severely unrealistic fabrics: -0.5 points\n- Major fit issues: -0.5 points\n- Poor fabric physics: -0.25 points\n\n## Editorial Standards & Composition (60% of total score)\n\n### SHOT TYPE EXECUTION (20%)\n**EVALUATE BASED ON SPECIFIED SHOT TYPE:**\n- **Full-body:** Complete outfit visible with environmental context\n- **Three-quarter:** Knees up with good proportions\n- **Medium shot:** Waist up with clear upper styling\n- **Close-up detail:** Sharp focus on specific elements\n- **Environmental wide:** Subject integrated within broader scene\n\n**DEDUCTIONS:**\n- Wrong shot type delivered: -1.5 points\n- Poor framing for specified shot: -1 point\n- Significant unwanted cropping: -0.5 points\n\n### COMPLETE STYLING VISION (15%)\n**EVALUATE COMPLETE LOOK:**\n- **Hair:** Appropriate style for theme and editorial concept\n- **Makeup:** Enhances mood and complements lighting\n- **Expression:** Conveys editorial narrative authentically\n- **Body Language:** Natural movement suited to outfit\n\n**DEDUCTIONS:**\n- Poor hair/makeup execution: -0.5 points\n- Inappropriate expression for theme: -0.5 points\n- Stiff or unnatural body language: -0.5 points\n\n### CLOTHING & ACCESSORIES (15%)\n**ESSENTIAL ITEMS:**\n- Main garments accurately rendered\n- Precise color and texture match\n- All specified accessories visible\n- Design details properly shown\n\n**DEDUCTIONS:**\n- Missing main garments: -1.5 points\n- Significantly wrong colors/textures: -0.5 points\n- Missing multiple accessories: -0.5 points\n- Lost design details: -0.25 points\n\n### EDITORIAL THEME CONSISTENCY (10%)\n**THEME-APPROPRIATE EXECUTION:**\n- Background matches selected theme perfectly\n- Environmental props enhance narrative\n- Lighting supports editorial mood\n- Overall aesthetic cohesion\n\n**Theme-Specific Checks:**\n- **Summer Vacation:** Beach/yacht/pool settings with natural sunlight\n- **Sophisticated Escape:** Architectural elegance with refined shadows\n- **Outdoor Adventure:** Natural landscapes with dynamic lighting\n- **Resort Life:** Luxury vacation settings with relaxed ambiance\n- **Active Lifestyle:** Sports venues with athletic energy\n- **Vintage Vibes:** Retro settings with nostalgic lighting\n\n**DEDUCTIONS:**\n- Wrong theme environment: -1 point\n- Poor theme execution: -0.5 points\n- Inconsistent mood/lighting: -0.25 points\n\n## Editorial Excellence Criteria\n\n### STYLE BALANCE ACHIEVEMENT\n**Evaluate the blend of:**\n- Editorial sophistication WITH authentic moments\n- Aspirational imagery WITH relatable elements\n- Fashion fantasy WITH lifestyle realism\n- Controlled styling WITH natural movement\n\n### PROFESSIONAL EDITORIAL FEEL\n- Magazine-worthy composition\n- Sophisticated color grading\n- Professional model presence\n- High-end production values\n\n## Enhanced Scoring System\n\n### SCORING PHILOSOPHY:\n- **START AT 7/10** - Assume decent quality baseline\n- **10/10** - Flawless editorial execution (extremely rare)\n- **9/10** - Publication-ready with minimal flaws\n- **8/10** - Strong editorial quality\n- **7/10** - Good professional standard\n- **6/10** - Acceptable with notable issues\n- **5/10** - Below editorial standards\n- **Below 5** - Significant failures\n\n### SHOT TYPE SCORING EQUITY:\n- All shot types can achieve maximum scores\n- Judge based on execution within chosen type\n- Close-ups valued equally to full-body shots\n- Environmental wides as valid as medium shots\n\n## Evaluation Process\n\n### EDITORIAL INSPECTION CHECKLIST:\n1. **Shot Type Verification** - Matches specified type\n2. **Complete Styling Check** - Hair, makeup, expression cohesive\n3. **Technical Quality Scan** - No major AI issues\n4. **Clothing & Accessories** - All elements present and accurate\n5. **Theme Execution** - Environment and mood match\n6. **Editorial Impact** - Would this work in a magazine?\n\n### OUTPUT FORMAT:\n\n**image_score: X**\n**issues: [\"issue 1\", \"issue 2\", \"issue 3\"]**\n\n**Enhanced Issue Format Examples:**\n- \"Wrong shot type: requested full-body, received medium\"\n- \"Hair styling inconsistent with sophisticated escape theme\"\n- \"Missing key accessories: no earrings or necklace\"\n- \"Expression too casual for editorial sophistication\"\n- \"Background lacks vintage vibes theme elements\"\n- \"Poor style balance: too stiff, lacks natural movement\"\n- \"Makeup inappropriate for outdoor adventure theme\"\n- \"Fabric rendering unrealistic for silk description\"\n- \"No environmental interaction as specified\"\n- \"Lighting doesn't support resort life mood\"\n\n**Note:** If image is perfect (score 10), issues array should be empty: [\"\"]\n\n**EVALUATION APPROACH:** Apply sophisticated editorial standards while recognizing diverse valid approaches. Consider the complete styling vision from hair to shoes. Evaluate how well the image balances editorial sophistication with authentic moments. Judge shot types based on their specific requirements, not a one-size-fits-all standard. Remember that high-end fashion editorials require cohesive execution across all elements.",
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -440,
+        1980
+      ],
+      "id": "e2393a8d-81a8-470b-8e9c-3c986c3e77f4",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a7ef52d5-201b-4420-b324-22f7ebc3be7e",
+              "name": "output.image_score",
+              "value": "={{ $json.output.image_score }}",
+              "type": "number"
+            },
+            {
+              "id": "734cf674-f2f8-4d69-90ad-13c858fc4759",
+              "name": "output.issues",
+              "value": "={{ $json.output.issues }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -120,
+        1980
+      ],
+      "id": "2455fe67-5477-4486-a136-e6ee3e82e52a",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "898ec89d-0790-43ee-8ae5-c4298e8da91f",
+              "leftValue": "={{ $json.output.image_score }}",
+              "rightValue": "=7",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        220,
+        1960
+      ],
+      "id": "6054813d-f3f7-4913-9555-7fdc3912a37e",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        60,
+        1960
+      ],
+      "id": "1d664825-3bd7-4f99-a6b6-a539647d1c05",
+      "name": "Merge3"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node - Dynamic Seed Generator (Always New Seeds)\n// Configuration\nconst config = {\n  randMax: $input.all()[0]?.json?.randMax || 1125899906842624, // ComfyUI default max\n  randMin: $input.all()[0]?.json?.randMin || 0,                // ComfyUI default min    \n  step: $input.all()[0]?.json?.step || 1,                     // Step increment\n  count: $input.all()[0]?.json?.count || 1                    // How many seeds to generate\n};\n\n// Calculate random range (exact ComfyUI logic)\nconst randomRange = (config.randMax - Math.max(0, config.randMin)) / (config.step / 10);\n\n// Generate fresh random seed using ComfyUI formula\nfunction generateNewSeed() {\n  const seed = Math.floor(Math.random() * randomRange) * (config.step / 10) + config.randMin;\n  return Math.floor(Math.max(config.randMin, Math.min(config.randMax, seed)));\n}\n\n// Generate seeds - always new/random every execution\nconst results = [];\nfor (let i = 0; i < config.count; i++) {\n  const seed = generateNewSeed();\n  results.push({\n    seed: seed,\n    index: i + 1,\n    timestamp: new Date().toISOString()\n  });\n}\n\n// Return only the seed\nreturn [{\n  json: {\n    seed: results[0].seed\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        1800
+      ],
+      "id": "75affeba-4439-4722-867b-a4a539810634",
+      "name": "Seed1"
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"1\": {\n    \"inputs\": {\n      \"unet_name\": \"flux1-dev.safetensors\",\n      \"weight_dtype\": \"fp8_e4m3fn_fast\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"Load Diffusion Model\"\n    }\n  },\n  \"2\": {\n    \"inputs\": {\n      \"clip_name1\": \"ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors\",\n      \"clip_name2\": \"t5xxl_fp8_e4m3fn.safetensors\",\n      \"type\": \"flux\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"DualCLIPLoader\",\n    \"_meta\": {\n      \"title\": \"DualCLIPLoader\"\n    }\n  },\n  \"4\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"Load VAE\"\n    }\n  },\n  \"5\": {\n    \"inputs\": {\n      \"text\": {{ $('Edit Fields8').item.json['all prompts'][2].prompt3.toJsonString() }},\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"6\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"5\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"8\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"10\",\n        0\n      ],\n      \"sampler\": [\n        \"47\",\n        0\n      ],\n      \"sigmas\": [\n        \"13\",\n        0\n      ],\n      \"latent_image\": [\n        \"15\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"9\": {\n    \"inputs\": {\n      \"noise_seed\": [\n        \"22\",\n        0\n      ]\n    },\n    \"class_type\": \"RandomNoise\",\n    \"_meta\": {\n      \"title\": \"RandomNoise\"\n    }\n  },\n  \"10\": {\n    \"inputs\": {\n      \"model\": [\n        \"21\",\n        0\n      ],\n      \"conditioning\": [\n        \"6\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"12\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"13\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 1,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"15\": {\n    \"inputs\": {\n      \"width\": 1216,\n      \"height\": 1632,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"EmptySD3LatentImage\"\n    }\n  },\n  \"16\": {\n    \"inputs\": {\n      \"samples\": [\n        \"8\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE Decode\"\n    }\n  },\n  \"18\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"19\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"18\",\n        0\n      ],\n      \"clip\": [\n        \"18\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"20\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"19\",\n        0\n      ],\n      \"clip\": [\n        \"19\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"21\": {\n    \"inputs\": {\n      \"lora_name\": \"cinematic-shot.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"20\",\n        0\n      ],\n      \"clip\": [\n        \"20\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"22\": {\n    \"inputs\": {\n      \"seed\": {{ $json.seed }}\n    },\n    \"class_type\": \"ttN seed\",\n    \"_meta\": {\n      \"title\": \"seed\"\n    }\n  },\n  \"24\": {\n    \"inputs\": {\n      \"text\": \"hands\",\n      \"clip\": [\n        \"21\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"25\": {\n    \"inputs\": {\n      \"guidance\": 3.5,\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"27\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"24\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"28\": {\n    \"inputs\": {\n      \"guidance\": 2.8000000000000003,\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"FluxGuidance\",\n    \"_meta\": {\n      \"title\": \"FluxGuidance\"\n    }\n  },\n  \"29\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"16\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"25\",\n        0\n      ],\n      \"negative\": [\n        \"27\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"31\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"30\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"32\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"ConditioningZeroOut\"\n    }\n  },\n  \"31\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/hand_yolov8n.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"32\": {\n    \"inputs\": {\n      \"text\": \"young,neutral expression, lips closed\",\n      \"clip\": [\n        \"92\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncode\",\n    \"_meta\": {\n      \"title\": \"CLIP Text Encode (Prompt)\"\n    }\n  },\n  \"33\": {\n    \"inputs\": {\n      \"filename_prefix\": \"ComfyUI\",\n      \"images\": [\n        \"88\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"Save Image\"\n    }\n  },\n  \"34\": {\n    \"inputs\": {\n      \"model_type\": \"flux\",\n      \"rel_l1_thresh\": 0.4000000000000001,\n      \"start_percent\": 0,\n      \"end_percent\": 1,\n      \"model\": [\n        \"1\",\n        0\n      ]\n    },\n    \"class_type\": \"TeaCache\",\n    \"_meta\": {\n      \"title\": \"TeaCache\"\n    }\n  },\n  \"43\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 25,\n      \"denoise\": 0.6500000000000001,\n      \"model\": [\n        \"21\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"47\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"12\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"53\": {\n    \"inputs\": {\n      \"tile_width\": [\n        \"59\",\n        0\n      ],\n      \"tile_height\": [\n        \"59\",\n        1\n      ],\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Image_Tile_Batch\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Tile_Batch\"\n    }\n  },\n  \"54\": {\n    \"inputs\": {\n      \"sampler_name\": \"deis\"\n    },\n    \"class_type\": \"KSamplerSelect\",\n    \"_meta\": {\n      \"title\": \"KSamplerSelect\"\n    }\n  },\n  \"55\": {\n    \"inputs\": {\n      \"noise\": [\n        \"9\",\n        0\n      ],\n      \"guider\": [\n        \"62\",\n        0\n      ],\n      \"sampler\": [\n        \"86\",\n        0\n      ],\n      \"sigmas\": [\n        \"64\",\n        0\n      ],\n      \"latent_image\": [\n        \"68\",\n        0\n      ]\n    },\n    \"class_type\": \"SamplerCustomAdvanced\",\n    \"_meta\": {\n      \"title\": \"SamplerCustomAdvanced\"\n    }\n  },\n  \"56\": {\n    \"inputs\": {\n      \"tile_size\": 1024,\n      \"overlap\": 64,\n      \"temporal_size\": 64,\n      \"temporal_overlap\": 8,\n      \"samples\": [\n        \"55\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecodeTiled\",\n    \"_meta\": {\n      \"title\": \"VAE Decode (Tiled)\"\n    }\n  },\n  \"57\": {\n    \"inputs\": {\n      \"images\": [\n        \"56\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"58\": {\n    \"inputs\": {\n      \"images\": [\n        \"53\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageListToImageBatch\",\n    \"_meta\": {\n      \"title\": \"Image List to Image Batch\"\n    }\n  },\n  \"59\": {\n    \"inputs\": {\n      \"width_factor\": 2,\n      \"height_factor\": 3,\n      \"overlap_rate\": 0.05000000000000001,\n      \"image\": [\n        \"61\",\n        0\n      ]\n    },\n    \"class_type\": \"TTP_Tile_image_size\",\n    \"_meta\": {\n      \"title\": \"TTP_Tile_image_size\"\n    }\n  },\n  \"61\": {\n    \"inputs\": {\n      \"upscale_method\": \"lanczos\",\n      \"megapixels\": 8.000000000000002,\n      \"image\": [\n        \"65\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageScaleToTotalPixels\",\n    \"_meta\": {\n      \"title\": \"Scale Image to Total Pixels\"\n    }\n  },\n  \"62\": {\n    \"inputs\": {\n      \"model\": [\n        \"80\",\n        0\n      ],\n      \"conditioning\": [\n        \"75\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicGuider\",\n    \"_meta\": {\n      \"title\": \"BasicGuider\"\n    }\n  },\n  \"64\": {\n    \"inputs\": {\n      \"scheduler\": \"beta\",\n      \"steps\": 20,\n      \"denoise\": 0.20000000000000004,\n      \"model\": [\n        \"80\",\n        0\n      ]\n    },\n    \"class_type\": \"BasicScheduler\",\n    \"_meta\": {\n      \"title\": \"BasicScheduler\"\n    }\n  },\n  \"65\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"70\",\n        0\n      ],\n      \"image\": [\n        \"73\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"66\": {\n    \"inputs\": {\n      \"model_name\": \"1xDeJPG_realplksr_otf.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"68\": {\n    \"inputs\": {\n      \"pixels\": [\n        \"58\",\n        0\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEEncode\",\n    \"_meta\": {\n      \"title\": \"VAE Encode\"\n    }\n  },\n  \"69\": {\n    \"inputs\": {\n      \"padding\": 128,\n      \"tiles\": [\n        \"57\",\n        0\n      ],\n      \"positions\": [\n        \"53\",\n        1\n      ],\n      \"original_size\": [\n        \"53\",\n        2\n      ],\n      \"grid_size\": [\n        \"53\",\n        3\n      ]\n    },\n    \"class_type\": \"TTP_Image_Assy\",\n    \"_meta\": {\n      \"title\": \"TTP_Image_Assy\"\n    }\n  },\n  \"70\": {\n    \"inputs\": {\n      \"model_name\": \"4xNomos8kSC.pth\"\n    },\n    \"class_type\": \"UpscaleModelLoader\",\n    \"_meta\": {\n      \"title\": \"Load Upscale Model\"\n    }\n  },\n  \"73\": {\n    \"inputs\": {\n      \"upscale_model\": [\n        \"66\",\n        0\n      ],\n      \"image\": [\n        \"89\",\n        0\n      ]\n    },\n    \"class_type\": \"ImageUpscaleWithModel\",\n    \"_meta\": {\n      \"title\": \"Upscale Image (using Model)\"\n    }\n  },\n  \"75\": {\n    \"inputs\": {\n      \"clip_l\": \"high quality, 4k, sharp\",\n      \"t5xxl\": \"high quality, 4k, sharp\",\n      \"guidance\": 3.5,\n      \"clip\": [\n        \"80\",\n        1\n      ]\n    },\n    \"class_type\": \"CLIPTextEncodeFlux\",\n    \"_meta\": {\n      \"title\": \"CLIPTextEncodeFlux\"\n    }\n  },\n  \"78\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"79\": {\n    \"inputs\": {\n      \"lora_name\": \"amateurphoto-v6-forcu.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"78\",\n        0\n      ],\n      \"clip\": [\n        \"78\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"80\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"79\",\n        0\n      ],\n      \"clip\": [\n        \"79\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"84\": {\n    \"inputs\": {\n      \"lora_name\": \"skin_texture_style_v5.safetensors\",\n      \"strength_model\": 0.5000000000000001,\n      \"strength_clip\": 0.5000000000000001,\n      \"model\": [\n        \"34\",\n        0\n      ],\n      \"clip\": [\n        \"2\",\n        0\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"85\": {\n    \"inputs\": {\n      \"lora_name\": \"MidJourneyXFlux.safetensors\",\n      \"strength_model\": 0.6000000000000001,\n      \"strength_clip\": 0.6000000000000001,\n      \"model\": [\n        \"84\",\n        0\n      ],\n      \"clip\": [\n        \"84\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  },\n  \"86\": {\n    \"inputs\": {\n      \"dishonesty_factor\": -0.10000000000000002,\n      \"start_percent\": 0.20000000000000004,\n      \"end_percent\": 0.7000000000000002,\n      \"smooth_factor\": 0.5000000000000001,\n      \"sampler\": [\n        \"54\",\n        0\n      ]\n    },\n    \"class_type\": \"AdvancedLyingSigmaSampler\",\n    \"_meta\": {\n      \"title\": \"Advanced Lying Sigma Sampler\"\n    }\n  },\n  \"88\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5000000000000001,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 1,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"69\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"28\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"89\": {\n    \"inputs\": {\n      \"guide_size\": 512,\n      \"guide_size_for\": true,\n      \"max_size\": 1024,\n      \"seed\": {{ $json.seed }},\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"deis\",\n      \"scheduler\": \"beta\",\n      \"denoise\": 0.5500000000000002,\n      \"feather\": 10,\n      \"noise_mask\": true,\n      \"force_inpaint\": true,\n      \"bbox_threshold\": 0.10000000000000002,\n      \"bbox_dilation\": 10,\n      \"bbox_crop_factor\": 3,\n      \"sam_detection_hint\": \"center-1\",\n      \"sam_dilation\": 38,\n      \"sam_threshold\": 0.9300000000000002,\n      \"sam_bbox_expansion\": 5,\n      \"sam_mask_hint_threshold\": 0.30000000000000004,\n      \"sam_mask_hint_use_negative\": \"False\",\n      \"drop_size\": 10,\n      \"wildcard\": \"\",\n      \"cycle\": 2,\n      \"inpaint_model\": false,\n      \"noise_mask_feather\": 20,\n      \"tiled_encode\": false,\n      \"tiled_decode\": false,\n      \"image\": [\n        \"29\",\n        0\n      ],\n      \"model\": [\n        \"92\",\n        0\n      ],\n      \"clip\": [\n        \"92\",\n        1\n      ],\n      \"vae\": [\n        \"4\",\n        0\n      ],\n      \"positive\": [\n        \"32\",\n        0\n      ],\n      \"negative\": [\n        \"30\",\n        0\n      ],\n      \"bbox_detector\": [\n        \"90\",\n        0\n      ]\n    },\n    \"class_type\": \"FaceDetailer\",\n    \"_meta\": {\n      \"title\": \"FaceDetailer\"\n    }\n  },\n  \"90\": {\n    \"inputs\": {\n      \"model_name\": \"bbox/face_yolov8m.pt\"\n    },\n    \"class_type\": \"UltralyticsDetectorProvider\",\n    \"_meta\": {\n      \"title\": \"UltralyticsDetectorProvider\"\n    }\n  },\n  \"92\": {\n    \"inputs\": {\n      \"lora_name\": \"mjV6.safetensors\",\n      \"strength_model\": 0.5500000000000002,\n      \"strength_clip\": 0.5500000000000002,\n      \"model\": [\n        \"85\",\n        0\n      ],\n      \"clip\": [\n        \"85\",\n        1\n      ]\n    },\n    \"class_type\": \"LoraLoader\",\n    \"_meta\": {\n      \"title\": \"Load LoRA\"\n    }\n  }\n}",
+        "outputFormat": "png",
+        "timeout": 60
+      },
+      "type": "n8n-nodes-comfyui.comfyui",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        2320
+      ],
+      "id": "06af75ec-9da7-43b7-8db6-2191c1277c94",
+      "name": "ComfyUI2",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "qm4oE0N6rHPy3QyR",
+          "name": "RUNPOD"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "evaluvate the given image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Fashion Photography AI Image Evaluator - Enhanced Edition\n\nYou are a sophisticated evaluator for AI-generated fashion editorial photography. Your task is to verify image quality while understanding the nuanced requirements of high-end fashion editorials. You evaluate based on varied shot types, complete styling vision, and editorial authenticity. **NO IMAGE SHOULD RECEIVE 10/10 UNLESS ABSOLUTELY FLAWLESS.**\n\n## Technical Quality Assessment (40% of total score)\n\n### ANATOMICAL INSPECTION (20%)\n**EXAMINE KEY AREAS:**\n\n**Hands & Fingers (When Clearly Visible):**\n- Check for major distortions only\n- Minor finger positioning issues are acceptable\n- Focus on obvious errors (missing/extra fingers)\n\n**Face & Body:**\n- General proportions and natural appearance\n- Major anatomical errors only\n- Minor asymmetries are acceptable\n\n**DEDUCTIONS:**\n- Hand with clearly wrong finger count: -2 points\n- Major anatomical distortions: -1.5 points\n- Severe proportion issues: -1 point\n\n### AI ARTIFACT DETECTION (10%)\n**FOCUS ON MAJOR ISSUES ONLY:**\n- Obvious texture failures\n- Major lighting inconsistencies\n- Severe background distortions\n- Clear edge artifacts\n\n**DEDUCTIONS:**\n- Major artifacts: -1 point\n- Multiple minor artifacts: -0.5 points\n\n### GARMENT RENDERING (10%)\n**GENERAL QUALITY:**\n- Overall fabric appearance and texture realism\n- General fit as described\n- Major design elements visible\n- Natural fabric movement and draping\n\n**DEDUCTIONS:**\n- Severely unrealistic fabrics: -0.5 points\n- Major fit issues: -0.5 points\n- Poor fabric physics: -0.25 points\n\n## Editorial Standards & Composition (60% of total score)\n\n### SHOT TYPE EXECUTION (20%)\n**EVALUATE BASED ON SPECIFIED SHOT TYPE:**\n- **Full-body:** Complete outfit visible with environmental context\n- **Three-quarter:** Knees up with good proportions\n- **Medium shot:** Waist up with clear upper styling\n- **Close-up detail:** Sharp focus on specific elements\n- **Environmental wide:** Subject integrated within broader scene\n\n**DEDUCTIONS:**\n- Wrong shot type delivered: -1.5 points\n- Poor framing for specified shot: -1 point\n- Significant unwanted cropping: -0.5 points\n\n### COMPLETE STYLING VISION (15%)\n**EVALUATE COMPLETE LOOK:**\n- **Hair:** Appropriate style for theme and editorial concept\n- **Makeup:** Enhances mood and complements lighting\n- **Expression:** Conveys editorial narrative authentically\n- **Body Language:** Natural movement suited to outfit\n\n**DEDUCTIONS:**\n- Poor hair/makeup execution: -0.5 points\n- Inappropriate expression for theme: -0.5 points\n- Stiff or unnatural body language: -0.5 points\n\n### CLOTHING & ACCESSORIES (15%)\n**ESSENTIAL ITEMS:**\n- Main garments accurately rendered\n- Precise color and texture match\n- All specified accessories visible\n- Design details properly shown\n\n**DEDUCTIONS:**\n- Missing main garments: -1.5 points\n- Significantly wrong colors/textures: -0.5 points\n- Missing multiple accessories: -0.5 points\n- Lost design details: -0.25 points\n\n### EDITORIAL THEME CONSISTENCY (10%)\n**THEME-APPROPRIATE EXECUTION:**\n- Background matches selected theme perfectly\n- Environmental props enhance narrative\n- Lighting supports editorial mood\n- Overall aesthetic cohesion\n\n**Theme-Specific Checks:**\n- **Summer Vacation:** Beach/yacht/pool settings with natural sunlight\n- **Sophisticated Escape:** Architectural elegance with refined shadows\n- **Outdoor Adventure:** Natural landscapes with dynamic lighting\n- **Resort Life:** Luxury vacation settings with relaxed ambiance\n- **Active Lifestyle:** Sports venues with athletic energy\n- **Vintage Vibes:** Retro settings with nostalgic lighting\n\n**DEDUCTIONS:**\n- Wrong theme environment: -1 point\n- Poor theme execution: -0.5 points\n- Inconsistent mood/lighting: -0.25 points\n\n## Editorial Excellence Criteria\n\n### STYLE BALANCE ACHIEVEMENT\n**Evaluate the blend of:**\n- Editorial sophistication WITH authentic moments\n- Aspirational imagery WITH relatable elements\n- Fashion fantasy WITH lifestyle realism\n- Controlled styling WITH natural movement\n\n### PROFESSIONAL EDITORIAL FEEL\n- Magazine-worthy composition\n- Sophisticated color grading\n- Professional model presence\n- High-end production values\n\n## Enhanced Scoring System\n\n### SCORING PHILOSOPHY:\n- **START AT 7/10** - Assume decent quality baseline\n- **10/10** - Flawless editorial execution (extremely rare)\n- **9/10** - Publication-ready with minimal flaws\n- **8/10** - Strong editorial quality\n- **7/10** - Good professional standard\n- **6/10** - Acceptable with notable issues\n- **5/10** - Below editorial standards\n- **Below 5** - Significant failures\n\n### SHOT TYPE SCORING EQUITY:\n- All shot types can achieve maximum scores\n- Judge based on execution within chosen type\n- Close-ups valued equally to full-body shots\n- Environmental wides as valid as medium shots\n\n## Evaluation Process\n\n### EDITORIAL INSPECTION CHECKLIST:\n1. **Shot Type Verification** - Matches specified type\n2. **Complete Styling Check** - Hair, makeup, expression cohesive\n3. **Technical Quality Scan** - No major AI issues\n4. **Clothing & Accessories** - All elements present and accurate\n5. **Theme Execution** - Environment and mood match\n6. **Editorial Impact** - Would this work in a magazine?\n\n### OUTPUT FORMAT:\n\n**image_score: X**\n**issues: [\"issue 1\", \"issue 2\", \"issue 3\"]**\n\n**Enhanced Issue Format Examples:**\n- \"Wrong shot type: requested full-body, received medium\"\n- \"Hair styling inconsistent with sophisticated escape theme\"\n- \"Missing key accessories: no earrings or necklace\"\n- \"Expression too casual for editorial sophistication\"\n- \"Background lacks vintage vibes theme elements\"\n- \"Poor style balance: too stiff, lacks natural movement\"\n- \"Makeup inappropriate for outdoor adventure theme\"\n- \"Fabric rendering unrealistic for silk description\"\n- \"No environmental interaction as specified\"\n- \"Lighting doesn't support resort life mood\"\n\n**Note:** If image is perfect (score 10), issues array should be empty: [\"\"]\n\n**EVALUATION APPROACH:** Apply sophisticated editorial standards while recognizing diverse valid approaches. Consider the complete styling vision from hair to shoes. Evaluate how well the image balances editorial sophistication with authentic moments. Judge shot types based on their specific requirements, not a one-size-fits-all standard. Remember that high-end fashion editorials require cohesive execution across all elements.",
+          "passthroughBinaryImages": true
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -460,
+        2480
+      ],
+      "id": "cda8bdd1-3299-465e-8068-ed498f902e9e",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a7ef52d5-201b-4420-b324-22f7ebc3be7e",
+              "name": "output.image_score",
+              "value": "={{ $json.output.image_score }}",
+              "type": "number"
+            },
+            {
+              "id": "734cf674-f2f8-4d69-90ad-13c858fc4759",
+              "name": "output.issues",
+              "value": "={{ $json.output.issues }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -140,
+        2480
+      ],
+      "id": "d70551fc-2432-4f9e-8bbc-c56da70bd8b5",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "898ec89d-0790-43ee-8ae5-c4298e8da91f",
+              "leftValue": "={{ $json.output.image_score }}",
+              "rightValue": "=6",
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        180,
+        2460
+      ],
+      "id": "f2492018-9d38-4afe-ae6f-4ee68d54ed27",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        20,
+        2460
+      ],
+      "id": "c9370a06-672f-4e24-b5cc-8d3f135b94b9",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node - Dynamic Seed Generator (Always New Seeds)\n// Configuration\nconst config = {\n  randMax: $input.all()[0]?.json?.randMax || 1125899906842624, // ComfyUI default max\n  randMin: $input.all()[0]?.json?.randMin || 0,                // ComfyUI default min    \n  step: $input.all()[0]?.json?.step || 1,                     // Step increment\n  count: $input.all()[0]?.json?.count || 1                    // How many seeds to generate\n};\n\n// Calculate random range (exact ComfyUI logic)\nconst randomRange = (config.randMax - Math.max(0, config.randMin)) / (config.step / 10);\n\n// Generate fresh random seed using ComfyUI formula\nfunction generateNewSeed() {\n  const seed = Math.floor(Math.random() * randomRange) * (config.step / 10) + config.randMin;\n  return Math.floor(Math.max(config.randMin, Math.min(config.randMax, seed)));\n}\n\n// Generate seeds - always new/random every execution\nconst results = [];\nfor (let i = 0; i < config.count; i++) {\n  const seed = generateNewSeed();\n  results.push({\n    seed: seed,\n    index: i + 1,\n    timestamp: new Date().toISOString()\n  });\n}\n\n// Return only the seed\nreturn [{\n  json: {\n    seed: results[0].seed\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -600,
+        2320
+      ],
+      "id": "cefc8750-57a7-436a-bd1c-75e94d49f3a4",
+      "name": "Seed2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        -900,
+        1020
+      ],
+      "id": "266e856e-909a-4ad6-b9b4-a302b53d9696",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "content": "# Prompt 1\n\n",
+        "height": 460,
+        "width": 1380
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        1220
+      ],
+      "id": "63e3ca6b-4ced-4ba5-b53e-b9d3806a6959",
+      "name": "Sticky Note",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# Prompt 2\n\n",
+        "height": 480,
+        "width": 1380,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        1720
+      ],
+      "id": "d4a88e47-9abd-4747-b078-f32d9b4f9d18",
+      "name": "Sticky Note1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# Prompt 3\n\n\n",
+        "height": 460,
+        "width": 1380,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        2240
+      ],
+      "id": "bedcc472-d76d-4850-9aca-03f7016d6197",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        1380
+      ],
+      "id": "31d29785-285f-496c-a1a2-a5e463b2a004",
+      "name": "Google Gemini Sri",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        1540
+      ],
+      "id": "426eebc3-f794-4b5d-91e6-16a3c49c45db",
+      "name": "Google Gemini BR",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9yxCHdoHv3CEy9Ue",
+          "name": "BR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        1700
+      ],
+      "id": "7085fbe5-1f26-4741-801f-30590dbeaae9",
+      "name": "Google Gemini BR 2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "oKO0GZ3I1pfWFnuh",
+          "name": "BR 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# Models\n",
+        "height": 620,
+        "width": 340,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1320,
+        1260
+      ],
+      "id": "0246c9dc-a400-4a2e-8b0b-36a115aedd4d",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6c5d88ff-f22e-4efe-8eae-f5a5150335c1",
+              "leftValue": "={{ $json.image_1 }}",
+              "rightValue": 26,
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -2540,
+        1100
+      ],
+      "id": "808ad387-3ce1-41e2-a214-901c5335749e",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -2900,
+        1100
+      ],
+      "id": "f31964b7-bb66-4303-8501-eb7aaf83cd8b",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        220
+      ],
+      "id": "7f108c60-19db-4e9a-bc0a-ed94ec17865c",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json['Gen-col'] }}",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1-biFjmXUxGiJXXy2dpgBSMW1a3p5T0Dn",
+            "mode": "list",
+            "cachedResultName": "AI | BUDA FILL",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1-biFjmXUxGiJXXy2dpgBSMW1a3p5T0Dn"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -360,
+        340
+      ],
+      "id": "9f025b9f-0d7e-4588-880d-15de71a75b42",
+      "name": "Google Drive",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Check if it's exactly one item with empty json object\nif (items.length === 1 && Object.keys(items[0].json).length === 0) {\n  return [{ json: { result: 1 } }];\n} else {\n  return [{ json: { result: 0 } }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        520
+      ],
+      "id": "56859a32-0271-4461-b9b5-d65e091027d4",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "0b47a5aa-ae69-4364-b554-bf5bc494f978",
+              "leftValue": "=1",
+              "rightValue": "0",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -360,
+        680
+      ],
+      "id": "bcce7c2d-2f0c-4374-a61e-c56c4d753343",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        80,
+        80
+      ],
+      "id": "fcfe3e88-d94d-42c7-85f6-d4d2795460ff",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        40,
+        480
+      ],
+      "id": "4334ae32-5e4f-4e30-92e8-97aa35d0f482",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        300,
+        460
+      ],
+      "id": "926b6198-ee9e-4564-8175-5bd47f92a405",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a5046cdf-fc0a-40e5-97f6-f87bf2179316",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        480,
+        460
+      ],
+      "id": "caaedae2-1cc7-472e-8616-a811397630fe",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ $json['Gen-col'] }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1-biFjmXUxGiJXXy2dpgBSMW1a3p5T0Dn",
+          "mode": "list",
+          "cachedResultName": "AI | BUDA FILL",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1-biFjmXUxGiJXXy2dpgBSMW1a3p5T0Dn"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        700,
+        460
+      ],
+      "id": "937b222a-e394-468b-a6aa-c41e9fe039f4",
+      "name": "Google Drive1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "81b9597c-cf36-4fd4-aeda-05dab0ae8d22",
+              "name": "role",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        460
+      ],
+      "id": "759d68dd-409b-4dd3-bc62-3c10b3e14b35",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "operation": "share",
+        "folderNoRootId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "permissionsUi": {
+          "permissionsValues": {
+            "role": "writer",
+            "type": "anyone",
+            "allowFileDiscovery": true
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        900,
+        460
+      ],
+      "id": "1adf9ed0-266b-44d7-a4ac-a3dd79d24e79",
+      "name": "Google Drive2",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 4,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1160,
+        680
+      ],
+      "id": "d6844a94-0830-48ee-90a2-65231a866402",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "name": "={{ $input.item.binary.data.fileName}}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1460,
+        700
+      ],
+      "id": "e640819e-7c34-4e5b-bd93-fb385d218bd2",
+      "name": "Google Drive3",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "={{ $input.item.binary.data.fileName}}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1020,
+        100
+      ],
+      "id": "1f001729-7782-45ea-a02f-f8b1be5bb6b4",
+      "name": "Google Drive5",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n// Get the ID from the specific Edit Fields15 node\nconst sharedId = $('Google Drive1').first().json.id;\n\nreturn items.map((item, index) => {\n  return {\n    json: {\n      ...item.json,\n      // Use existing ID if item has one, otherwise use the shared ID from Edit Fields15\n      id: item.json.id || sharedId\n    },\n    binary: item.binary || {}\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        700
+      ],
+      "id": "bb618dc8-6f7a-4baf-988f-a3e7bd9481a3",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Find the first item that has an ID\nconst itemWithId = items.find(item => item.json.id);\nconst sharedId = itemWithId ? itemWithId.json.id : null;\n\nreturn items.map((item, index) => {\n  return {\n    json: {\n      ...item.json,\n      // Use existing ID if item has one, otherwise use the shared ID\n      id: item.json.id || sharedId\n    },\n    binary: item.binary || {}\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        540,
+        160
+      ],
+      "id": "a7ad94a2-d5f7-47ed-8d96-da7fd185b43a",
+      "name": "Code2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        100
+      ],
+      "id": "3a7864c3-3935-40fa-997a-a7a3fe5373e1",
+      "name": "Limit3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2dbf3210-6692-4cdb-bfc2-3656b2a0e8ad",
+              "name": "Link",
+              "value": "={{ \"https://drive.google.com/drive/folders/\" +$json.id + \"?usp=drive_link\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1460,
+        180
+      ],
+      "id": "b1514482-85be-454d-b145-e639bc54a166",
+      "name": "Edit Fields9"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1320,
+        180
+      ],
+      "id": "9d8c5a65-cc4c-4ab9-b523-e6c8006fc3f9",
+      "name": "Merge8"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Gen-col": "={{ $('Merge8').item.json.name }}",
+            "image_1": "={{ $json.Link }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brick",
+              "displayName": "Brick",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brand",
+              "displayName": "Brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Gender",
+              "displayName": "Gender",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt 1",
+              "displayName": "Prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 2",
+              "displayName": "Prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 3",
+              "displayName": "Prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_1",
+              "displayName": "image_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_2",
+              "displayName": "image_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_3",
+              "displayName": "image_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1600,
+        180
+      ],
+      "id": "60619177-6ed0-4cf9-b5ea-5194aa4fbfde",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        700
+      ],
+      "id": "0e1d83db-1d58-456d-8dc8-f6389158fa99",
+      "name": "Limit4"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        1780,
+        840
+      ],
+      "id": "9552c9ea-9408-481f-8671-e6b03a7014d6",
+      "name": "Merge9"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2dbf3210-6692-4cdb-bfc2-3656b2a0e8ad",
+              "name": "Link",
+              "value": "={{ \"https://drive.google.com/drive/folders/\" +$json.id + \"?usp=drive_link\" }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1940,
+        840
+      ],
+      "id": "a80e31de-0672-429e-ae8f-9d02dacfb243",
+      "name": "Edit Fields10"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Gen-col": "={{ $('Merge9').item.json.name }}",
+            "image_1": "={{ $json.Link }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brick",
+              "displayName": "Brick",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Brand",
+              "displayName": "Brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Gender",
+              "displayName": "Gender",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Link",
+              "displayName": "Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt 1",
+              "displayName": "Prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 2",
+              "displayName": "Prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 3",
+              "displayName": "Prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_1",
+              "displayName": "image_1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_2",
+              "displayName": "image_2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "image_3",
+              "displayName": "image_3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2100,
+        840
+      ],
+      "id": "cd9dc939-14ce-4959-8f60-7dc020d5722f",
+      "name": "Google Sheets2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "image_1"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3500,
+        2780
+      ],
+      "id": "cf8ea362-b75b-4f59-94fc-c0d61f5b594a",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3720,
+        2780
+      ],
+      "id": "04e0b6a6-dcba-4b90-acc9-ed0381a41501",
+      "name": "Wait",
+      "webhookId": "a0b4eb72-cf1a-477d-8958-fea1d413e1e1"
+    },
+    {
+      "parameters": {
+        "content": "# Updates items in folder\n\n",
+        "height": 340,
+        "width": 1780,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dd4f1352-77e9-4232-a015-4e2902069e4e",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "# Creates &  Updates items in folder\n\n",
+        "height": 640,
+        "width": 2260,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        360
+      ],
+      "id": "3db2b803-fb7e-4701-b2d2-6c48154ef804",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "# Searches for folder, and routes accordingly",
+        "height": 840,
+        "width": 440,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        60
+      ],
+      "id": "c9dd2404-b9e0-4f6b-a34e-d84f248ea8f3",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# PROMPT PARSE",
+        "height": 600,
+        "width": 360,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1840,
+        1340
+      ],
+      "id": "6e683e2f-1353-4126-8b22-29e64d5424a0",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        380,
+        1460
+      ],
+      "id": "c85d52e9-2798-48e6-af11-73acd7aa423b",
+      "name": "Edit Fields11"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=/home/images/temp/{{ $input.item.binary.data.fileName}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1620,
+        2540
+      ],
+      "id": "4f23a791-cc3c-4e04-8fc4-7f07d08242e8",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8c054951-7047-4355-8b45-84627b2bfd64",
+              "name": "fileName",
+              "value": "={{ $json.fileName }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1780,
+        2540
+      ],
+      "id": "b1e1c3d1-04a5-45b8-be54-247a42110950",
+      "name": "Edit Fields12"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9127d539-ce12-41f4-bbb2-c28401b7634e",
+              "name": "filename",
+              "value": "={{ $json.filename }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        420,
+        1960
+      ],
+      "id": "07d68fb1-714a-42e0-9b22-c66497fad855",
+      "name": "Edit Fields13"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "937bb995-d5e6-4f2c-a48c-829e657b1d2e",
+              "name": "filename",
+              "value": "={{ $json.filename }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        2480
+      ],
+      "id": "e2cbf49d-047d-45cc-ab97-703a81fc2ccf",
+      "name": "Edit Fields14"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.fileName }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        320,
+        160
+      ],
+      "id": "6db561e5-5ce9-4b63-a720-2ec8fc7fd28f",
+      "name": "Read/Write Files from Disk1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        100
+      ],
+      "id": "df400e09-44ff-4828-b5b0-560ae67508d6",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b539d44-2225-4c37-97f5-c9fc4e56544d",
+              "name": "fileName",
+              "value": "={{ $json.fileName }}",
+              "type": "string"
+            },
+            {
+              "id": "97e6be4b-0b5a-4cf0-acf6-05d5d3723c18",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        420,
+        20
+      ],
+      "id": "e0c8518f-a79e-446a-bd32-b936e0d45d6f",
+      "name": "Edit Fields15"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n// Get the ID from the specific Edit Fields15 node\nconst sharedId = $('Edit Fields15').first().json.id;\n\nreturn items.map((item, index) => {\n  return {\n    json: {\n      ...item.json,\n      // Use existing ID if item has one, otherwise use the shared ID from Edit Fields15\n      id: item.json.id || sharedId\n    },\n    binary: item.binary || {}\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        100
+      ],
+      "id": "c2e60a08-f9fc-4ed7-b919-fb67e58df63e",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\n// Find the first item that has an ID\nconst itemWithId = items.find(item => item.json.id);\nconst sharedId = itemWithId ? itemWithId.json.id : null;\n\nreturn items.map((item, index) => {\n  return {\n    json: {\n      ...item.json,\n      // Use existing ID if item has one, otherwise use the shared ID\n      id: item.json.id || sharedId\n    },\n    binary: item.binary || {}\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        520,
+        620
+      ],
+      "id": "970394f8-5348-48e5-81c0-46a5f3bb23ed",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "fileSelector": "={{ $json.fileName }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        300,
+        620
+      ],
+      "id": "94ea7945-0264-46d0-b684-22e922436457",
+      "name": "Read/Write Files from Disk2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "string to each object",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "AI Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "string to each object": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sort": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields6": {
+      "main": [
+        [
+          {
+            "node": "Seed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields8": {
+      "main": [
+        [
+          {
+            "node": "Seed2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields7": {
+      "main": [
+        [
+          {
+            "node": "Seed1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Sri": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini BR": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini BR 2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Sort",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 2
+          }
+        ],
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Read/Write Files from Disk2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Google Drive1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Drive2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Google Drive3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Drive5": {
+      "main": [
+        [
+          {
+            "node": "Limit3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit3": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields9": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive3": {
+      "main": [
+        [
+          {
+            "node": "Limit4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit4": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields10": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets2": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ComfyUI": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ComfyUI1": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields11": {
+      "main": [
+        [
+          {
+            "node": "Seed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields12": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Seed": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed1": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Seed2": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ComfyUI2": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields13": {
+      "main": [
+        [
+          {
+            "node": "Seed1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields14": {
+      "main": [
+        [
+          {
+            "node": "Seed2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields15": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Google Drive5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk2": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "38582d33-d31b-418e-b36c-2c6eccbca491",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "J7mgV8sFENBQ21ro",
+  "tags": []
+}

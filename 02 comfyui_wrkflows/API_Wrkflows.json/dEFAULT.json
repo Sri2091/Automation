@@ -1,0 +1,279 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "flux1-dev.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "2": {
+    "inputs": {
+      "clip_name1": "ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "4": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "21",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "guidance": 3,
+      "conditioning": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "8": {
+    "inputs": {
+      "noise": [
+        "9",
+        0
+      ],
+      "guider": [
+        "10",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "9": {
+    "inputs": {
+      "noise_seed": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "10": {
+    "inputs": {
+      "model": [
+        "21",
+        0
+      ],
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "11": {
+    "inputs": {
+      "model_type": "flux",
+      "rel_l1_thresh": 0.4000000000000001,
+      "max_skip_steps": 3,
+      "model": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "TeaCache",
+    "_meta": {
+      "title": "TeaCache"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 1,
+      "denoise": 1,
+      "model": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "15": {
+    "inputs": {
+      "width": 1216,
+      "height": 1632,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "16": {
+    "inputs": {
+      "samples": [
+        "8",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "17": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "16",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "18": {
+    "inputs": {
+      "lora_name": "amateurphoto-v6-forcu.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "11",
+        0
+      ],
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "19": {
+    "inputs": {
+      "lora_name": "skin_texture_style_v5.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "18",
+        0
+      ],
+      "clip": [
+        "18",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "20": {
+    "inputs": {
+      "lora_name": "mjV6.safetensors",
+      "strength_model": 0.6000000000000001,
+      "strength_clip": 0.6000000000000001,
+      "model": [
+        "19",
+        0
+      ],
+      "clip": [
+        "19",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "21": {
+    "inputs": {
+      "lora_name": "cinematic-shot.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "20",
+        0
+      ],
+      "clip": [
+        "20",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "22": {
+    "inputs": {
+      "seed": 0
+    },
+    "class_type": "ttN seed",
+    "_meta": {
+      "title": "seed"
+    }
+  }
+}

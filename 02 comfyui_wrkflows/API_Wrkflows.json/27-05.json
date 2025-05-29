@@ -1,0 +1,502 @@
+{
+  "1": {
+    "inputs": {
+      "unet_name": "flux1-dev.safetensors",
+      "weight_dtype": "fp8_e4m3fn_fast"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "2": {
+    "inputs": {
+      "clip_name1": "ViT-L-14-TEXT-detail-improved-hiT-GmP-TE-only-HF.safetensors",
+      "clip_name2": "t5xxl_fp8_e4m3fn.safetensors",
+      "type": "flux",
+      "device": "default"
+    },
+    "class_type": "DualCLIPLoader",
+    "_meta": {
+      "title": "DualCLIPLoader"
+    }
+  },
+  "4": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "21",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "6": {
+    "inputs": {
+      "guidance": 3,
+      "conditioning": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "8": {
+    "inputs": {
+      "noise": [
+        "9",
+        0
+      ],
+      "guider": [
+        "10",
+        0
+      ],
+      "sampler": [
+        "12",
+        0
+      ],
+      "sigmas": [
+        "13",
+        0
+      ],
+      "latent_image": [
+        "15",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "9": {
+    "inputs": {
+      "noise_seed": [
+        "22",
+        0
+      ]
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "10": {
+    "inputs": {
+      "model": [
+        "21",
+        0
+      ],
+      "conditioning": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "BasicGuider"
+    }
+  },
+  "12": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "13": {
+    "inputs": {
+      "scheduler": "beta",
+      "steps": 1,
+      "denoise": 1,
+      "model": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "BasicScheduler"
+    }
+  },
+  "15": {
+    "inputs": {
+      "width": 1216,
+      "height": 1632,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "16": {
+    "inputs": {
+      "samples": [
+        "8",
+        0
+      ],
+      "vae": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "18": {
+    "inputs": {
+      "lora_name": "amateurphoto-v6-forcu.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "34",
+        0
+      ],
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "19": {
+    "inputs": {
+      "lora_name": "skin_texture_style_v5.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "18",
+        0
+      ],
+      "clip": [
+        "18",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "20": {
+    "inputs": {
+      "lora_name": "mjV6.safetensors",
+      "strength_model": 0.6000000000000001,
+      "strength_clip": 0.6000000000000001,
+      "model": [
+        "19",
+        0
+      ],
+      "clip": [
+        "19",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "21": {
+    "inputs": {
+      "lora_name": "cinematic-shot.safetensors",
+      "strength_model": 0.5000000000000001,
+      "strength_clip": 0.5000000000000001,
+      "model": [
+        "20",
+        0
+      ],
+      "clip": [
+        "20",
+        1
+      ]
+    },
+    "class_type": "LoraLoader",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  },
+  "22": {
+    "inputs": {
+      "seed": 0
+    },
+    "class_type": "ttN seed",
+    "_meta": {
+      "title": "seed"
+    }
+  },
+  "23": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 0,
+      "steps": 25,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.6000000000000001,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.10000000000000002,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.9300000000000002,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7000000000000002,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 2,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "16",
+        0
+      ],
+      "model": [
+        "21",
+        0
+      ],
+      "clip": [
+        "21",
+        1
+      ],
+      "vae": [
+        "4",
+        0
+      ],
+      "positive": [
+        "25",
+        0
+      ],
+      "negative": [
+        "27",
+        0
+      ],
+      "bbox_detector": [
+        "26",
+        0
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "FaceDetailer"
+    }
+  },
+  "24": {
+    "inputs": {
+      "text": "hands",
+      "clip": [
+        "21",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "25": {
+    "inputs": {
+      "guidance": 3.5,
+      "conditioning": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "26": {
+    "inputs": {
+      "model_name": "bbox/hand_yolov8n.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "27": {
+    "inputs": {
+      "conditioning": [
+        "24",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "ConditioningZeroOut"
+    }
+  },
+  "28": {
+    "inputs": {
+      "guidance": 2.8000000000000003,
+      "conditioning": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "FluxGuidance",
+    "_meta": {
+      "title": "FluxGuidance"
+    }
+  },
+  "29": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 1024,
+      "seed": 0,
+      "steps": 25,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 0.5500000000000002,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "bbox_threshold": 0.10000000000000002,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3,
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.9300000000000002,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7000000000000002,
+      "sam_mask_hint_use_negative": "False",
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 2,
+      "inpaint_model": false,
+      "noise_mask_feather": 20,
+      "tiled_encode": false,
+      "tiled_decode": false,
+      "image": [
+        "23",
+        0
+      ],
+      "model": [
+        "21",
+        0
+      ],
+      "clip": [
+        "21",
+        1
+      ],
+      "vae": [
+        "4",
+        0
+      ],
+      "positive": [
+        "28",
+        0
+      ],
+      "negative": [
+        "30",
+        0
+      ],
+      "bbox_detector": [
+        "31",
+        0
+      ]
+    },
+    "class_type": "FaceDetailer",
+    "_meta": {
+      "title": "FaceDetailer"
+    }
+  },
+  "30": {
+    "inputs": {
+      "conditioning": [
+        "32",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "ConditioningZeroOut"
+    }
+  },
+  "31": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt"
+    },
+    "class_type": "UltralyticsDetectorProvider",
+    "_meta": {
+      "title": "UltralyticsDetectorProvider"
+    }
+  },
+  "32": {
+    "inputs": {
+      "text": "young ",
+      "clip": [
+        "21",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "33": {
+    "inputs": {
+      "filename_prefix": "ComfyUI",
+      "images": [
+        "29",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "34": {
+    "inputs": {
+      "model_type": "flux",
+      "rel_l1_thresh": 0.4000000000000001,
+      "start_percent": 0,
+      "end_percent": 1,
+      "model": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "TeaCache",
+    "_meta": {
+      "title": "TeaCache"
+    }
+  }
+}
