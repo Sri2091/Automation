@@ -21,34 +21,12 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        3920,
+        4140,
         540
       ],
       "id": "dd9300db-5d95-487b-b0a2-d570e2525d6b",
       "name": "Merge",
       "executeOnce": true
-    },
-    {
-      "parameters": {
-        "modelName": "models/gemini-2.5-flash-preview-05-20",
-        "options": {
-          "temperature": 0.7
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
-      "typeVersion": 1,
-      "position": [
-        4360,
-        840
-      ],
-      "id": "0af6053f-7bf9-495d-95b6-c3d4238da5fb",
-      "name": "Google Gemini Chat Model",
-      "credentials": {
-        "googlePalmApi": {
-          "id": "UpLQ2CLSMB2oJQnX",
-          "name": "Sri"
-        }
-      }
     },
     {
       "parameters": {
@@ -61,7 +39,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        5700,
+        6360,
         1060
       ],
       "id": "2b1161fe-7b57-4e52-b31d-abc77657a659",
@@ -72,17 +50,17 @@
       "parameters": {
         "documentId": {
           "__rl": true,
-          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "value": "1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY",
           "mode": "list",
-          "cachedResultName": "Internal | Ajio Buda 5",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+          "cachedResultName": "INTERNAL  | Titan Taneria",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "value": 1955849859,
+          "value": 229555237,
           "mode": "list",
-          "cachedResultName": "FSN_Gen",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+          "cachedResultName": "FSN_GEN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY/edit#gid=229555237"
         },
         "options": {}
       },
@@ -106,17 +84,17 @@
         "operation": "update",
         "documentId": {
           "__rl": true,
-          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "value": "1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY",
           "mode": "list",
-          "cachedResultName": "Internal | Ajio Buda 5",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+          "cachedResultName": "INTERNAL  | Titan Taneria",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
-          "value": 1955849859,
+          "value": 229555237,
           "mode": "list",
-          "cachedResultName": "FSN_Gen",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+          "cachedResultName": "FSN_GEN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1T91zUgsNMv1tD3B5XMzz9zo8JuYs6D3q4IySSR6UhuY/edit#gid=229555237"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -189,7 +167,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        6260,
+        6840,
         1060
       ],
       "id": "70644ce7-da20-46e9-a02f-cf2bc6ab902f",
@@ -200,8 +178,7 @@
           "id": "Dd3w6Uil0Iw63fMM",
           "name": "Google Sheets Sriwork"
         }
-      },
-      "disabled": true
+      }
     },
     {
       "parameters": {
@@ -212,7 +189,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2000,
+        2220,
         400
       ],
       "id": "3bbb8692-c056-42ef-8568-3d5ef9b07fdb",
@@ -233,49 +210,35 @@
       "name": "Split Out"
     },
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        1760,
-        400
-      ],
-      "id": "db1c7cdf-e914-4b98-966a-66f9f3301355",
-      "name": "Limit"
-    },
-    {
       "parameters": {
         "promptType": "define",
-        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "text": "=Generate an fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word prompt following the Fashion Flux style guidelines.",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+          "systemMessage": "=# INDIAN ETHNIC FASHION PHOTOGRAPHY SYSTEM - BRAND-ALIGNED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion photography prompt generator specializing in Indian ethnic wear that combines approachable, relatable aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of ethnic outfits into warm, aspirational fashion photography prompts suitable for modern Indian fashion brands.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE\n- Comprehensive knowledge of Indian ethnic wear: sarees, kurtas, anarkalis, lehengas, salwar suits\n- Fluent in Indian fashion terminology: silhouettes, textiles (cotton, silk, chiffon), traditional embellishments\n- Recognition of Indian aesthetic elements and cultural fashion influences\n- Understanding of contemporary Indian fashion photography styles\n\n### VISUAL LANGUAGE MASTERY\n- Translate ethnic fashion concepts into relatable visual descriptions\n- Articulate natural lighting setups with subtle shadows\n- Command color theory emphasizing outfit visibility against neutral backgrounds\n- Express warmth and approachability through detailed sensory language\n\n### THEME INTELLIGENCE\n- Auto-select appropriate Indian lifestyle themes based on outfit analysis\n- Generate authentic Indian environmental contexts with architectural details\n- Create relaxed, candid compositions with natural interactions\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**OUTFIT DETAILS:**\n- Garment type (kurta, anarkali, saree, lehenga, salwar suit)\n- Colors, patterns, and fabric textures\n- Length and traditional cuts\n- Neckline styles common in ethnic wear\n- Sleeve variations\n- Traditional design details (embroidery, prints, borders, embellishments)\n\n**FOOTWEAR & ACCESSORIES:**\n- Traditional footwear (juttis, kolhapuris, sandals)\n- Jewelry (ethnic earrings, traditional necklaces, bangles)\n- Dupattas and additional ethnic accessories\n\n## BRAND-SPECIFIC THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Color vibrancy & visual weight** (bright/bold vs soft/muted)\n2. **Fabric flow & movement** (structured vs flowing)\n3. **Styling elements** (casual vs dressed up)\n4. **Time of day suggestion** (morning fresh vs evening elegant)\n5. **Activity context** (static elegance vs movement-friendly)\n\n### THEME OPTIONS WITH INDIAN BACKGROUNDS:\n\n**HERITAGE HOME**\n- *Indicators:* Structured silhouettes, deeper jewel tones, heavier fabrics, traditional motifs, formal ethnic pieces\n- *Backgrounds:* Indian tiled flooring, architectural columns with arches, traditional courtyards, white/grey walls\n- *Lighting:* Natural sunlight with soft shadows, window light\n- *Mood:* Comfortable elegance, approachable sophistication\n\n**MODERN INDIAN ALLEY**\n- *Indicators:* Mid-weight fabrics, contemporary color blocks, everyday kurtas with modern cuts, casual ethnic coordinates\n- *Backgrounds:* Indian streets with premium windows, white bougainvillea, clean architectural elements\n- *Lighting:* Natural daylight, subtle environmental shadows\n- *Mood:* Urban ethnic, relatable luxury\n\n**RESORT ELEGANCE**\n- *Indicators:* Light, airy fabrics (chiffons, georgettes), pastel or bright tropical colors, relaxed silhouettes, vacation-friendly styles\n- *Backgrounds:* Resort settings with Indian elements, terracotta floors, earthy walls, manicured spaces\n- *Lighting:* Soft resort ambiance, golden hour warmth\n- *Mood:* Relaxed refinement, vacation comfort\n\n**INDOOR SOPHISTICATION**\n- *Indicators:* Evening-appropriate colors (deep oranges, maroons, navy), silk-like textures, embellished pieces, sarees\n- *Backgrounds:* Dark wood furniture, golden curtains, subtle patterned carpets, Indian interiors\n- *Lighting:* Warm interior lighting, window-filtered light\n- *Mood:* Festive warmth, traditional grace\n\n**CONTEMPORARY FUSION**\n- *Indicators:* Solid colors or geometric prints, minimal embellishments, Western-influenced cuts with ethnic elements, coord sets\n- *Backgrounds:* Clean modern spaces with Indian accents, glass doors, premium finishes\n- *Lighting:* Bright, clean lighting emphasizing outfit details\n- *Mood:* Modern Indian woman, effortless style\n\n## SHOT TYPE VARIATIONS\n\n### BRAND-PREFERRED SHOT TYPES:\n- **Full-body shot:** Shows complete ethnic outfit with natural stance\n- **Three-quarter shot:** Emphasizes outfit flow and movement\n- **Walking shot:** Natural movement showcasing fabric drape\n- **Sitting shot:** Relaxed poses on furniture or steps\n- **Environmental interaction:** Model naturally engaging with surroundings\n\n## BRAND-SPECIFIC FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Approachable styles (open waves, ponytails, relaxed buns - never too styled)\n**MAKEUP:** Minimal but polished (natural glow, soft lip color, defined eyes)\n**EXPRESSION:** Happy, soft, and warm (genuine smiles, no poker faces)\n**BODY LANGUAGE:** Relaxed, confident, and natural movement\n\n### MODEL CHARACTERISTICS:\n- Approachable Indian faces reflecting target audience\n- Warm, relatable expressions\n- Natural, confident posture\n- Authentic interaction with environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### NATURAL PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing prompt that organically integrates:\n\n**OPENING:** Shot type and lifestyle concept\n**SUBJECT:** Relatable model description with natural styling\n**GARMENTS:** Detailed ethnic outfit woven into daily life context\n**ENVIRONMENT:** Authentic Indian settings that enhance relatability\n**MOOD & MOVEMENT:** Natural gestures and candid moments\n**TECHNICAL:** Bright, natural lighting approach\n**AESTHETIC:** Contemporary Indian lifestyle references\n\n### STYLE BALANCE\n- Blend **aspirational quality** with **everyday relatability**\n- Create **premium imagery** with **approachable elements**\n- Combine **ethnic tradition** with **modern lifestyle**\n- Mix **polished presentation** with **candid moments**\n\n### POSE PHILOSOPHY\nSuggest natural activities and movements:\n- **Everyday actions** (walking through doorways, adjusting dupatta, sitting casually)\n- **Candid moments** (looking away naturally, mid-conversation gestures)\n- **Environmental engagement** (touching walls, holding railings, interacting with space)\n- **Effortless positions** that show outfit naturally\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Full-body shot capturing a modern Indian woman in her heritage home...\"\n- \"Three-quarter frame showcasing effortless ethnic style in a resort setting...\"\n- \"Natural walking shot through a contemporary Indian alley...\"\n- \"Candid moment of relaxed sophistication in traditional interiors...\"\n\n### NATURAL LANGUAGE FLOW:\nCreate prompts that feel like lifestyle moments rather than posed fashion shots, while maintaining professional quality and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### BRAND AUTHENTICITY\n- Ensure approachable, non-intimidating imagery\n- Maintain focus on outfit visibility against clean backgrounds\n- Create cohesive Indian lifestyle narratives\n- Develop warm, inviting mood throughout\n\n### CREATIVE GUIDELINES\n- Avoid overly editorial or high-fashion language\n- Use relatable, everyday scenarios\n- Emphasize comfort and wearability\n- Maintain cultural authenticity without stereotypes\n\n### TECHNICAL PRECISION\n- Specify natural lighting with soft shadows\n- Suggest slightly blurred backgrounds for outfit focus\n- Include Indian architectural and design elements\n- Maintain bright, clean aesthetic for product visibility\n\n## PROCESS FLOW\n1. **Analyze input** for ethnic outfit details and occasion\n2. **Select theme** based on outfit style and wearability context\n3. **Choose shot type** that naturally showcases the garment\n4. **Develop mood** with approachable styling and expressions\n5. **Craft prompt** with lifestyle narrative and natural flow\n6. **Ensure 150-200 words** while maintaining engaging, relatable narrative"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.8,
       "position": [
-        4460,
-        -200
+        5120,
+        -40
       ],
       "id": "eb25e61c-6960-4421-8d59-71eb558006de",
       "name": "Prompt Generator",
       "executeOnce": false
     },
     {
-      "parameters": {
-        "amount": 30
-      },
+      "parameters": {},
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        6500,
+        7160,
         1060
       ],
       "id": "e45705cf-c942-4d66-91f0-827cad60134f",
       "name": "Wait",
-      "webhookId": "e6f1ce27-f4d2-4823-89e4-b36c36fa8f70",
-      "disabled": true
+      "webhookId": "e6f1ce27-f4d2-4823-89e4-b36c36fa8f70"
     },
     {
       "parameters": {
@@ -306,7 +269,7 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1520,
+        1740,
         420
       ],
       "id": "abb0831c-c15a-45bf-8185-e4883adf29e3",
@@ -317,8 +280,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        1520,
-        580
+        1740,
+        700
       ],
       "id": "4742fecf-2aec-4408-b3a4-61c97d4f99f8",
       "name": "No Operation, do nothing1"
@@ -380,28 +343,6 @@
     },
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4o",
-          "mode": "list",
-          "cachedResultName": "gpt-4o"
-        },
-        "options": {
-          "temperature": 0.7
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        3320,
-        820
-      ],
-      "id": "442e0e09-4faa-43a9-8dc6-25f76909effc",
-      "name": "OpenAI Chat Model",
-      "disabled": true
-    },
-    {
-      "parameters": {
         "options": {
           "prompt": "=Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
         }
@@ -409,7 +350,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
       "typeVersion": 1,
       "position": [
-        4780,
+        5440,
         240
       ],
       "id": "22c9204e-7d1c-41a9-b95b-5eb30cc787f3",
@@ -438,7 +379,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3260,
+        3380,
         740
       ],
       "id": "56434385-1c2c-4dd2-8295-251b8b214bd1",
@@ -461,7 +402,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        3800,
+        4020,
         720
       ],
       "id": "9477ed4a-1af6-468a-89d4-133cfd8a1e27",
@@ -477,7 +418,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        2720,
+        2940,
         940
       ],
       "id": "9a7b835b-dce4-46ff-8b41-c9a3cc742e9a",
@@ -496,7 +437,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        2900,
+        3120,
         1080
       ],
       "id": "1e5d8732-d1e6-4714-927f-f8a7f7f6be64",
@@ -511,7 +452,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
       "typeVersion": 1,
       "position": [
-        2840,
+        3060,
         940
       ],
       "id": "ce0b3baf-b72c-44b9-9db2-65a22fc6ebc1",
@@ -525,7 +466,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        3340,
+        3400,
         1040
       ],
       "id": "42163538-7ed2-4658-b6a1-92dd04e862f4",
@@ -549,7 +490,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        2720,
+        2940,
         740
       ],
       "id": "68f7c799-cc01-4dbc-9886-0c9e2a8c79a3",
@@ -567,7 +508,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        3440,
+        3660,
         740
       ],
       "id": "d04b8a11-04db-4c65-819f-b200b57703ac",
@@ -583,7 +524,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        3460,
+        3680,
         920
       ],
       "id": "1ec70946-59cb-4f36-91f2-e7b35db40267",
@@ -602,7 +543,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        3640,
+        3860,
         1060
       ],
       "id": "19b3de28-41b6-4fe2-af08-37b2c5664cb0",
@@ -617,7 +558,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
       "typeVersion": 1,
       "position": [
-        3580,
+        3800,
         920
       ],
       "id": "58953a4f-184c-4634-ba2e-260e12b03dd5",
@@ -630,7 +571,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4140,
+        4320,
         540
       ],
       "id": "3c9534e1-015f-45ad-a9cf-07c6caae98a5",
@@ -642,13 +583,13 @@
         "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+          "systemMessage": "=# INDIAN ETHNIC FASHION PHOTOGRAPHY SYSTEM - BRAND-ALIGNED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion photography prompt generator specializing in Indian ethnic wear that combines approachable, relatable aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of ethnic outfits into warm, aspirational fashion photography prompts suitable for modern Indian fashion brands.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE\n- Comprehensive knowledge of Indian ethnic wear: sarees, kurtas, anarkalis, lehengas, salwar suits\n- Fluent in Indian fashion terminology: silhouettes, textiles (cotton, silk, chiffon), traditional embellishments\n- Recognition of Indian aesthetic elements and cultural fashion influences\n- Understanding of contemporary Indian fashion photography styles\n\n### VISUAL LANGUAGE MASTERY\n- Translate ethnic fashion concepts into relatable visual descriptions\n- Articulate natural lighting setups with subtle shadows\n- Command color theory emphasizing outfit visibility against neutral backgrounds\n- Express warmth and approachability through detailed sensory language\n\n### THEME INTELLIGENCE\n- Auto-select appropriate Indian lifestyle themes based on outfit analysis\n- Generate authentic Indian environmental contexts with architectural details\n- Create relaxed, candid compositions with natural interactions\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**OUTFIT DETAILS:**\n- Garment type (kurta, anarkali, saree, lehenga, salwar suit)\n- Colors, patterns, and fabric textures\n- Length and traditional cuts\n- Neckline styles common in ethnic wear\n- Sleeve variations\n- Traditional design details (embroidery, prints, borders, embellishments)\n\n**FOOTWEAR & ACCESSORIES:**\n- Traditional footwear (juttis, kolhapuris, sandals)\n- Jewelry (ethnic earrings, traditional necklaces, bangles)\n- Dupattas and additional ethnic accessories\n\n## BRAND-SPECIFIC THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Color vibrancy & visual weight** (bright/bold vs soft/muted)\n2. **Fabric flow & movement** (structured vs flowing)\n3. **Styling elements** (casual vs dressed up)\n4. **Time of day suggestion** (morning fresh vs evening elegant)\n5. **Activity context** (static elegance vs movement-friendly)\n\n### THEME OPTIONS WITH INDIAN BACKGROUNDS:\n\n**HERITAGE HOME**\n- *Indicators:* Structured silhouettes, deeper jewel tones, heavier fabrics, traditional motifs, formal ethnic pieces\n- *Backgrounds:* Indian tiled flooring, architectural columns with arches, traditional courtyards, white/grey walls\n- *Lighting:* Natural sunlight with soft shadows, window light\n- *Mood:* Comfortable elegance, approachable sophistication\n\n**MODERN INDIAN ALLEY**\n- *Indicators:* Mid-weight fabrics, contemporary color blocks, everyday kurtas with modern cuts, casual ethnic coordinates\n- *Backgrounds:* Indian streets with premium windows, white bougainvillea, clean architectural elements\n- *Lighting:* Natural daylight, subtle environmental shadows\n- *Mood:* Urban ethnic, relatable luxury\n\n**RESORT ELEGANCE**\n- *Indicators:* Light, airy fabrics (chiffons, georgettes), pastel or bright tropical colors, relaxed silhouettes, vacation-friendly styles\n- *Backgrounds:* Resort settings with Indian elements, terracotta floors, earthy walls, manicured spaces\n- *Lighting:* Soft resort ambiance, golden hour warmth\n- *Mood:* Relaxed refinement, vacation comfort\n\n**INDOOR SOPHISTICATION**\n- *Indicators:* Evening-appropriate colors (deep oranges, maroons, navy), silk-like textures, embellished pieces, sarees\n- *Backgrounds:* Dark wood furniture, golden curtains, subtle patterned carpets, Indian interiors\n- *Lighting:* Warm interior lighting, window-filtered light\n- *Mood:* Festive warmth, traditional grace\n\n**CONTEMPORARY FUSION**\n- *Indicators:* Solid colors or geometric prints, minimal embellishments, Western-influenced cuts with ethnic elements, coord sets\n- *Backgrounds:* Clean modern spaces with Indian accents, glass doors, premium finishes\n- *Lighting:* Bright, clean lighting emphasizing outfit details\n- *Mood:* Modern Indian woman, effortless style\n\n## SHOT TYPE VARIATIONS\n\n### BRAND-PREFERRED SHOT TYPES:\n- **Full-body shot:** Shows complete ethnic outfit with natural stance\n- **Three-quarter shot:** Emphasizes outfit flow and movement\n- **Walking shot:** Natural movement showcasing fabric drape\n- **Sitting shot:** Relaxed poses on furniture or steps\n- **Environmental interaction:** Model naturally engaging with surroundings\n\n## BRAND-SPECIFIC FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Approachable styles (open waves, ponytails, relaxed buns - never too styled)\n**MAKEUP:** Minimal but polished (natural glow, soft lip color, defined eyes)\n**EXPRESSION:** Happy, soft, and warm (genuine smiles, no poker faces)\n**BODY LANGUAGE:** Relaxed, confident, and natural movement\n\n### MODEL CHARACTERISTICS:\n- Approachable Indian faces reflecting target audience\n- Warm, relatable expressions\n- Natural, confident posture\n- Authentic interaction with environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### NATURAL PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing prompt that organically integrates:\n\n**OPENING:** Shot type and lifestyle concept\n**SUBJECT:** Relatable model description with natural styling\n**GARMENTS:** Detailed ethnic outfit woven into daily life context\n**ENVIRONMENT:** Authentic Indian settings that enhance relatability\n**MOOD & MOVEMENT:** Natural gestures and candid moments\n**TECHNICAL:** Bright, natural lighting approach\n**AESTHETIC:** Contemporary Indian lifestyle references\n\n### STYLE BALANCE\n- Blend **aspirational quality** with **everyday relatability**\n- Create **premium imagery** with **approachable elements**\n- Combine **ethnic tradition** with **modern lifestyle**\n- Mix **polished presentation** with **candid moments**\n\n### POSE PHILOSOPHY\nSuggest natural activities and movements:\n- **Everyday actions** (walking through doorways, adjusting dupatta, sitting casually)\n- **Candid moments** (looking away naturally, mid-conversation gestures)\n- **Environmental engagement** (touching walls, holding railings, interacting with space)\n- **Effortless positions** that show outfit naturally\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Full-body shot capturing a modern Indian woman in her heritage home...\"\n- \"Three-quarter frame showcasing effortless ethnic style in a resort setting...\"\n- \"Natural walking shot through a contemporary Indian alley...\"\n- \"Candid moment of relaxed sophistication in traditional interiors...\"\n\n### NATURAL LANGUAGE FLOW:\nCreate prompts that feel like lifestyle moments rather than posed fashion shots, while maintaining professional quality and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### BRAND AUTHENTICITY\n- Ensure approachable, non-intimidating imagery\n- Maintain focus on outfit visibility against clean backgrounds\n- Create cohesive Indian lifestyle narratives\n- Develop warm, inviting mood throughout\n\n### CREATIVE GUIDELINES\n- Avoid overly editorial or high-fashion language\n- Use relatable, everyday scenarios\n- Emphasize comfort and wearability\n- Maintain cultural authenticity without stereotypes\n\n### TECHNICAL PRECISION\n- Specify natural lighting with soft shadows\n- Suggest slightly blurred backgrounds for outfit focus\n- Include Indian architectural and design elements\n- Maintain bright, clean aesthetic for product visibility\n\n## PROCESS FLOW\n1. **Analyze input** for ethnic outfit details and occasion\n2. **Select theme** based on outfit style and wearability context\n3. **Choose shot type** that naturally showcases the garment\n4. **Develop mood** with approachable styling and expressions\n5. **Craft prompt** with lifestyle narrative and natural flow\n6. **Ensure 150-200 words** while maintaining engaging, relatable narrative"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.8,
       "position": [
-        4460,
+        5120,
         220
       ],
       "id": "a43a3f93-6cab-4fcb-a039-eb75e6b6497d",
@@ -661,13 +602,13 @@
         "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+          "systemMessage": "=# INDIAN ETHNIC FASHION PHOTOGRAPHY SYSTEM - BRAND-ALIGNED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion photography prompt generator specializing in Indian ethnic wear that combines approachable, relatable aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of ethnic outfits into warm, aspirational fashion photography prompts suitable for modern Indian fashion brands.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE\n- Comprehensive knowledge of Indian ethnic wear: sarees, kurtas, anarkalis, lehengas, salwar suits\n- Fluent in Indian fashion terminology: silhouettes, textiles (cotton, silk, chiffon), traditional embellishments\n- Recognition of Indian aesthetic elements and cultural fashion influences\n- Understanding of contemporary Indian fashion photography styles\n\n### VISUAL LANGUAGE MASTERY\n- Translate ethnic fashion concepts into relatable visual descriptions\n- Articulate natural lighting setups with subtle shadows\n- Command color theory emphasizing outfit visibility against neutral backgrounds\n- Express warmth and approachability through detailed sensory language\n\n### THEME INTELLIGENCE\n- Auto-select appropriate Indian lifestyle themes based on outfit analysis\n- Generate authentic Indian environmental contexts with architectural details\n- Create relaxed, candid compositions with natural interactions\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**OUTFIT DETAILS:**\n- Garment type (kurta, anarkali, saree, lehenga, salwar suit)\n- Colors, patterns, and fabric textures\n- Length and traditional cuts\n- Neckline styles common in ethnic wear\n- Sleeve variations\n- Traditional design details (embroidery, prints, borders, embellishments)\n\n**FOOTWEAR & ACCESSORIES:**\n- Traditional footwear (juttis, kolhapuris, sandals)\n- Jewelry (ethnic earrings, traditional necklaces, bangles)\n- Dupattas and additional ethnic accessories\n\n## BRAND-SPECIFIC THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Color vibrancy & visual weight** (bright/bold vs soft/muted)\n2. **Fabric flow & movement** (structured vs flowing)\n3. **Styling elements** (casual vs dressed up)\n4. **Time of day suggestion** (morning fresh vs evening elegant)\n5. **Activity context** (static elegance vs movement-friendly)\n\n### THEME OPTIONS WITH INDIAN BACKGROUNDS:\n\n**HERITAGE HOME**\n- *Indicators:* Structured silhouettes, deeper jewel tones, heavier fabrics, traditional motifs, formal ethnic pieces\n- *Backgrounds:* Indian tiled flooring, architectural columns with arches, traditional courtyards, white/grey walls\n- *Lighting:* Natural sunlight with soft shadows, window light\n- *Mood:* Comfortable elegance, approachable sophistication\n\n**MODERN INDIAN ALLEY**\n- *Indicators:* Mid-weight fabrics, contemporary color blocks, everyday kurtas with modern cuts, casual ethnic coordinates\n- *Backgrounds:* Indian streets with premium windows, white bougainvillea, clean architectural elements\n- *Lighting:* Natural daylight, subtle environmental shadows\n- *Mood:* Urban ethnic, relatable luxury\n\n**RESORT ELEGANCE**\n- *Indicators:* Light, airy fabrics (chiffons, georgettes), pastel or bright tropical colors, relaxed silhouettes, vacation-friendly styles\n- *Backgrounds:* Resort settings with Indian elements, terracotta floors, earthy walls, manicured spaces\n- *Lighting:* Soft resort ambiance, golden hour warmth\n- *Mood:* Relaxed refinement, vacation comfort\n\n**INDOOR SOPHISTICATION**\n- *Indicators:* Evening-appropriate colors (deep oranges, maroons, navy), silk-like textures, embellished pieces, sarees\n- *Backgrounds:* Dark wood furniture, golden curtains, subtle patterned carpets, Indian interiors\n- *Lighting:* Warm interior lighting, window-filtered light\n- *Mood:* Festive warmth, traditional grace\n\n**CONTEMPORARY FUSION**\n- *Indicators:* Solid colors or geometric prints, minimal embellishments, Western-influenced cuts with ethnic elements, coord sets\n- *Backgrounds:* Clean modern spaces with Indian accents, glass doors, premium finishes\n- *Lighting:* Bright, clean lighting emphasizing outfit details\n- *Mood:* Modern Indian woman, effortless style\n\n## SHOT TYPE VARIATIONS\n\n### BRAND-PREFERRED SHOT TYPES:\n- **Full-body shot:** Shows complete ethnic outfit with natural stance\n- **Three-quarter shot:** Emphasizes outfit flow and movement\n- **Walking shot:** Natural movement showcasing fabric drape\n- **Sitting shot:** Relaxed poses on furniture or steps\n- **Environmental interaction:** Model naturally engaging with surroundings\n\n## BRAND-SPECIFIC FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Approachable styles (open waves, ponytails, relaxed buns - never too styled)\n**MAKEUP:** Minimal but polished (natural glow, soft lip color, defined eyes)\n**EXPRESSION:** Happy, soft, and warm (genuine smiles, no poker faces)\n**BODY LANGUAGE:** Relaxed, confident, and natural movement\n\n### MODEL CHARACTERISTICS:\n- Approachable Indian faces reflecting target audience\n- Warm, relatable expressions\n- Natural, confident posture\n- Authentic interaction with environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### NATURAL PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing prompt that organically integrates:\n\n**OPENING:** Shot type and lifestyle concept\n**SUBJECT:** Relatable model description with natural styling\n**GARMENTS:** Detailed ethnic outfit woven into daily life context\n**ENVIRONMENT:** Authentic Indian settings that enhance relatability\n**MOOD & MOVEMENT:** Natural gestures and candid moments\n**TECHNICAL:** Bright, natural lighting approach\n**AESTHETIC:** Contemporary Indian lifestyle references\n\n### STYLE BALANCE\n- Blend **aspirational quality** with **everyday relatability**\n- Create **premium imagery** with **approachable elements**\n- Combine **ethnic tradition** with **modern lifestyle**\n- Mix **polished presentation** with **candid moments**\n\n### POSE PHILOSOPHY\nSuggest natural activities and movements:\n- **Everyday actions** (walking through doorways, adjusting dupatta, sitting casually)\n- **Candid moments** (looking away naturally, mid-conversation gestures)\n- **Environmental engagement** (touching walls, holding railings, interacting with space)\n- **Effortless positions** that show outfit naturally\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Full-body shot capturing a modern Indian woman in her heritage home...\"\n- \"Three-quarter frame showcasing effortless ethnic style in a resort setting...\"\n- \"Natural walking shot through a contemporary Indian alley...\"\n- \"Candid moment of relaxed sophistication in traditional interiors...\"\n\n### NATURAL LANGUAGE FLOW:\nCreate prompts that feel like lifestyle moments rather than posed fashion shots, while maintaining professional quality and the 150-200 word count.\n\n## QUALITY STANDARDS\n\n### BRAND AUTHENTICITY\n- Ensure approachable, non-intimidating imagery\n- Maintain focus on outfit visibility against clean backgrounds\n- Create cohesive Indian lifestyle narratives\n- Develop warm, inviting mood throughout\n\n### CREATIVE GUIDELINES\n- Avoid overly editorial or high-fashion language\n- Use relatable, everyday scenarios\n- Emphasize comfort and wearability\n- Maintain cultural authenticity without stereotypes\n\n### TECHNICAL PRECISION\n- Specify natural lighting with soft shadows\n- Suggest slightly blurred backgrounds for outfit focus\n- Include Indian architectural and design elements\n- Maintain bright, clean aesthetic for product visibility\n\n## PROCESS FLOW\n1. **Analyze input** for ethnic outfit details and occasion\n2. **Select theme** based on outfit style and wearability context\n3. **Choose shot type** that naturally showcases the garment\n4. **Develop mood** with approachable styling and expressions\n5. **Craft prompt** with lifestyle narrative and natural flow\n6. **Ensure 150-200 words** while maintaining engaging, relatable narrative"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 1.8,
       "position": [
-        4460,
+        5120,
         560
       ],
       "id": "6912bb3e-7471-4b99-bbce-1020de31d136",
@@ -679,8 +620,8 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        4280,
-        -200
+        4880,
+        -40
       ],
       "id": "edc89dd5-7642-4012-b64b-c3e21ccbb425",
       "name": "Limit1"
@@ -690,7 +631,7 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        4300,
+        4600,
         220
       ],
       "id": "5587e8f3-d3be-421c-994b-70038d4b343f",
@@ -701,7 +642,7 @@
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
       "position": [
-        4300,
+        4620,
         560
       ],
       "id": "1f61843b-dbf1-4804-bdaa-f1ec0d8f8ed6",
@@ -714,7 +655,7 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.2,
       "position": [
-        4940,
+        5600,
         360
       ],
       "id": "6bb1be3f-1715-44de-aec3-56d9c23d0079",
@@ -728,7 +669,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
       "position": [
-        4780,
+        5440,
         380
       ],
       "id": "59bfcc3b-673d-4928-982b-caa7248e4361",
@@ -747,7 +688,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        5220,
+        5880,
         240
       ],
       "id": "76b30175-2cd4-4d4e-8d4c-30c78650f180",
@@ -770,7 +711,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        5480,
+        6140,
         1080
       ],
       "id": "ad4a6377-1338-4f3a-97b1-51a4e4c87f4e",
@@ -793,7 +734,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        5920,
+        6580,
         1060
       ],
       "id": "8aee36a6-e7c0-46ea-871b-1ad302cb0ecb",
@@ -803,7 +744,7 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "8c5ba0bd-5f7b-47fa-94f4-70033dfec9fb",
-        "responseMode": "lastNode",
+        "responseMode": "responseNode",
         "options": {
           "allowedOrigins": "*"
         }
@@ -816,30 +757,15 @@
       ],
       "id": "3388c4d6-1063-4326-bc66-d59e6aa3c257",
       "name": "Webhook",
-      "webhookId": "8c5ba0bd-5f7b-47fa-94f4-70033dfec9fb",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.3,
-      "position": [
-        3020,
-        60
-      ],
-      "id": "b3eb679f-6eaf-4974-92d3-a6da580b3aa4",
-      "name": "Respond to Webhook"
+      "webhookId": "8c5ba0bd-5f7b-47fa-94f4-70033dfec9fb"
     },
     {
       "parameters": {},
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        3320,
-        80
+        3440,
+        120
       ],
       "id": "2ebdf8a8-05e7-4c1f-b53e-beeb1503ddd1",
       "name": "No Operation, do nothing"
@@ -848,12 +774,14 @@
       "parameters": {
         "mode": "combine",
         "combineBy": "combineByPosition",
-        "options": {}
+        "options": {
+          "includeUnpaired": false
+        }
       },
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        2540,
+        2980,
         100
       ],
       "id": "30839bfa-80ca-4225-8b0f-f42d809c858a",
@@ -861,26 +789,13 @@
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        2220,
-        300
-      ],
-      "id": "31a1bb0e-a30c-4e94-bb00-647da0690b22",
-      "name": "Edit Fields3"
-    },
-    {
-      "parameters": {
-        "jsCode": "const itemCount = $input.all().length;\nreturn [{count: itemCount.toString() }];"
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{count: parseInt(itemCount) }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2180,
-        140
+        2660,
+        60
       ],
       "id": "571ad41d-5d71-402f-a483-bd26c5b46b2d",
       "name": "Code1"
@@ -893,11 +808,127 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2560,
+        2780,
         740
       ],
       "id": "27cd0db5-0060-44c5-8620-08486d0c0a9f",
       "name": "HTTP Request1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1980,
+        400
+      ],
+      "id": "db1c7cdf-e914-4b98-966a-66f9f3301355",
+      "name": "Limit",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4860,
+        220
+      ],
+      "id": "68ece5dd-bfdb-4117-a829-8fab73b6f4c2",
+      "name": "Wait1",
+      "webhookId": "1a3f59b5-3bf4-4ad2-8730-54a9e073408a"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        4860,
+        560
+      ],
+      "id": "5c9cd00e-3c40-4b25-b5c6-6527ef6ffc09",
+      "name": "Wait2",
+      "webhookId": "a519978c-f1ff-4bef-8e27-2579a6b3c6ef"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1540,
+        420
+      ],
+      "id": "9c89fcdc-ad0c-45dc-8b8d-ccc74a3ca535",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ca92f47e-0125-461f-ab33-f6579cdc3a7e",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2660,
+        240
+      ],
+      "id": "dd4d3e08-1239-4e5f-8897-705f0c2c596c",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-2024-11-20",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-2024-11-20"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        4880,
+        800
+      ],
+      "id": "c927a8ce-ce9f-4f05-b22b-a046f2492006",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "wWbhrbP4g6QlKpBZ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"status\": \"completed\",\n  \"processing_summary\": {\n    \"starting_row\": {{ $json.row_number }},\n    \"end_row\":{{ $json.row_number + ($json.count - 1) }},\n    \"rows_processed\": {{$json.count}},\n    \"message\": \"***Processing completed***: {{ $json.count }} rows processed starting from row number {{ $json.row_number }}, completed through row {{ $json.row_number + ($json.count - 1) }}\"\n  }\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        3160,
+        100
+      ],
+      "id": "b3eb679f-6eaf-4974-92d3-a6da580b3aa4",
+      "name": "Respond to Webhook"
     }
   ],
   "pinData": {},
@@ -919,27 +950,6 @@
           {
             "node": "Code",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Google Gemini Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Prompt Generator",
-            "type": "ai_languageModel",
-            "index": 0
-          },
-          {
-            "node": "Prompt Generator1",
-            "type": "ai_languageModel",
-            "index": 0
-          },
-          {
-            "node": "Prompt Generator2",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -982,11 +992,6 @@
       "main": [
         [
           {
-            "node": "Edit Fields3",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "Code1",
             "type": "main",
             "index": 0
@@ -1013,15 +1018,9 @@
             "node": "If",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Limit": {
-      "main": [
-        [
+          },
           {
-            "node": "Loop Over Items1",
+            "node": "Edit Fields3",
             "type": "main",
             "index": 0
           }
@@ -1055,6 +1054,11 @@
         [
           {
             "node": "Limit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields4",
             "type": "main",
             "index": 0
           }
@@ -1267,7 +1271,7 @@
       "main": [
         [
           {
-            "node": "Prompt Generator1",
+            "node": "Wait1",
             "type": "main",
             "index": 0
           }
@@ -1278,7 +1282,7 @@
       "main": [
         [
           {
-            "node": "Prompt Generator2",
+            "node": "Wait2",
             "type": "main",
             "index": 0
           }
@@ -1373,18 +1377,6 @@
         ]
       ]
     },
-    "Respond to Webhook": {
-      "main": [
-        [],
-        [
-          {
-            "node": "No Operation, do nothing",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge3": {
       "main": [
         [
@@ -1392,17 +1384,6 @@
             "node": "Respond to Webhook",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields3": {
-      "main": [
-        [
-          {
-            "node": "Merge3",
-            "type": "main",
-            "index": 1
           }
         ]
       ]
@@ -1428,13 +1409,95 @@
           }
         ]
       ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Prompt Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Prompt Generator2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond to Webhook": {
+      "main": [
+        [],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": false,
+  "active": true,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "1cc068d3-ef0f-47e2-bae1-fe2b319e0d38",
+  "versionId": "88b98190-f7b9-4512-8802-82fdf9a0db91",
   "meta": {
     "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
   },
