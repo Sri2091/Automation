@@ -1,0 +1,362 @@
+{
+  "name": "drive upload",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f4db6509-9c40-4a44-884a-69a0e968af66",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0",
+          "mode": "list",
+          "cachedResultName": "ACAI",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        220,
+        0
+      ],
+      "id": "afa0c343-4770-45f1-9bbe-be65e592f77d",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "queryString": "={{ $json['Gen-col'] }}",
+        "filter": {
+          "whatToSearch": "folders"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        860,
+        -20
+      ],
+      "id": "419fac9d-4e29-474d-8b9e-8a3cb6a4a5e0",
+      "name": "Google Drive",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "f35GdfZYgChIAUgD",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 24
+      },
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "id": "6293af2d-fe17-45db-8345-e9e3ddb4233c",
+      "name": "Limit",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "26254026-08e0-4543-972d-25c31cb9eecc",
+              "name": "Link",
+              "value": "=https://drive.google.com/drive/folders/{{ $json.id }}?usp=drive_link",
+              "type": "string"
+            },
+            {
+              "id": "93058dd8-93c6-4c51-ab7f-f49c99e2fb40",
+              "name": "name",
+              "value": "={{ $json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1020,
+        -20
+      ],
+      "id": "57a5be23-b9e1-4ad8-9d35-65b1aad972fe",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0",
+          "mode": "list",
+          "cachedResultName": "ACAI",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Bvf_JgwCvHo3ImbNMry6TKDtM2IuyPGs1KZFHwyHZh0/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Drive link": "={{ $json.Link }}",
+            "Gen-col": "={{ $json.name }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Brick",
+              "displayName": "Brick",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Gender",
+              "displayName": "Gender",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Drive link",
+              "displayName": "Drive link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "POC Generate",
+              "displayName": "POC Generate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Image 1",
+              "displayName": "Image 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "POC FILL",
+              "displayName": "POC FILL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        1160,
+        -20
+      ],
+      "id": "f959391b-c3f4-408e-8dd7-08d0ce786e6f",
+      "name": "Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "f6f7afd5-62dd-46a0-9414-a84b3c4bd391",
+              "leftValue": "={{ $json.row_number }}",
+              "rightValue": 26,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        620,
+        0
+      ],
+      "id": "da23090d-6566-42c3-bcbd-1f5308fa28ae",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "791c7ca5-d27f-49fc-9d54-31dda1ee030e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "Ih0NI75qnRv44tP8",
+  "tags": []
+}

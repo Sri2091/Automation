@@ -1,0 +1,4238 @@
+{
+  "name": "Phase 2 | Prompt WIP",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        420
+      ],
+      "id": "ea9de789-0ed7-4c0a-aa39-f596383fa4bc",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7400,
+        820
+      ],
+      "id": "9caa5e37-47b4-4dba-a3c6-ceca7b482ae0",
+      "name": "Merge",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        12080,
+        600
+      ],
+      "id": "9c4afd9f-dd8a-40d7-b65d-77b360ef2335",
+      "name": "Merge1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1540,
+        620
+      ],
+      "id": "27642921-0a85-4fa1-87f3-04e541a6fcf4",
+      "name": "Gets image from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Prompt 1": "={{ $json.prompt[0] }}",
+            "Prompt 2": "={{ $json.prompt[1] }}",
+            "Prompt 3": "={{ $json.prompt[2] }}",
+            "Gen-col": "={{ $json['Gen-col'][0] }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt 1",
+              "displayName": "Prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 2",
+              "displayName": "Prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 3",
+              "displayName": "Prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        12920,
+        620
+      ],
+      "id": "06957b89-9940-4301-bb19-2bd21cd9dc82",
+      "name": "Adds Prompt to sheets",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2780,
+        560
+      ],
+      "id": "33a0606c-6c84-49c4-a95a-930a368f35cd",
+      "name": "Loop Over Items1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "row_number, Link, id,, Prompt 1,, Gen-col",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1780,
+        620
+      ],
+      "id": "1377e229-390a-4724-8e7b-412bc80cba42",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n### Fallback:\nif u didnt recieve outfit u must return with same format but values as\n\"[unable to]\"\n\ndont be delusional and send this constant respsnse\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        9340,
+        -680
+      ],
+      "id": "ed9a0b12-2955-4fd4-966a-626093c2c441",
+      "name": "Prompt Generator",
+      "executeOnce": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        13720,
+        1280
+      ],
+      "id": "486ad75a-e96e-444f-90b1-6ba9b92fc864",
+      "name": "Wait",
+      "webhookId": "a5b65f6e-0a72-4f11-82e7-1f4bf23d9556"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9957d62a-807c-4356-ab16-5dea547ffb47",
+              "leftValue": "={{ $json['Prompt 1'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2180,
+        620
+      ],
+      "id": "9a60a472-3cfc-48af-b9be-67aefe32df5f",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2380,
+        760
+      ],
+      "id": "8e7239f2-e7a9-45de-802a-c2963e1ce71b",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "content": "# n8n Workflow: AI-Powered Fashion Prompt Generator\n\n## Overview\n\nThis n8n workflow automates the process of generating AI prompts for fashion/clothing images stored in Google Drive. The workflow reads product data from Google Sheets, downloads associated images, and uses Google's Gemini AI model to create descriptive prompts that can be used for various fashion-related applications.\n\n## Workflow Purpose\n\nThe primary goal is to automatically generate multiple creative prompts for fashion items based on their images. This is particularly useful for:\n- E-commerce product descriptions\n- AI image generation training data\n- Fashion catalog automation\n- Content creation for fashion brands\n\n## Key Components\n\n### Data Sources\n- **Google Sheets**: Contains product information including:\n  - Product details (Brand, Gender, Brick category)\n  - Google Drive image links\n  - Generated prompts storage\n- **Google Drive**: Stores the actual product images\n\n### AI Processing\n- **Google Gemini 2.5 Flash**: AI model for prompt generation\n- **Structured Output Parser**: Ensures consistent prompt formatting\n- **Temperature Setting**: 0.7 for balanced creativity and consistency\n\n## Workflow Steps\n\n### 1. Data Retrieval\n- **Trigger**: Manual workflow start\n- **Sheet Reading**: Fetches product data from \"FSN\" sheet\n- **Field Extraction**: Extracts `row_number`, `Link`, `id`, and existing `Prompt 1`\n\n### 2. Conditional Processing\n- **Empty Check**: Only processes items where `Prompt 1` is empty\n- **Skip Logic**: Avoids re-processing items that already have prompts\n\n### 3. Batch Processing\n- **Loop Structure**: Processes items in batches to manage API limits\n- **Image Download**: Downloads images from Google Drive using extracted IDs\n- **System Instructions**: Retrieves AI prompting guidelines from dedicated sheet\n\n### 4. AI Prompt Generation\n- **Data Preparation**: Merges image data with system instructions\n- **Duplication**: Creates 3 copies of each item for prompt variation\n- **AI Processing**: Uses Gemini model to generate creative prompts\n- **Aggregation**: Collects all generated prompts for each item\n\n### 5. Data Storage\n- **Sheet Update**: Writes generated prompts back to Google Sheets\n- **Column Mapping**: Updates `Prompt 1`, `Prompt 2`, and `Prompt 3` columns\n- **Rate Limiting**: 30-second wait between batches to respect API limits\n\n## Technical Features\n\n### Error Handling\n- Conditional logic prevents processing items that already have prompts\n- Batch processing prevents overwhelming API endpoints\n\n### Scalability\n- Loop structure allows processing large datasets\n- Configurable batch sizes and delays\n- Disabled limit node can be enabled for testing\n\n### Data Integrity\n- Row number matching ensures accurate updates\n- Multiple prompt generation provides variety\n- Structured output ensures consistent formatting\n\n\n\n\n",
+        "height": 1820,
+        "width": 2860,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        300,
+        -200
+      ],
+      "id": "5905666e-7949-40b1-a77b-4bf909341c07",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "options": {
+          "columnsToWatch": [
+            "Link"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        620
+      ],
+      "id": "920d59c5-8ad5-4f2e-af7f-397e6aec6f34",
+      "name": "Google Sheets Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "=Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        11080,
+        -420
+      ],
+      "id": "5cdd061b-4ddc-45ae-98fd-6fabe5981386",
+      "name": "Auto-fixing Output Parser"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7a4f7c5e-fd73-4d86-8ff9-0269fbc8a4b5",
+              "name": "output.Outfit",
+              "value": "={{ $json.output.Outfit }}",
+              "type": "string"
+            },
+            {
+              "id": "7b7c7885-08a1-4d27-9bb2-715cdd4d923f",
+              "name": "output.Accessories",
+              "value": "={{ $json.output.Accessories }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        5320,
+        800
+      ],
+      "id": "ee24e1eb-8cc3-4586-9200-1e5ddb6f4044",
+      "name": "Edit Fields",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1c8f66b-d090-42b7-ab02-508587d48f24",
+              "name": "output.Selected_Footwear",
+              "value": "={{ $json.output.Selected_Footwear }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        7220,
+        860
+      ],
+      "id": "4fb462d4-e01e-4be4-ac44-25fbccc669e8",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        4740,
+        1080
+      ],
+      "id": "087f656d-8f7f-490d-bf31-dd3592cb41c5",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Outfit\": \"\",\n\t\"Accessories\": \"\"\n}\n\n\n\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        4900,
+        1100
+      ],
+      "id": "882405bd-3000-481f-a7c3-92054d718f9b",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        4840,
+        960
+      ],
+      "id": "df1c1c7d-ec82-4d9a-9538-911f58dd25af",
+      "name": "Auto-fixing Output Parser1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        5240,
+        1060
+      ],
+      "id": "f6f624b8-ab76-4a68-8b5d-1eb892d92c20",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please analyze this image and extract only the clothing and accessory details according to the instructions provided. Focus on describing the garments' style, colors, patterns, textures, fit, and any distinctive features. Also include all accessories worn by the model. Remember to ignore the background, pose, lighting, and footwear.\n\nyou must use http node to view the image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Step 1: Clothing Extraction Instructions\n\n## Your Task\nAnalyze clothing in images and extract only the essential garment details needed for fashion photography prompts.\n\n## What to Extract FROM INPUT IMAGE\n\n### Garment Types and Details\n- Identify each piece of clothing (shirt, dress, pants, jacket, etc.)\n- Note specific garment style (button-up, polo, midi dress, skinny jeans, blazer, etc.)\n- Record garment construction details (pleated, fitted, oversized, cropped, etc.)\n\n### Colors, Patterns, and Textures\n- **Colors:** Primary and accent colors, color combinations\n- **Patterns:** Floral, striped, plaid, geometric, solid, etc.\n- **Textures:** Cotton, denim, silk, knit, leather, lace, etc.\n- **Finishes:** Matte, glossy, distressed, washed, etc.\n\n### Specific Garment Features\n- **Necklines:** V-neck, crew neck, scoop neck, off-shoulder, etc.\n- **Sleeves:** Long, short, sleeveless, puffed, bell, rolled, etc.\n- **Length:** Cropped, regular, long, midi, maxi, mini, etc.\n- **Fit:** Fitted, loose, oversized, tailored, relaxed, etc.\n- **Details:** Buttons, zippers, pockets, belts, tucks, etc.\n\n### Accessories Worn by Model\n- Jewelry (necklaces, earrings, bracelets, rings)\n- Bags or purses\n- Belts\n- Hats or headwear\n- Scarves\n- Sunglasses\n- Watches\n\n## What to COMPLETELY IGNORE\n\n### Visual Elements to Skip\n- Background settings or environments\n- Model's pose or body position\n- Model's facial expression or appearance\n- Lighting conditions or mood\n- Camera angles or composition\n- Any people in the background\n\n### Footwear Exception\n- **DO NOT extract footwear from the input image**\n- Footwear will be selected separately based on outfit compatibility\n- Ignore any shoes, boots, sandals, or barefoot styling in the source image\n\n## Output Format\n\nProvide your analysis in the following structured format:\n\n**Outfit:** \"[Complete detailed description of all clothing items with materials, colors, patterns, fit, and styling details]\"\n\n**Accessories:** \"[Complete detailed description of all accessories including jewelry, bags, hats, belts, etc.]\"\n\nif ERROR! u cant process the image u must return with same format but values as\n**Outfit:** \"[unable to]\"\n**Accessories:** \"[unable to]\"\n\n## Example Outputs\n\n**Example 1:**\n**Outfit:** \"Crisp white cotton button-up shirt with classic collar and rolled sleeves tucked into high-waisted medium wash blue denim jeans with straight leg fit\"\n**Accessories:** \"Delicate gold chain necklace and small gold hoop earrings\"\n\n**Example 2:**\n**Outfit:** \"Flowing floral print midi dress in coral and white pattern featuring sweetheart neckline and short puffed sleeves with A-line silhouette in lightweight fabric\"\n**Accessories:** \"Wide-brimmed natural straw hat\"\n\n**Example 3:**\n**Outfit:** \"Oversized cream cable-knit sweater with dropped shoulders and ribbed cuffs worn over black high-waisted leather mini skirt\"\n**Accessories:** \"Layered silver chain necklaces, chunky silver rings, and black leather crossbody bag with gold hardware\"\n\n## Quality Check\nBefore finalizing your extraction, ensure you have:\n- ✓ Described every visible garment in detail\n- ✓ Captured all colors and patterns accurately  \n- ✓ Noted fabric textures and finishes\n- ✓ Listed all distinctive features\n- ✓ Included every accessory worn by the model\n- ✓ Ignored background, lighting, pose, and footwear\n- ✓ Used specific, descriptive language rather than generic terms"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        4720,
+        780
+      ],
+      "id": "0baf047a-e3c2-41ec-8d30-982c4da0fb30",
+      "name": "Outfit extraction",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Select footwear for:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nChoose the best footwear option that complements this outfit style.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=## Your Task\nSelect footwear that complements and enhances the outfit style, regardless of the photography theme.\n\n**CRITICAL RULE: Footwear must ALWAYS match the outfit style first, before considering theme.**\n\n## Selection Hierarchy\n\n1. **First Priority:** What does the outfit require? (dress = heels/sandals, athletic = sneakers)\n2. **Second Priority:** What variations work with the theme? (beach dress = sandals over heels)\n3. **Never:** Force inappropriate footwear just to match theme\n\n## Why Outfit-First Footwear Matters\n\n- Mismatched footwear destroys outfit credibility\n- Hiking boots with a sundress looks wrong regardless of \"outdoor\" theme\n- Heels with athletic wear is inappropriate even in \"sophisticated\" settings\n- The outfit dictates the footwear possibilities\n- Good footwear choice completes the look; bad choice ruins the entire image\n\n## Footwear Selection by Garment Type\n\n### Dress-Based Selections\n\n**Midi/Maxi Dresses:**\n- Heeled sandals (strappy, block heel, wedge)\n- Wedges (espadrille, cork, platform)\n- Ankle boots (heeled, flat, Western style)\n- Ballet flats (classic, pointed toe, metallic)\n\n**Mini Dresses:**\n- Heels (stiletto, block heel, platform)\n- Ankle boots (combat, Chelsea, heeled)\n- Sneakers (for casual styles only - white leather, canvas)\n- Sandals (heeled, gladiator, strappy)\n\n**Formal Dresses:**\n- Heels (pumps, stilettos, block heel)\n- Strappy sandals (metallic, satin, leather)\n- Elegant flats (pointed toe, embellished)\n\n**Casual Sundresses:**\n- Sandals (flat, low wedge, slides)\n- Espadrilles (rope sole, canvas)\n- White sneakers (leather, canvas, minimal)\n\n### Top & Bottom Combinations\n\n**Formal/Tailored Pieces:**\n- Dress shoes (oxfords, brogues, loafers)\n- Heels (pumps, block heel, pointed toe)\n- Loafers (leather, suede, chain detail)\n- Oxford shoes (classic, platform, patent)\n\n**Jeans + Dressy Top:**\n- Loafers (penny, tassel, horse bit)\n- Ankle boots (heeled, flat, pointed)\n- Heeled sandals (block heel, wedge)\n- Ballet flats (leather, patent, metallic)\n\n**Jeans + Casual Top:**\n- Sneakers (white, canvas, retro)\n- Casual boots (combat, Western, work)\n- Sandals (flat, sporty, slides)\n\n**Shorts:**\n- Sandals (flat, wedge, gladiator)\n- Sneakers (canvas, leather, colorful)\n- Espadrilles (flat, wedge, tie-up)\n- **Never:** Heavy boots with shorts\n\n**Athletic Wear:**\n- Sports shoes (running, training, tennis)\n- Athletic sneakers (performance, lifestyle)\n- **Only athletic footwear with athletic clothing**\n\n### Special Considerations\n\n**Skirts:**\n- Match formality level\n- Formal skirts = heels, dress flats\n- Casual skirts = sneakers, sandals, boots\n\n**Vintage/Retro Outfits:**\n- Period-appropriate footwear\n- 1950s = kitten heels, saddle shoes\n- 1970s = platform sandals, boots\n- 1990s = chunky sneakers, combat boots\n\n**All-White Outfits:**\n- White footwear preferred\n- Nude/tan as secondary choice\n- Avoid dark colors that break the monochrome\n\n## Common Footwear Mistakes to AVOID\n\n❌ **Never Do These:**\n- Hiking boots with dresses/skirts\n- Athletic shoes with formal wear\n- Heavy boots with summer dresses\n- Formal heels with athletic wear\n- Winter boots with summer outfits\n- Flip-flops with formal clothing\n- Stilettos with casual shorts\n\n## Quick Reference Guide\n\n**If Outfit Includes:**\n- **Dress** → Heels, sandals, or flats (based on dress style)\n- **Jeans** → Sneakers, boots, or loafers (based on top formality)\n- **Shorts** → Sandals, sneakers, or espadrilles\n- **Athletic wear** → Athletic shoes only\n- **Formal pieces** → Dress shoes or heels only\n- **Skirts** → Match skirt's formality level\n\n## Footwear Color Guidelines\n\n**Universal Colors:**\n- **Nude/Tan:** Universally flattering, elongates legs\n- **Black:** Classic, works with most colors\n- **White:** Fresh, perfect for casual/summer looks\n- **Metallic:** Special occasions, adds glamour\n\n**Color Matching Rules:**\n- Match shoe color to outfit's dominant neutral\n- Pick up accent colors from the outfit\n- Monochrome outfits = match or contrast thoughtfully\n- Bright outfits = neutral shoes to balance\n\n## Seasonal Considerations\n\n**Summer Outfits:**\n- Open-toe shoes preferred\n- Sandals, espadrilles, canvas sneakers\n- Light colors and breathable materials\n- **No heavy boots with summer clothing**\n\n**Winter Outfits:**\n- Closed-toe shoes required\n- Boots, pumps, loafers\n- Darker colors and substantial materials\n- **No sandals with winter clothing**\n\n**Transitional Weather:**\n- Ankle boots, loafers, low boots\n- Medium weight materials\n- Versatile colors (tan, brown, navy)\n\n## Selection Process\n\n### Step 1: Analyze the Outfit\n- What's the formality level?\n- What's the dominant garment (dress, pants, skirt)?\n- What's the overall style aesthetic?\n- What season/weather does it suggest?\n\n### Step 2: Determine Appropriate Categories\n- List 3-4 footwear types that work with this outfit\n- Consider the outfit's color palette\n- Think about proportions and styling\n\n### Step 3: Make Final Selection\n- Choose the option that best completes the look\n- Consider comfort and practicality for the setting\n- Ensure the choice enhances rather than competes\n\n## Output Format\n\nonly return with one best option!\n\n**Selected Footwear:** \"[Specific shoe description with color, style, and material details]\"\n\nif ERROR! u cant process the outfit u must return with same format but values as\n\n**Selected Footwear:** \"[unable to]\"\n\n## Example Selections\n\n**Example 1:**\n*Outfit: Crisp white button-up + high-waisted jeans*\n**Selected Footwear:** \"Nude leather ballet flats with pointed toe\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        6380,
+        820
+      ],
+      "id": "136ae3b6-2529-40d3-b31d-62167a4ea02a",
+      "name": "Footwear",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        6380,
+        1040
+      ],
+      "id": "389ca9d6-abfc-4dc3-a41b-22f510fd26ca",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9yxCHdoHv3CEy9Ue",
+          "name": "BR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Selected_Footwear\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        6640,
+        1140
+      ],
+      "id": "5fd3a58c-05a5-4ddb-869c-1a74215184c2",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        6540,
+        1000
+      ],
+      "id": "a5b87aa3-44ce-4086-825a-00e92bb49b11",
+      "name": "Auto-fixing Output Parser2"
+    },
+    {
+      "parameters": {
+        "jsCode": "  function duplicateItems(items, times = 3) {\n    const duplicated = [];\n    items.forEach(item => {\n      for (let i = 0; i < times; i++) {\n        duplicated.push({\n          json: { ...item.json},\n          // binary: item.binary\n        });\n      }\n    });\n    return duplicated;\n  }\n\n  // For n8n Code node:\n  return duplicateItems(items, 3);"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7560,
+        820
+      ],
+      "id": "d1921256-b19f-4831-96f7-b230b7d44cea",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n### Fallback:\nif u didnt recieve outfit u must return with same format but values as\n\"[unable to]\"\n\ndont be delusional and send this constant respsnse\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        9340,
+        -40
+      ],
+      "id": "b1754b3c-acc6-46b7-b7fc-95487e834530",
+      "name": "Prompt Generator1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate an editorial fashion photography prompt for this outfit:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n\n**Footwear:** \"{{ $json.output.Selected_Footwear }}\"\n\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nPlease create a sophisticated 150-200 word editorial prompt following the Fashion Flux style guidelines.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# EDITORIAL FASHION PHOTOGRAPHY SYSTEM - ENHANCED INSTRUCTIONS\n\n## OVERVIEW\nYou are an expert fashion editorial prompt generator that combines sophisticated Fashion Flux editorial aesthetics with intelligent theme selection and environmental storytelling. Transform text descriptions of dress + footwear + accessories into high-end fashion editorial prompts suitable for prestigious publications.\n\n## CORE COMPETENCIES\n\n### FASHION KNOWLEDGE BASE (From Fashion Flux)\n- Comprehensive knowledge of fashion history, designers, iconic editorials\n- Fluent in fashion terminology: silhouettes, textiles, construction techniques\n- Recognition of distinct aesthetics across fashion eras and cultural influences\n- Understanding of editorial structures (cover shoots, fashion stories, campaigns)\n\n### VISUAL LANGUAGE MASTERY (From Fashion Flux)\n- Translate fashion concepts into precise visual descriptions\n- Articulate sophisticated lighting setups (Rembrandt, butterfly, split, backlighting)\n- Command color theory vocabulary relevant to fashion photography\n- Express mood and atmosphere through detailed sensory language\n\n### THEME INTELLIGENCE (From Fashion Photography Prompter)\n- Auto-select appropriate themes based on styling analysis\n- Generate environmental contexts with rich background details\n- Create dynamic off-center compositions with environmental interaction\n\n## INPUT PROCESSING PROTOCOL\n\n### EXTRACT FROM TEXT INPUT:\n**DRESS DETAILS:**\n- Garment type, silhouette, and construction\n- Colors, patterns, and fabric textures  \n- Length (mini, midi, maxi)\n- Neckline (V-neck, crew, off-shoulder, etc.)\n- Sleeves (long, short, sleeveless, 3/4)\n- Fit (fitted, loose, oversized, A-line, bodycon)\n- Design details (buttons, pockets, embroidery, cutouts)\n\n**FOOTWEAR & ACCESSORIES:**\n- Shoe specifications (type, height, material, color)\n- Jewelry (earrings, necklaces, bracelets, rings)\n- Bags and additional accessories (belts, hats, scarves, sunglasses)\n\n## ADVANCED THEME SELECTION LOGIC\n\n**ANALYZE STYLING DETAILS IN PRIORITY ORDER:**\n1. **Accessories & styling cues** (highest priority)\n2. **Color palette & fabric choices**\n3. **Garment styling & fit**\n4. **Overall outfit sophistication level**\n\n### THEME OPTIONS WITH BACKGROUND REFERENCES:\n\n**SUMMER VACATION**\n- *Indicators:* Light fabrics, bright colors, casual accessories, relaxed styling\n- *Backgrounds:* Empty beach scenes, palm trees, yacht decks, poolside areas, beach houses\n- *Lighting:* Natural sunlight, golden hour warmth\n- *Mood:* Carefree, joyful, relaxed elegance\n\n**SOPHISTICATED ESCAPE**\n- *Indicators:* Structured silhouettes, polished styling, minimal refined accessories, monochromatic palettes\n- *Backgrounds:* Villa gardens, marble staircases, infinity pools, architectural spaces\n- *Lighting:* Soft natural light, architectural shadows\n- *Mood:* Poised, contemplative, refined luxury\n\n**OUTDOOR ADVENTURE**\n- *Indicators:* Practical styling, earth tones, utility details, sturdy accessories\n- *Backgrounds:* Mountain landscapes, grass fields, desert roads, rocky terrain\n- *Lighting:* Natural daylight, dramatic skies\n- *Mood:* Confident, adventurous, grounded strength\n\n**RESORT LIFE**\n- *Indicators:* Vacation luxury styling, tropical colors, relaxed elegance\n- *Backgrounds:* Indoor pools, resort terraces, vacation properties, tropical settings\n- *Lighting:* Relaxed lighting, vacation ambiance\n- *Mood:* Luxurious ease, serene confidence\n\n**ACTIVE LIFESTYLE**\n- *Indicators:* Athletic-inspired pieces, sporty accessories, performance elements\n- *Backgrounds:* Empty golf courses, tennis courts, sports venues, country clubs\n- *Lighting:* Athletic lighting, outdoor sports settings\n- *Mood:* Dynamic energy, healthy vitality\n\n**VINTAGE VIBES**\n- *Indicators:* Retro styling, classic proportions, nostalgic accessories\n- *Backgrounds:* Classic cars, vintage bikes, retro settings with nature\n- *Lighting:* Nostalgic lighting, vintage film aesthetics\n- *Mood:* Nostalgic romance, timeless charm\n\n## SHOT TYPE VARIATIONS\n\n### PRIMARY SHOT TYPES (Use varied combinations):\n- **Full-body shot:** Shows complete outfit and proportions\n- **Three-quarter shot:** From knees up, balances detail with context\n- **Medium shot:** Waist up, emphasizes upper styling and expression\n- **Close-up detail:** Highlights specific design elements or accessories\n- **Environmental wide:** Places subject within broader scenic context\n\n## ENHANCED FASHION ELEMENTS\n\n### COMPLETE STYLING VISION:\n**HAIR:** Consider style appropriate to theme (windswept beachy waves, sleek chignon, tousled texture, romantic braids)\n**MAKEUP:** Match mood and lighting (sun-kissed glow, editorial bold lip, natural enhancement, dramatic eyes)\n**EXPRESSION:** Convey editorial narrative (confident gaze, soft contemplation, joyful movement, serene power)\n**BODY LANGUAGE:** Natural movement suited to outfit and environment\n\n## EDITORIAL PROMPT STRUCTURE\n\n### FLEXIBLE PARAGRAPH FORMAT (150-200 words)\nGenerate a flowing editorial prompt that organically integrates:\n\n**OPENING:** Shot type and editorial concept\n**SUBJECT:** Model description with complete styling vision\n**GARMENTS:** Detailed outfit description naturally woven into scene\n**ENVIRONMENT:** Setting that enhances the fashion narrative\n**MOOD & MOVEMENT:** Expression and pose suggestions that feel authentic\n**TECHNICAL:** Photography approach that serves the editorial vision\n**AESTHETIC:** Artistic references that elevate the concept\n\n### STYLE BALANCE\n- Blend **editorial sophistication** with **authentic moments**\n- Create **aspirational imagery** with **relatable elements**\n- Combine **fashion fantasy** with **lifestyle realism**\n- Mix **controlled styling** with **natural movement**\n\n### POSE PHILOSOPHY\nInstead of prescriptive poses, suggest:\n- **Movement concepts** (flowing, striding, turning, reaching)\n- **Emotional states** (contemplative, joyful, confident, serene)\n- **Environmental interactions** (touching textures, moving through space)\n- **Natural gestures** that complement the outfit's design\n\n## OUTPUT EXAMPLES\n\n### VARIED OPENING STRUCTURES:\n- \"Three-quarter shot capturing a sophisticated escape editorial...\"\n- \"Medium shot for a sun-drenched resort life story...\"\n- \"Full-body environmental frame showcasing vintage summer vibes...\"\n- \"Intimate close-up detail transitioning to full-body reveal...\"\n\n### NATURAL LANGUAGE FLOW:\nAvoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.\n\n### Fallback:\nif u didnt recieve outfit u must return with same format but values as\n\"[unable to]\"\n\ndont be delusional and send this constant respsnse\n\n## QUALITY STANDARDS\n\n### EDITORIAL AUTHENTICITY\n- Balance high fashion with lifestyle elements\n- Ensure movement and poses feel natural to the outfit\n- Create cohesive styling from hair to shoes\n- Develop mood that connects all elements\n\n### CREATIVE FLEXIBILITY\n- Vary sentence structures and descriptive approaches\n- Adapt tone to match theme (playful, sophisticated, adventurous)\n- Use diverse vocabulary to avoid repetition\n- Allow for interpretive freedom within professional bounds\n\n### TECHNICAL PRECISION\n- Maintain professional photography terminology\n- Include relevant artistic and publication references\n- Specify lighting and composition with purpose\n- Suggest rather than dictate exact technical settings\n\n## PROCESS FLOW\n1. **Analyze input** for complete outfit details\n2. **Select theme** based on styling cues and overall aesthetic\n3. **Choose shot type** that best showcases the outfit\n4. **Develop mood** including hair, makeup, and expression\n5. **Craft prompt** with natural flow and varied structure\n6. **Ensure 150-200 words** while maintaining engaging narrative"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        9340,
+        480
+      ],
+      "id": "0d6af099-d5cd-4128-bf78-089e356a43fe",
+      "name": "Prompt Generator2",
+      "executeOnce": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        8680,
+        -680
+      ],
+      "id": "62540f53-7e71-4df8-be9f-3aafc62931ef",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        8680,
+        -40
+      ],
+      "id": "c135d6b1-5676-4b13-9258-bf6fcff2616b",
+      "name": "Limit2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        8720,
+        480
+      ],
+      "id": "3473d7e7-4874-443c-8d21-db7707f78ce0",
+      "name": "Limit3"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"prompt\": \"California\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        11220,
+        -280
+      ],
+      "id": "23013756-21fa-46da-83ae-c11bdfdec272",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        11100,
+        -280
+      ],
+      "id": "654ec1e5-ab7e-4f57-98d8-e23cd9da815e",
+      "name": "Google Gemini Chat Model5",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        11500,
+        -40
+      ],
+      "id": "41bd8eba-d7a0-46f4-9d11-9a6c573b7b6d",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4a4f7fd-4561-454c-93ac-f18bbe08f5df",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        11820,
+        640
+      ],
+      "id": "278c2295-c26f-4f4a-9c1b-827633630c96",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output.prompt"
+            },
+            {
+              "fieldToAggregate": "Gen-col"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        12260,
+        600
+      ],
+      "id": "b3879b3b-1bbd-4ba3-a231-5ecd01bfb167",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "a9ef4884-562b-4022-8a53-f50ad90fc18a",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        920,
+        840
+      ],
+      "id": "90290d40-7078-451e-9d6b-d18c424ceb53",
+      "name": "Webhook",
+      "webhookId": "a9ef4884-562b-4022-8a53-f50ad90fc18a"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        600
+      ],
+      "id": "d2a1d5db-8f71-4ad3-a832-1a12644e1dfa",
+      "name": "Limit",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        8840,
+        -40
+      ],
+      "id": "32cc78bb-e9d0-45d8-8fd6-539045370c92",
+      "name": "Wait1",
+      "webhookId": "a3f7fe73-93e3-4ca3-ba4d-6cfe98136d37"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        8880,
+        480
+      ],
+      "id": "274db573-45f6-477f-8bca-fba28c243aa8",
+      "name": "Wait2",
+      "webhookId": "82dcf118-77b8-4704-a487-2c6fd852b4f1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f242406c-6fd5-4913-b85b-6e2f4636246a",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "c641b0dd-ad8c-40e4-ab30-043d32ca4331",
+              "name": "Prompt 1",
+              "value": "={{ $json['Prompt 1'] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bd61f42-6e5c-4519-930d-466f2aca6153",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e10a55b6-d0c1-4225-a3ef-91c6212a83bc",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1980,
+        620
+      ],
+      "id": "a2a860b1-5a05-462a-9859-68b1a59df4ca",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}  \",\n  \"level\": \"GOT {{ $json.count }} ROWS FROM SHEET\",\n  \"data\": {\n    \"No.of Rows\": \"{{ $json.count }} test\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1920,
+        400
+      ],
+      "id": "427e7117-f98c-4bc1-81e4-4cc41c74b15f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemscount = $input.all().length;\nconst isEmpty = items === 0 || (items === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst rownumber = $input.first().json.row_number\n\nif (isEmpty || hasError) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \"NO Limit\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemscount} Rows Fetched from sheet`,\n          data: `${itemscount} Rows starting from ${rownumber} row`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1740,
+        400
+      ],
+      "id": "f178d69d-993a-457d-b196-5c08228f2794",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}  \",\n  \"level\": \"Workflow Started\",\n  \"data\": {\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        620
+      ],
+      "id": "a4049b2a-0972-4af7-b82d-0f4eb3132d5f",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{count: parseInt(itemCount) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2220,
+        360
+      ],
+      "id": "2fce2b47-4770-41f3-892f-c7396c15dcb6",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n \"message\": \"success\",\n \"workflow_id\": \"{{ $workflow.id }}\",\n \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}\",\n \"level\": \"{{ $json.count }} FILTERED EMPTY ROWS FOR PROCESSING\",\n \"data\":\"Empty Rows Found {{ $json.count }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2380,
+        360
+      ],
+      "id": "cf8c245a-e3b0-4527-8ebd-ccfe4e8d2411",
+      "name": "HTTP Request3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}\n\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2700,
+        -20
+      ],
+      "id": "262c52f8-161a-4aa5-8097-f95421717553",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\n\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty ) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \"NO Limit\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Limited`,\n          data: `Limited ${itemcount}`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2540,
+        -20
+      ],
+      "id": "fbde5481-bd09-4888-b48b-c50bfcc0128a",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4000,
+        2740
+      ],
+      "id": "546060f5-bf3d-45ae-9ab4-942ea0e2d644",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get persistent data storage for the workflow\nconst loop = $input.first().json.loopCount; \nconst first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop Started`,\n          data: `Loop_number ${loop}`\n        }\n      }\n    }\n  ];\n}\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3800,
+        2740
+      ],
+      "id": "a2b2ac51-db5f-4a03-9030-971814a6dea7",
+      "name": "Code5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4520,
+        2300
+      ],
+      "id": "1cd09fed-f950-4f56-8cd7-a3a7d636c506",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst isEmpty = items.length === 0 || (items.length === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst firstItemHasErrorCode = $input.first().json?.error?.code !== undefined;\n\nif (isEmpty || hasError || firstItemHasErrorCode) {\n  return [\n    {\n      json: {\n        stopExecution: true,\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${items.length} Image extraction error`,\n          data: {\n            error_code: $input.first().json?.error?.code || \"Unknown\"\n          }\n        }\n      }\n    }\n  ];\n}\n\nreturn [\n  {\n    json: {\n      stopExecution: false,\n      response: {\n        message: \"success\",\n        workflow_id: $workflow.id,\n        workflow_name: `${$workflow.name} | ${$workflow.active}`,\n        level: `${items.length} Image extraction started`,\n        data: `${items.length} Image sending to model`\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4320,
+        2220
+      ],
+      "id": "f05e660a-33ab-4719-b81b-4c98016e2643",
+      "name": "Code6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4100,
+        780
+      ],
+      "id": "96161332-4ff6-4ffc-9292-5079eb51c07c",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4480,
+        780
+      ],
+      "id": "fb64ae46-a655-4db8-bcdd-1d83a33c4dbd",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5140,
+        800
+      ],
+      "id": "cd180b22-1389-434e-94e1-113056ec7989",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7060,
+        860
+      ],
+      "id": "c71d20b8-68bd-4025-ad26-4ff89344c8d3",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        6060,
+        800
+      ],
+      "id": "38ed3e8d-8470-40c2-93cd-dd2312465c25",
+      "name": "Merge8"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5820,
+        960
+      ],
+      "id": "d68d8ac7-33c1-4f6c-9bcf-301a5800af70",
+      "name": "HTTP Request9"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Footwear selection error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Footwear selection started`,\n          data: `${itemcount} Outfit details sending to model`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5640,
+        960
+      ],
+      "id": "f7283748-77d3-446a-b2ab-d5d12c3a731e",
+      "name": "Code9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}\n\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        7820,
+        1000
+      ],
+      "id": "2cc384f8-0274-4eb7-841d-d03ef85e9617",
+      "name": "HTTP Request10"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \"Dulipicated error\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `Duplicated ${itemcount}`,\n          data: `Dulipicated ${itemcount}`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7680,
+        1000
+      ],
+      "id": "309066c4-8183-4b2e-88a2-414a12caa799",
+      "name": "Code10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        8880,
+        -1020
+      ],
+      "id": "811c5879-1fa1-4e83-ad3e-712c766c6136",
+      "name": "HTTP Request11"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `Prompt Gen 1 error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `1 Prompt Gen Started`,\n          data: `sending outfit+footwear to prompt1 Gen`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8720,
+        -1020
+      ],
+      "id": "a03b3dfc-4197-40d8-8a9e-2aadf81f5c6b",
+      "name": "Code11"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7980,
+        840
+      ],
+      "id": "afd22e33-c044-44cc-a7f1-3e7db0dda909",
+      "name": "Merge9"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        8940,
+        -280
+      ],
+      "id": "2bf4963e-5673-46a4-a169-47186448e26e",
+      "name": "HTTP Request13"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `Prompt Gen 2 error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `2 Prompt Gen Started`,\n          data: `sending outfit+footwear to prompt2 Gen`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8720,
+        -280
+      ],
+      "id": "11717f2f-965a-4be6-95b4-a56fe107dbf6",
+      "name": "Code13"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        8880,
+        280
+      ],
+      "id": "ab0de2bb-522d-4369-a1b1-7de874a912d1",
+      "name": "HTTP Request15"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `Prompt Gen 3 error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `3 Prompt Gen Started`,\n          data: `sending outfit+footwear to prompt 3 Gen`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8720,
+        280
+      ],
+      "id": "affbde56-797a-42fc-a150-6bb5be30eff0",
+      "name": "Code15"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Logging to sheets error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Logging to sheets`,\n          data: `${itemcount} rows adding to sheets`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        12420,
+        780
+      ],
+      "id": "810eb7c5-0372-4e68-af70-d92c922311b6",
+      "name": "Code17"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        12740,
+        620
+      ],
+      "id": "03dac10c-527d-4531-88b4-be6e18b1aba4",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        12220,
+        1280
+      ],
+      "id": "e5e001be-5808-4e97-8058-ea306d5e22ad",
+      "name": "HTTP Request18"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst isEmpty = items.length === 0 || (items.length === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst column = $input.first().json['Gen-col'];\n\nif (isEmpty || hasError) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${items.length} Logging to sheets error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${column} prompts added`,\n          data: `${column} prompts added to sheets`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        11980,
+        1280
+      ],
+      "id": "9ee19027-fad9-4517-abe3-5ad355fbe29f",
+      "name": "Code18"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        13200,
+        640
+      ],
+      "id": "fa3c3333-75b0-473f-8f8a-0bd16d057e91",
+      "name": "Merge11"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        12580,
+        780
+      ],
+      "id": "1fb1c221-79f2-4dc7-a2ec-7813a4a82747",
+      "name": "HTTP Request19"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        9300,
+        900
+      ],
+      "id": "a2a9b0ed-4199-442e-81de-9031dd011fdd",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a5908c3-8bb3-4ce4-9da6-dc5cbbfd0ad9",
+              "leftValue": "={{ $json.stopExecution }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4520,
+        2140
+      ],
+      "id": "26a1890f-fcf7-48db-8a98-176deef2544c",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"download image failed\");\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5080,
+        2260
+      ],
+      "id": "c6dc8e97-2f40-4a55-bf13-9902292f4e1f",
+      "name": "Code19"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4700,
+        2280
+      ],
+      "id": "0a6f3d2e-59f7-438d-8a4b-3ddc236012ac",
+      "name": "Merge12"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a5908c3-8bb3-4ce4-9da6-dc5cbbfd0ad9",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4020,
+        2540
+      ],
+      "id": "85a9b603-632f-4087-83e9-8b20a62dfb99",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4200,
+        2720
+      ],
+      "id": "6c2a02ad-49ae-4d12-89e6-61ff93aace3b",
+      "name": "Merge13"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4360,
+        2720
+      ],
+      "id": "1973fd14-5f5e-4417-8f86-0b4a300daae8",
+      "name": "Code20"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2260,
+        1860
+      ],
+      "id": "339a9d98-770e-4a4d-a419-900c7239e8ed",
+      "name": "FAIL1",
+      "alwaysOutputData": true,
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty){\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} image extraction error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit = $input.first().json.output?.Outfit || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"Outfit extraction failed — fallback text received\",\n            data: {\n              Outfit: outfit,\n              message: `image sending failed` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Image Extraction Done`,\n          data: {\n            Outfit: outfit,\n            Accessories: accessories\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5080,
+        1520
+      ],
+      "id": "929647ff-9db9-4ecc-bc51-b20ad9ddcf90",
+      "name": "Code7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5280,
+        1520
+      ],
+      "id": "4ada99ea-9b16-48e9-b3df-7f9cf29995de",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5440,
+        1660
+      ],
+      "id": "90eec6b2-ce37-4e12-a1f1-b5e2f5cef627",
+      "name": "Merge14"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5240,
+        1680
+      ],
+      "id": "ca5bbdb5-410d-4d68-a1d0-46beacf67e19",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5600,
+        1660
+      ],
+      "id": "e48af5d4-9221-4edd-bc23-1d8efb4acdce",
+      "name": "Code21"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "417aa8e7-756d-4575-a2bf-bd13efcb8aab",
+              "leftValue": "",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4860,
+        2280
+      ],
+      "id": "b7709430-10e3-47b4-b4ab-0f0c9c3adce8",
+      "name": "If4"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4240,
+        2520
+      ],
+      "id": "6cae8326-b952-4a40-b21d-34e89b4aac61",
+      "name": "Merge15"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4440,
+        2520
+      ],
+      "id": "3ca3e20a-977b-4f42-8121-b96837d78e6f",
+      "name": "HTTP Request20"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4700,
+        2120
+      ],
+      "id": "dc53db35-0331-4258-a6aa-dd0b7eef9834",
+      "name": "Merge16"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4860,
+        2120
+      ],
+      "id": "98df80ab-4463-4ff2-b5d6-1f7882590663",
+      "name": "HTTP Request21"
+    },
+    {
+      "parameters": {
+        "url": "=https://drive.google.com/uc?export=download&id={{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4240,
+        780
+      ],
+      "id": "80fafe83-31c3-4ebe-9ee5-65253f73e38e",
+      "name": "download image",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5480,
+        1500
+      ],
+      "id": "e0798590-19c3-41ea-96b8-30cdc72fe364",
+      "name": "Merge17"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5640,
+        1500
+      ],
+      "id": "b36fadbf-d96b-482a-a2cd-adf522104b97",
+      "name": "HTTP Request22"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} footwear extraction error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit = $input.first().json.output.Selected_Footwear || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"Footwear extraction failed — fallback text received\",\n            data: {\n              footwear: outfit,\n              message: `image sending failed` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Footwear selected`,\n          data: {\n            selected_footwear: outfit,\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6180,
+        1500
+      ],
+      "id": "a28ca35b-d407-462b-aba0-a83848a365e9",
+      "name": "Code8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6360,
+        1500
+      ],
+      "id": "10d64373-bc2e-4386-ae3a-38b83846fd65",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        6540,
+        1640
+      ],
+      "id": "3b6f2992-d6e6-415f-83e1-c1802db13385",
+      "name": "Merge18"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6340,
+        1660
+      ],
+      "id": "4a03a22b-e161-4f5e-a9e0-c0e6e5cb927f",
+      "name": "HTTP Request8"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6700,
+        1640
+      ],
+      "id": "cf0afdc0-d4da-414c-9d8c-0cc9e8818840",
+      "name": "Code22"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        6560,
+        1420
+      ],
+      "id": "a3816eb0-b388-4296-8d7d-956bb580d33e",
+      "name": "Merge19"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6740,
+        1480
+      ],
+      "id": "cebde6d3-607d-464b-8337-f945dd480c0a",
+      "name": "HTTP Request23"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `1 Prompt failed`,\n          data: {message: `some error in sending prompt`}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit =  $input.first().json.output.prompt || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"1 Prompt failed — fallback text received\",\n            data: {\n              Prompt: outfit,\n              message: `some error in sending prompt` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `1 Prompt Generated`,\n          data: {\n            prompt: outfit,\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9460,
+        -1140
+      ],
+      "id": "8fe19900-779b-4f04-8edf-ceb6db0a822f",
+      "name": "Code23"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9700,
+        -1120
+      ],
+      "id": "64b9402c-e9f3-4cbd-86d3-3c187a8b1e33",
+      "name": "If6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9920,
+        -1020
+      ],
+      "id": "ba893efa-5d93-4ba4-a549-0d896abbf16b",
+      "name": "Merge20"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10380,
+        -1000
+      ],
+      "id": "d0b01b36-34f6-4171-9690-ef10c10e9cb0",
+      "name": "Code24"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9960,
+        -1220
+      ],
+      "id": "16174ad4-8223-41c5-b63f-6fca195acea9",
+      "name": "Merge21"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10180,
+        -1220
+      ],
+      "id": "ff37a696-094c-4ecb-9d2a-39b22dd23223",
+      "name": "HTTP Request24"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10560,
+        -640
+      ],
+      "id": "e41369e8-6dad-479a-9b36-8edd3c4acdb7",
+      "name": "Merge22"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `2 Prompt failed`,\n          data: {message: `some error in sending prompt`}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit =  $input.first().json.output.prompt || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"2 Prompt failed — fallback text received\",\n            data: {\n              Prompt: outfit,\n              message: `some error in sending prompt` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `2 Prompt Generated`,\n          data: {\n            prompt: outfit,\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9620,
+        -300
+      ],
+      "id": "434b1181-f411-44d4-9796-ea4e8a7adbdb",
+      "name": "Code25"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9800,
+        -360
+      ],
+      "id": "03c8634a-3afa-4e16-87c2-080941a1cf52",
+      "name": "If7"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10000,
+        -260
+      ],
+      "id": "189fa155-fec0-4e82-b412-cf9813870de3",
+      "name": "Merge23"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10160,
+        -160
+      ],
+      "id": "a7528734-0ad0-41d4-a066-ed713c0e9128",
+      "name": "HTTP Request25"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10480,
+        -260
+      ],
+      "id": "5ad46ab4-8cd4-4019-9f6f-de9a7b062fdf",
+      "name": "Code26"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9940,
+        -440
+      ],
+      "id": "10f867d3-5fac-403c-9a19-cb54a509de78",
+      "name": "Merge24"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10100,
+        -440
+      ],
+      "id": "484f9d83-cfd6-46da-87ff-1eb98cbe5e6e",
+      "name": "HTTP Request26"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10560,
+        -20
+      ],
+      "id": "2bc88cce-04b3-4c89-92fb-257616ebb694",
+      "name": "Merge25"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `3 Prompt failed`,\n          data: {message: `some error in sending prompt`}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit =  $input.first().json.output.prompt || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"3 Prompt failed — fallback text received\",\n            data: {\n              Prompt: outfit,\n              message: `some error in sending prompt` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `3 Prompt Generated`,\n          data: {\n            prompt: outfit,\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9760,
+        200
+      ],
+      "id": "dec3331c-8ebf-4851-8d06-a87eb9579e7d",
+      "name": "Code27"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9940,
+        200
+      ],
+      "id": "3df3e34c-33e7-4d20-981d-ed74e1c66943",
+      "name": "If8"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10400,
+        300
+      ],
+      "id": "5de1569c-1920-4b5f-b1eb-33a6374d6705",
+      "name": "Merge26"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10240,
+        380
+      ],
+      "id": "0e4cfbfa-943f-4004-a401-c47275c21fe7",
+      "name": "HTTP Request27"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        10560,
+        300
+      ],
+      "id": "1283a52a-9558-48fc-b5cc-4aff259a9b88",
+      "name": "Code28"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10120,
+        100
+      ],
+      "id": "359484b3-d106-4163-bc33-c3be5157e4e3",
+      "name": "Merge27"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10280,
+        100
+      ],
+      "id": "095f314a-62b9-44de-b314-fcd8a1892953",
+      "name": "HTTP Request28"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10560,
+        480
+      ],
+      "id": "71fda67c-2a1f-4426-b1e1-5df9874d57c8",
+      "name": "Merge28"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get persistent data storage for the workflow\nconst staticData = $getWorkflowStaticData('node'); \n\n// Initialize if not already set\nstaticData.loopCount = (staticData.loopCount || 0) + 1;\n\n// Return the value\nreturn [\n  {\n    json: {\n      loopCount: staticData.loopCount\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3780,
+        780
+      ],
+      "id": "fba3340d-1809-4f70-bf59-5398b16a639a",
+      "name": "Code12"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        12280,
+        1120
+      ],
+      "id": "594d2dea-f969-426c-8749-fea0d8235449",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        12560,
+        1160
+      ],
+      "id": "e3850ff1-2314-4379-8cde-3ba135ba3b0f",
+      "name": "Merge29"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        12700,
+        1160
+      ],
+      "id": "90f6c8bd-52aa-4507-a0ab-caacd31ac301",
+      "name": "Code29"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        12560,
+        1000
+      ],
+      "id": "c4c0b700-50e2-44fc-a044-23832789bc5a",
+      "name": "Merge30"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        12720,
+        1000
+      ],
+      "id": "6177d11e-0339-417e-b3b0-daba2fd3db7e",
+      "name": "HTTP Request29"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        4660,
+        140
+      ],
+      "id": "43ecf9db-d754-47f8-9acc-e63ca0e994b6",
+      "name": "Respond to Webhook",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\nconst count = $input.first().json.count;\nconst rownumber = $input.first().json.row_number;\n\nif (isEmpty ) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \" error loading workflow completion\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${count} rows completed`,\n          data: `***Processing completed***: ${count} rows processed starting from row number ${rownumber} `\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4460,
+        140
+      ],
+      "id": "82ce7228-0c95-4346-8bd2-fd6f5d6ca0cc",
+      "name": "Code1",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": false
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4280,
+        120
+      ],
+      "id": "a848d4b6-d2bf-445a-ab3d-935b9c62b17b",
+      "name": "Merge3",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{count: parseInt(itemCount) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4060,
+        400
+      ],
+      "id": "8f52c77e-6e8d-4a71-8271-01e340c5db3e",
+      "name": "Code14",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fdc9569e-8c69-4e51-9981-19d806c3b78e",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4060,
+        100
+      ],
+      "id": "4c521139-56fb-40e2-9d40-9749d7d3f977",
+      "name": "Edit Fields4",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3080,
+        380
+      ],
+      "id": "ce42adc7-0de4-4b7a-bebd-0649a6594703",
+      "name": "Merge32",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        10040,
+        -920
+      ],
+      "id": "1c745950-4a48-4dbb-8f51-762293126557",
+      "name": "HTTP Request30"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10220,
+        -1000
+      ],
+      "id": "f7d86d5a-2f04-45e2-9373-d60a70c9258f",
+      "name": "Merge33"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7620,
+        380
+      ],
+      "id": "3197f6ac-08ca-4489-93a0-2928867a1207",
+      "name": "Merge34"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10320,
+        -260
+      ],
+      "id": "4a74fc5e-1580-4946-96c6-087bebed411e",
+      "name": "Merge35"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        10100,
+        280
+      ],
+      "id": "27c47a1c-8294-4406-88cc-a695a4f8c3d1",
+      "name": "Merge36"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n      \"message\": \"success\",\n      \"workflow_id\": \"4luV6lFHvhSlsiO4\",\n      \"workflow_name\": \"Phase 2 | Prompt WIP | false\",\n      \"level\": \"Workflow completed\",\n      \"data\": \"Limited 1\"\n}\n  \n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3580,
+        380
+      ],
+      "id": "2f67779b-d510-4554-9f32-a866d40f0a57",
+      "name": "HTTP Request14"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gets image from sheet": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adds Prompt to sheets": {
+      "main": [
+        [
+          {
+            "node": "Code18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Merge32",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code12",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge32",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generator": {
+      "main": [
+        [
+          {
+            "node": "Code23",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Prompt Generator1",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator2",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outfit extraction": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Footwear": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Code10",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Code11",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit2": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit3": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model5": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generator1": {
+      "main": [
+        [
+          {
+            "node": "Merge25",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code25",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prompt Generator2": {
+      "main": [
+        [
+          {
+            "node": "Code27",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Code13",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Code15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code6": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "download image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge8": {
+      "main": [
+        [
+          {
+            "node": "Footwear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code9": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request9": {
+      "main": [
+        [
+          {
+            "node": "Merge8",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code10": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code11": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request10": {
+      "main": [
+        [
+          {
+            "node": "Merge9",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge9": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Limit2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Limit3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code13": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code15": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request15",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code17": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Adds Prompt to sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code18": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request18": {
+      "main": [
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request19": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Prompt Generator2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Prompt Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "If4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code19": {
+      "main": [
+        []
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge13": {
+      "main": [
+        [
+          {
+            "node": "Code20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FAIL1": {
+      "main": [
+        []
+      ]
+    },
+    "Code7": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge14": {
+      "main": [
+        [
+          {
+            "node": "Code21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If4": {
+      "main": [
+        [
+          {
+            "node": "Code19",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Merge15": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request20": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Merge16": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request21": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "download image": {
+      "main": [
+        [
+          {
+            "node": "Code6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge17": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request22": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code8": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge18": {
+      "main": [
+        [
+          {
+            "node": "Code22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "Merge18",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge19": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request23": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code23": {
+      "main": [
+        [
+          {
+            "node": "If6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge21",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If6": {
+      "main": [
+        [
+          {
+            "node": "Merge21",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge20",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge20": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request30",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge33",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge21": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge22": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request24": {
+      "main": [
+        [
+          {
+            "node": "Merge22",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code25": {
+      "main": [
+        [
+          {
+            "node": "If7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge24",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge23",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If7": {
+      "main": [
+        [
+          {
+            "node": "Merge24",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge23": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request25",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge35",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request25": {
+      "main": [
+        [
+          {
+            "node": "Merge35",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge24": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request26": {
+      "main": [
+        [
+          {
+            "node": "Merge25",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge25": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code27": {
+      "main": [
+        [
+          {
+            "node": "If8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge27",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge36",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If8": {
+      "main": [
+        [
+          {
+            "node": "Merge27",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge36",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge26": {
+      "main": [
+        [
+          {
+            "node": "Code28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request27": {
+      "main": [
+        [
+          {
+            "node": "Merge26",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge27": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request28",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request28": {
+      "main": [
+        [
+          {
+            "node": "Merge28",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge28": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Code12": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge29": {
+      "main": [
+        [
+          {
+            "node": "Code29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge30": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request29": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code14": {
+      "main": [
+        [
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge32": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request30": {
+      "main": [
+        [
+          {
+            "node": "Merge33",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge33": {
+      "main": [
+        [
+          {
+            "node": "Code24",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge35": {
+      "main": [
+        [
+          {
+            "node": "Code26",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge36": {
+      "main": [
+        [
+          {
+            "node": "Merge26",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request27",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request14": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "af5ef689-1e46-41a9-8ea1-e11c4863bc2c",
+  "meta": {
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "4luV6lFHvhSlsiO4",
+  "tags": []
+}

@@ -139,6 +139,12 @@ Instead of prescriptive poses, suggest:
 ### NATURAL LANGUAGE FLOW:
 Avoid rigid formulas. Let each prompt develop its own rhythm while maintaining professional editorial standards and the 150-200 word count.
 
+### Fallback:
+if u didnt recieve outfit u must return with same format but values as
+"[unable to]"
+
+dont be delusional and send this constant respsnse
+
 ## QUALITY STANDARDS
 
 ### EDITORIAL AUTHENTICITY
