@@ -105,10 +105,10 @@
             background-color: #2d3748;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 15px 45px;
             border-radius: 6px;
-            font-size: 14px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 700;
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
@@ -156,8 +156,23 @@
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                border-color 0.3s ease,
+                opacity 0.3s ease,
+                /* Add these for smooth movement when position:absolute is applied */
+                right 0.5s ease-in-out, /* Animate 'right' over 0.5s */
+                top 0.5s ease-in-out,   /* Animate 'top' over 0.5s */
+                width 0.3s ease;      /* If you change width in .moved-to-right */
+                /* Add any other properties you animate */  
         }
+        .card:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
+            cursor: pointer;
+            transform: translateY(-5px) scale(1.03);
+            
 
+        }
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -700,7 +715,7 @@
             <div id="home-content" class="page-view active">
                 <div class="dashboard-header">
                     <h1>Dashboard</h1>
-                    <button class="action-button" id="start-workflow-btn" onclick="startWorkflow()" disabled>Start</button>
+                    <button class="action-button" id="start-workflow-btn" onclick="startWorkflow()" disabled>Trigger Workflow</button>
                 </div>
 
                 <div class="summary-cards">
@@ -959,7 +974,7 @@
         function enableStartButton() {
             const startBtn = document.getElementById('start-workflow-btn');
             startBtn.disabled = false;
-            startBtn.textContent = 'Start';
+            startBtn.textContent = 'Trigger Workflow';
             startBtn.style.backgroundColor = '';
             startBtn.style.color = '';
         }
