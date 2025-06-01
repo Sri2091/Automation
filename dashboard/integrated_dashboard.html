@@ -734,12 +734,12 @@
                     </div>
                     <div class="card">
                         <div class="card-header">
-                            <span>Subscriptions</span>
-                            <span class="icon">👥</span>
+                            <span>Total Rows to Process</span>
+                            <span class="icon">📋</span>
                         </div>
                         <div class="card-body">
-                            <div class="value">+2,350</div>
-                            <div class="sub-text positive">+180.1% from last month</div>
+                            <div class="value" id="total-rows-count">0</div>
+                            <div class="sub-text" id="rows-status">Waiting for workflow data...</div>
                         </div>
                     </div>
                     <div class="card">
@@ -833,6 +833,8 @@
         let allLogs = [];
         let workflowCompleted = false;
         let isWorkflowRunning = false;
+        let totalRows = 0;
+        let processedRows = 0;
 
 
          // Workflow connection
@@ -857,7 +859,6 @@
             ws.onmessage = function(event) {
                 try {
                     const data = JSON.parse(event.data);
-                    // console.log (data)
                     
                     if (data.type === 'all_logs') {
                         allLogs = data.logs;
@@ -865,7 +866,6 @@
                         displayLogsInLogsPage(allLogs);
                     } else if (data.type === 'new_log') {
                         allLogs.push(data.log);
-                        // Keep only last 1000 logs
                         if (allLogs.length > 1000) {
                             allLogs.shift();
                         }
@@ -881,17 +881,26 @@
                         isWorkflowRunning = false;
                         document.getElementById('status').textContent = 'Completed';
                         document.getElementById('status').className = 'connection-status completed';
-                         // Re-enable start button when workflow completes
-                        enableStartButton(); // ADD THIS LINE
+                        enableStartButton();
                     } else if (data.type === 'workflow_reset') {
                         workflowCompleted = false;
                         document.getElementById('status').textContent = 'Live';
                         document.getElementById('status').className = 'connection-status connected';
                     }
+                    // ADD THESE NEW CASES FOR ROW COUNT
+                    else if (data.type === 'rows_updated') {
+                        totalRows = data.total_rows;
+                        processedRows = data.processed_rows;
+                        updateRowsCard(data);
+                    } else if (data.type === 'rows_reset') {
+                        totalRows = 0;
+                        processedRows = 0;
+                        updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Waiting for workflow data...'});
+                    }
                 } catch (error) {
                     console.error('Error parsing WebSocket message:', error);
                 }
-            };
+            };  
             
             ws.onclose = function() {
                 document.getElementById('status').textContent = 'Disconnected';
@@ -989,6 +998,54 @@
                 startBtn.style.color = '#000';
             } else {
                 enableStartButton();
+            }
+        }
+        function updateRowsCard(data) {
+            const totalRowsElement = document.getElementById('total-rows-count');
+            const rowsStatusElement = document.getElementById('rows-status');
+            
+            if (totalRowsElement) {
+                // Format number with commas
+                totalRowsElement.textContent = data.total_rows.toLocaleString();
+            }
+            
+            if (rowsStatusElement) {
+                if (data.total_rows === 0) {
+                    rowsStatusElement.textContent = data.message || 'Waiting for workflow data...';
+                    rowsStatusElement.className = 'sub-text';
+                } else if (data.processed_rows > 0) {
+                    const percentage = data.percentage || ((data.processed_rows / data.total_rows) * 100);
+                    if (data.processed_rows >= data.total_rows) {
+                        rowsStatusElement.textContent = `✅ All ${data.total_rows.toLocaleString()} rows completed`;
+                        rowsStatusElement.className = 'sub-text positive';
+                    } else {
+                        rowsStatusElement.textContent = `${data.processed_rows.toLocaleString()}/${data.total_rows.toLocaleString()} processed (${percentage.toFixed(1)}%)`;
+                        rowsStatusElement.className = 'sub-text positive';
+                    }
+                } else {
+                    rowsStatusElement.textContent = `Ready to process ${data.total_rows.toLocaleString()} rows`;
+                    rowsStatusElement.className = 'sub-text';
+                }
+            }
+        }
+        async function loadRowsCount() {
+            try {
+                const response = await fetch('http://localhost:8001/rows');
+                if (response.ok) {
+                    const data = await response.json();
+                    totalRows = data.total_rows;
+                    processedRows = data.processed_rows;
+                    updateRowsCard({
+                        total_rows: data.total_rows,
+                        processed_rows: data.processed_rows,
+                        percentage: data.percentage
+                    });
+                } else {
+                    updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Server not responding'});
+                }
+            } catch (error) {
+                console.error('Error loading rows count:', error);
+                updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Unable to connect to server'});
             }
         }
 
@@ -1222,6 +1279,19 @@
             const tabs = document.querySelectorAll('.page-tabs a');
             const pageViews = document.querySelectorAll('.page-view');
 
+            connectWebSocket();
+            // Load initial data
+            setTimeout(() => {
+                if (allLogs.length === 0) {
+                    loadLogs();
+                }
+                loadRowsCount(); // ADD THIS LINE
+            }, 2000);
+        // Start checking workflow status
+            workflowCheckInterval = setInterval(checkWorkflowStatus, 10000);
+            checkWorkflowStatus();
+            updateStartButtonState();
+            
             tabs.forEach(tab => {
                 tab.addEventListener('click', function(event) {
                     event.preventDefault();

@@ -17,6 +17,10 @@ active_connections: List[WebSocket] = []
 # Flag to track if workflow is completed
 workflow_completed = False
 
+rows_count = 0
+rows_processed = 0
+
+
 class LogEntry(BaseModel):
     message: str
     workflow_id: Optional[str] = None
@@ -24,6 +28,11 @@ class LogEntry(BaseModel):
     node_name: Optional[str] = None
     level: Optional[str] = "info"
     data: Optional[Any] = None
+
+class RowsData(BaseModel):
+    total_rows: int
+    processed_rows: Optional[int] = 0
+    message: Optional[str] = None
 
 async def broadcast_log(log_data: Dict):
     """Broadcast new log to all connected WebSocket clients"""
@@ -105,7 +114,7 @@ async def receive_log(log_entry: LogEntry):
         "level": log_entry.level,
         "data": log_entry.data
     }
-    
+
     # Store log entry
     logs.append(log_data)
     
@@ -215,6 +224,121 @@ async def get_status():
         "total_logs": len(logs),
         "active_connections": len(active_connections)
     }
+
+@app.post("/rows/set")
+async def set_rows_count(rows_data: RowsData):
+    """Set the total number of rows to be processed"""
+    global rows_count, rows_processed
+    
+    rows_count = rows_data.total_rows
+    rows_processed = rows_data.processed_rows
+    
+    timestamp = datetime.now().isoformat()
+    
+    print(f"[{timestamp}] Rows count set: {rows_count} total, {rows_processed} processed")
+    
+    # Broadcast to all connected clients
+    if active_connections:
+        message = json.dumps({
+            "type": "rows_updated", 
+            "total_rows": rows_count,
+            "processed_rows": rows_processed,
+            "message": rows_data.message or f"Total rows set to {rows_count}",
+            "timestamp": timestamp
+        })
+        connections_copy = active_connections.copy()
+        for connection in connections_copy:
+            try:
+                await connection.send_text(message)
+            except:
+                if connection in active_connections:
+                    active_connections.remove(connection)
+    
+    return {
+        "status": "success", 
+        "total_rows": rows_count,
+        "processed_rows": rows_processed,
+        "timestamp": timestamp
+    }
+
+@app.post("/rows/update")
+async def update_processed_rows(rows_data: RowsData):
+    """Update the number of processed rows"""
+    global rows_processed
+    
+    if rows_data.processed_rows is not None:
+        rows_processed = rows_data.processed_rows
+    
+    timestamp = datetime.now().isoformat()
+    
+    print(f"[{timestamp}] Processed rows updated: {rows_processed}/{rows_count}")
+    
+    # Broadcast to all connected clients
+    if active_connections:
+        percentage = (rows_processed / rows_count * 100) if rows_count > 0 else 0
+        message = json.dumps({
+            "type": "rows_updated", 
+            "total_rows": rows_count,
+            "processed_rows": rows_processed,
+            "percentage": round(percentage, 1),
+            "message": rows_data.message or f"Processed {rows_processed}/{rows_count} rows ({percentage:.1f}%)",
+            "timestamp": timestamp
+        })
+        connections_copy = active_connections.copy()
+        for connection in connections_copy:
+            try:
+                await connection.send_text(message)
+            except:
+                if connection in active_connections:
+                    active_connections.remove(connection)
+    
+    return {
+        "status": "success", 
+        "total_rows": rows_count,
+        "processed_rows": rows_processed,
+        "percentage": round(percentage, 1) if rows_count > 0 else 0,
+        "timestamp": timestamp
+    }
+
+@app.get("/rows")
+async def get_rows_count():
+    """Get current rows count and processed count"""
+    percentage = (rows_processed / rows_count * 100) if rows_count > 0 else 0
+    
+    return {
+        "total_rows": rows_count,
+        "processed_rows": rows_processed,
+        "percentage": round(percentage, 1),
+        "remaining_rows": max(0, rows_count - rows_processed)
+    }
+
+@app.delete("/rows")
+async def reset_rows_count():
+    """Reset rows count (usually when workflow starts fresh)"""
+    global rows_count, rows_processed
+    
+    rows_count = 0
+    rows_processed = 0
+    
+    timestamp = datetime.now().isoformat()
+    
+    # Broadcast reset to all connected clients
+    if active_connections:
+        message = json.dumps({
+            "type": "rows_reset", 
+            "message": "Rows count reset for new workflow",
+            "timestamp": timestamp
+        })
+        connections_copy = active_connections.copy()
+        for connection in connections_copy:
+            try:
+                await connection.send_text(message)
+            except:
+                if connection in active_connections:
+                    active_connections.remove(connection)
+    
+    print(f"[{timestamp}] Rows count reset")
+    return {"status": "success", "message": "Rows count reset", "timestamp": timestamp}
 
 if __name__ == "__main__":
     import uvicorn
