@@ -1,0 +1,2505 @@
+{
+  "name": "Phase 2 | Master testing",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        420
+      ],
+      "id": "6edcea2d-a75f-47d4-b0c6-b1918ef278e9",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7500,
+        500
+      ],
+      "id": "c1c7b1ae-f210-4540-95b4-1cd17a8ad52f",
+      "name": "Merge",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        8100,
+        520
+      ],
+      "id": "ea29bff9-7023-4c22-9205-3851df2d43b8",
+      "name": "Merge1",
+      "executeOnce": false
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1320,
+        620
+      ],
+      "id": "92134b0f-905f-4c66-8941-7fbad785f061",
+      "name": "Gets image from sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1955849859,
+          "mode": "list",
+          "cachedResultName": "FSN_Gen",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=1955849859"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Prompt 1": "={{ $json.prompt[0] }}",
+            "Prompt 2": "={{ $json.prompt[1] }}",
+            "Prompt 3": "={{ $json.prompt[2] }}",
+            "Gen-col": "={{ $json['Gen-col'][0] }}"
+          },
+          "matchingColumns": [
+            "Gen-col"
+          ],
+          "schema": [
+            {
+              "id": "Gen-col",
+              "displayName": "Gen-col",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Prompt 1",
+              "displayName": "Prompt 1",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 2",
+              "displayName": "Prompt 2",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Prompt 3",
+              "displayName": "Prompt 3",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        8940,
+        540
+      ],
+      "id": "685f6324-d8db-484d-9570-d6fc0ef29d15",
+      "name": "Adds Prompt to sheets",
+      "executeOnce": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Dd3w6Uil0Iw63fMM",
+          "name": "Google Sheets Sriwork"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2980,
+        600
+      ],
+      "id": "a8528ec1-920c-434f-92b9-1edc08b23b38",
+      "name": "Loop Over Items1",
+      "alwaysOutputData": false,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "row_number, Link, id,, Prompt 1,, Gen-col",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        620
+      ],
+      "id": "6dc5e19b-0f9d-49b3-9404-4337c8a88b5d",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        10100,
+        1400
+      ],
+      "id": "2958a9e7-603e-4b69-999a-2a95ba109897",
+      "name": "Wait",
+      "webhookId": "9b864dc0-d554-4137-9e0a-f1acfa152d8a"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "9957d62a-807c-4356-ab16-5dea547ffb47",
+              "leftValue": "={{ $json['Prompt 1'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1820,
+        620
+      ],
+      "id": "f96b6431-4c07-411e-831e-e9116bdfbb31",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        760
+      ],
+      "id": "43562631-0530-4bbd-94de-6528651ab33a",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY",
+          "mode": "list",
+          "cachedResultName": "Internal | Ajio Buda 5",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "FSN",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MGbnhByVIjFDIucBTo-87OPtAjpPHC6SHqkNwy9kXDY/edit#gid=0"
+        },
+        "options": {
+          "columnsToWatch": [
+            "Link"
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        920,
+        620
+      ],
+      "id": "e2310897-0771-49a7-a979-7413c250d91c",
+      "name": "Google Sheets Trigger",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7a4f7c5e-fd73-4d86-8ff9-0269fbc8a4b5",
+              "name": "output.Outfit",
+              "value": "={{ $json.output.Outfit }}",
+              "type": "string"
+            },
+            {
+              "id": "7b7c7885-08a1-4d27-9bb2-715cdd4d923f",
+              "name": "output.Accessories",
+              "value": "={{ $json.output.Accessories }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        6020,
+        680
+      ],
+      "id": "f233eede-d9f9-434e-a0cf-fd27081a7f4b",
+      "name": "Edit Fields",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c1c8f66b-d090-42b7-ab02-508587d48f24",
+              "name": "output.Selected_Footwear",
+              "value": "={{ $json.output.Selected_Footwear }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        7300,
+        640
+      ],
+      "id": "96585498-675d-4dde-ba42-fb59e630cd09",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f4a4f7fd-4561-454c-93ac-f18bbe08f5df",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        7920,
+        720
+      ],
+      "id": "24ad39a1-9f64-48e0-a035-ad352402d4c3",
+      "name": "Edit Fields2"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "output.prompt"
+            },
+            {
+              "fieldToAggregate": "Gen-col"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        8300,
+        520
+      ],
+      "id": "562db396-5bda-488d-a3c1-1f95eed8376c",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "ad44fb78-e0fc-43fa-9003-77f8ef6693b8",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        920,
+        840
+      ],
+      "id": "3ae0bd3c-ab9d-4d1c-b3ab-47e74b0c3850",
+      "name": "Webhook",
+      "webhookId": "ad44fb78-e0fc-43fa-9003-77f8ef6693b8"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        600
+      ],
+      "id": "3deb5251-1fb6-41a8-9123-eb177a1bf92e",
+      "name": "Limit",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f242406c-6fd5-4913-b85b-6e2f4636246a",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "c641b0dd-ad8c-40e4-ab30-043d32ca4331",
+              "name": "Prompt 1",
+              "value": "={{ $json['Prompt 1'] }}",
+              "type": "string"
+            },
+            {
+              "id": "6bd61f42-6e5c-4519-930d-466f2aca6153",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            },
+            {
+              "id": "e10a55b6-d0c1-4225-a3ef-91c6212a83bc",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1660,
+        620
+      ],
+      "id": "e46c16f0-3ea0-4bd2-bb53-2713f24c8d3b",
+      "name": "Edit Fields3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}  \",\n  \"level\": \"GOT {{ $json.count }} ROWS FROM SHEET\",\n  \"data\": {\n    \"No.of Rows\": \"{{ $json.count }} test\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1600,
+        360
+      ],
+      "id": "725bba7f-f728-4e24-8dd9-c9cde3a51f98",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemscount = $input.all().length;\nconst isEmpty = items === 0 || (items === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst rownumber = $input.first().json.row_number\n\nif (isEmpty || hasError) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \"sheet fetch error\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemscount} Rows Fetched from sheet`,\n          data: `${itemscount} Rows starting from ${rownumber} row`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1460,
+        360
+      ],
+      "id": "a11659e6-c647-4ee5-9c60-6b5aa33e500b",
+      "name": "Code2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}  \",\n  \"level\": \"Workflow Started\",\n  \"data\": {\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1120,
+        620
+      ],
+      "id": "7e9b919d-f2e0-43af-9450-4504be382fcf",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{Empty_Rows: parseInt(itemCount) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        240
+      ],
+      "id": "c0cf226e-1947-4ca0-a53e-600ce244c184",
+      "name": "Code3"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}\n\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2660,
+        260
+      ],
+      "id": "b682d624-4541-44c6-a72b-084fed2f34f5",
+      "name": "HTTP Request4"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.first().json.Limit_Rows;\nconst emptyrows = $input.first().json.Empty_Rows\n\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty ) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: \"NO Limit\",\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Limited of total ${emptyrows}`,\n          data: `Limited = ${itemcount} Filtered rows = ${emptyrows}`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2500,
+        260
+      ],
+      "id": "7bfd5418-3d4e-43b9-af23-e9a99f992429",
+      "name": "Code4"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3700,
+        1260
+      ],
+      "id": "24b398ea-18bc-495b-afd4-024017a73b1f",
+      "name": "HTTP Request5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get persistent data storage for the workflow\nconst staticData = $getWorkflowStaticData('node'); \n// Initialize if not already set\nstaticData.loopCount = (staticData.loopCount || 0) + 1;\n\nconst loop = staticData.loopCount; \nconst first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop Started`,\n          data: `Loop_number ${loop}`\n        }\n      }\n    }\n  ];\n}\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3380,
+        1240
+      ],
+      "id": "8b65d5ae-db47-4424-911b-e683fe0dcf1c",
+      "name": "Code5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4620,
+        1180
+      ],
+      "id": "9375ccaa-bc21-453c-97d0-f273545cb905",
+      "name": "HTTP Request6"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst isEmpty = items.length === 0 || (items.length === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst firstItemHasErrorCode = $input.first().json?.error?.code !== undefined;\n\nif (isEmpty || hasError || firstItemHasErrorCode) {\n  return [\n    {\n      json: {\n        stopExecution: true,\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${items.length} Image extraction error`,\n          data: {\n            error_code: $input.first().json?.error?.code || \"Unknown\"\n          }\n        }\n      }\n    }\n  ];\n}\n\nreturn [\n  {\n    json: {\n      stopExecution: false,\n      response: {\n        message: \"success\",\n        workflow_id: $workflow.id,\n        workflow_name: `${$workflow.name} | ${$workflow.active}`,\n        level: `${items.length} Image extraction started`,\n        data: `${items.length} Image sending to model`\n      }\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4160,
+        1100
+      ],
+      "id": "73c11df2-ca2d-4581-af42-532342755022",
+      "name": "Code6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3960,
+        640
+      ],
+      "id": "6631a0b6-3c4d-4fa0-b86f-8729977d5ad5",
+      "name": "Merge4"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4900,
+        660
+      ],
+      "id": "518a256c-5e2b-43a9-8dde-64dbadb83154",
+      "name": "Merge5"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5840,
+        680
+      ],
+      "id": "10d47e5f-2613-45a9-b3d1-1b3bd4bb5a6b",
+      "name": "Merge6"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        7160,
+        660
+      ],
+      "id": "3d34771a-01bb-4c45-9d35-91e4bdb66e09",
+      "name": "Merge7"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Logging to sheets error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Logging to sheets`,\n          data: `${itemcount} rows adding to sheets`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8420,
+        720
+      ],
+      "id": "dd04ba07-ebeb-4814-8a63-b72a2752ea9f",
+      "name": "Code17"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        8740,
+        540
+      ],
+      "id": "98caecdb-00f0-4d96-8f9d-f9b50a8595f2",
+      "name": "Merge10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        9320,
+        980
+      ],
+      "id": "1cdce2da-4fe1-45ff-9a02-38c111efd737",
+      "name": "HTTP Request18"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst isEmpty = items.length === 0 || (items.length === 1 && Object.keys(items[0].json).length === 0);\nconst hasError = items.some(item => item.error);\nconst column = $input.first().json['Gen-col'];\n\nif (isEmpty || hasError) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${items.length} Logging to sheets error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${column} prompts added`,\n          data: `${column} prompts added to sheets`\n        }\n      }\n    }\n  ];\n}\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9100,
+        980
+      ],
+      "id": "3e8f5765-b2be-4282-bdc0-c4c1147a5558",
+      "name": "Code18"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9960,
+        560
+      ],
+      "id": "53217460-8f51-4403-8c6f-d2c9c717e8d5",
+      "name": "Merge11"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        8600,
+        720
+      ],
+      "id": "71149437-9c00-4846-99f3-d0163183a8d1",
+      "name": "HTTP Request19"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a5908c3-8bb3-4ce4-9da6-dc5cbbfd0ad9",
+              "leftValue": "={{ $json.stopExecution }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        4500,
+        1020
+      ],
+      "id": "d74b000c-184b-4994-bda2-10ca87152455",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"download image failed\");\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4920,
+        1160
+      ],
+      "id": "eb3ae41d-99e5-436c-847b-bc02b5657161",
+      "name": "Code19"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4480,
+        1160
+      ],
+      "id": "ccdd2f1e-5448-41ba-9590-e4731e928290",
+      "name": "Merge12"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4a5908c3-8bb3-4ce4-9da6-dc5cbbfd0ad9",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        3560,
+        1120
+      ],
+      "id": "647997e3-465c-45a7-841a-76bd8295b8da",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch",
+        "useDataOfInput": 2
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3560,
+        1260
+      ],
+      "id": "7e3f3a9c-99a3-4c10-bbf9-e9bfec7b40fd",
+      "name": "Merge13"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3840,
+        1260
+      ],
+      "id": "84e98659-fb3c-4fd2-bfe7-f9a61c149c24",
+      "name": "Code20"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nif (isEmpty){\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} image extraction error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit = $input.first().json.output?.Outfit || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"Outfit extraction failed — fallback text received\",\n            data: {\n              Outfit: outfit,\n              message: `image sending failed` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Image Extraction Done & Footwear Selection started`,\n          data: {\n            Outfit: outfit,\n            Accessories: accessories\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5200,
+        1000
+      ],
+      "id": "787f8556-c3ec-4549-9879-cc0caecc0b30",
+      "name": "Code7"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        5360,
+        1000
+      ],
+      "id": "0ac80e55-e770-4bc0-9f83-b629d5ebb106",
+      "name": "If3"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5500,
+        1120
+      ],
+      "id": "ffd1cced-170e-4354-ad6a-79e9c11c2e20",
+      "name": "Merge14"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5300,
+        1140
+      ],
+      "id": "7d2fa902-2a7f-4ad1-952f-fd258ad507b9",
+      "name": "HTTP Request7"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5660,
+        1120
+      ],
+      "id": "b593e107-89b7-46c7-b3cc-6828456699a6",
+      "name": "Code21"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        3740,
+        1120
+      ],
+      "id": "1a275a83-adb0-4e9e-af55-880564534d55",
+      "name": "Merge15"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        3880,
+        1120
+      ],
+      "id": "58a6b86f-3437-47bc-8da2-16ca3774f3b7",
+      "name": "HTTP Request20"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4680,
+        1020
+      ],
+      "id": "e97ba307-bf93-47e9-b7d4-63c50a6554c4",
+      "name": "Merge16"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4840,
+        1020
+      ],
+      "id": "08a627af-5c1f-4dcf-aaea-6f48e8e32d33",
+      "name": "HTTP Request21"
+    },
+    {
+      "parameters": {
+        "url": "=https://drive.google.com/uc?export=download&id={{ $json.id }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4540,
+        640
+      ],
+      "id": "332733a5-ddb1-4f2d-a1aa-34fb15f4baa8",
+      "name": "download image",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        5540,
+        960
+      ],
+      "id": "8eb15112-fdfa-4c99-9b70-f599f2d5a9d5",
+      "name": "Merge17"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        5700,
+        960
+      ],
+      "id": "eb228414-0a17-475d-aba6-ade72b7ce590",
+      "name": "HTTP Request22"
+    },
+    {
+      "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.all().length;\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} footwear extraction error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  const outfit = $input.first().json.output.Selected_Footwear || \"\";\n  const accessories = $input.first().json.output?.Accessories || \"\";\n\n  // Check if the outfit matches a fallback/invalid response\n  const fallbackRegex = /unable to/i;\n\n  if (fallbackRegex.test(outfit)) {\n    return [\n      {\n        json: {\n          response: {\n            message: \"error\",\n            workflow_id: $workflow.id,\n            workflow_name: `${$workflow.name} | ${$workflow.active}`,\n            level: \"Footwear extraction failed — fallback text received\",\n            data: {\n              footwear: outfit,\n              message: `image sending failed` \n            }\n          }\n        }\n      }\n    ];\n  }\n\n  // All good, return success\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${itemcount} Footwear selected`,\n          data: {\n            selected_footwear: outfit,\n          }\n        }\n      }\n    }\n  ];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6400,
+        1020
+      ],
+      "id": "924389a2-6613-4b13-b420-76eafe0e49af",
+      "name": "Code8"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        6580,
+        1040
+      ],
+      "id": "3a51bad5-a286-402f-b928-0a7580454ee9",
+      "name": "If5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.0.97:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6820,
+        1220
+      ],
+      "id": "da3f2266-0270-4777-971e-46ab704d7be1",
+      "name": "HTTP Request8"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6960,
+        1220
+      ],
+      "id": "4689e29a-d0eb-4432-89de-b1b1acc3e220",
+      "name": "Code22"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        6780,
+        1040
+      ],
+      "id": "aa450600-456a-459c-bcd9-b5264b212af0",
+      "name": "Merge19"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        6920,
+        1040
+      ],
+      "id": "461f9545-b314-4a3b-bb89-6d6e67ee09c4",
+      "name": "HTTP Request23"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b00b075a-f50e-4672-8d92-fea9f06aea2b",
+              "leftValue": "={{ $json.response.message }}",
+              "rightValue": "success",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        9380,
+        820
+      ],
+      "id": "6f36cdb0-6407-4337-bd11-2673afda0cc9",
+      "name": "If9"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9520,
+        960
+      ],
+      "id": "ddf90e4f-4f0a-437d-a1b7-397bd38533a6",
+      "name": "Merge29"
+    },
+    {
+      "parameters": {
+        "jsCode": "throw new Error(\"loop failed\");"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        9680,
+        960
+      ],
+      "id": "a8a1af02-8f2c-4789-8be0-aa91f223db22",
+      "name": "Code29"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        9560,
+        800
+      ],
+      "id": "4fd1b50d-824e-440a-9003-490c313d65f0",
+      "name": "Merge30"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        9720,
+        800
+      ],
+      "id": "f1252e38-b8fd-493b-a94e-8ab7813097d6",
+      "name": "HTTP Request29"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/log",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}\",\n  \"level\": \"Workflow completed\",\n  \"data\": \"Processing completed successfully\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        4020,
+        360
+      ],
+      "id": "5ddaf2a6-516f-4e40-a184-7084ec9313f1",
+      "name": "HTTP Request14"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2360,
+        260
+      ],
+      "id": "2e7073c1-cee1-417d-b3df-17c643688329",
+      "name": "Merge31"
+    },
+    {
+      "parameters": {
+        "jsCode": "const itemCount = $input.all().length;\nreturn [{Limit_Rows: parseInt(itemCount) }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1980,
+        380
+      ],
+      "id": "0a6af3d7-2a23-438d-8e2b-32269886ea59",
+      "name": "Code16"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        4760,
+        1180
+      ],
+      "id": "d8691982-e511-425e-963b-b2590d2f9b68",
+      "name": "Merge34"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "cwp7W4Ckgsa2PpST",
+          "mode": "list",
+          "cachedResultName": "Outfit extractor"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        5120,
+        660
+      ],
+      "id": "7dbb9fda-8a60-4867-9f34-030272c03e95",
+      "name": "Execute Workflow"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        6660,
+        1220
+      ],
+      "id": "f32be96b-fb12-47cb-a17e-f8ad1cf04bd8",
+      "name": "Merge37"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "wWO26VYV7uPS02Hf",
+          "mode": "list",
+          "cachedResultName": "Footwear"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        6220,
+        840
+      ],
+      "id": "05529812-ecd9-4eda-8c3d-e0e021b30c83",
+      "name": "Execute Workflow1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "xOk31j3rA5zvJvVX",
+          "mode": "list",
+          "cachedResultName": "prompt generator"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        7760,
+        500
+      ],
+      "id": "98270749-58d5-4d3c-b291-832e78854b0d",
+      "name": "Execute Workflow2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eae6aabc-979c-48e8-9734-89737ee09c10",
+              "name": "Gen-col",
+              "value": "={{ $json['Gen-col'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        10300,
+        1400
+      ],
+      "id": "23db1beb-d333-4940-a0ab-75f7d9fcbda5",
+      "name": "Edit Fields5"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Debug version of deduplication logic\nconst staticData = $getWorkflowStaticData('node');\nconst executionId = $execution.id;\n\n// Log for debugging\nconsole.log(`Execution ID: ${executionId}`);\nconsole.log(`Existing completed executions:`, staticData.completedExecutions);\n\n// Check if we've already logged completion for this execution\nif (staticData.completedExecutions && staticData.completedExecutions.includes(executionId)) {\n  console.log(`SKIPPING - Already processed execution: ${executionId}`);\n  return [];\n}\n\n// Initialize the array if it doesn't exist\nif (!staticData.completedExecutions) {\n  staticData.completedExecutions = [];\n}\n\n// Add current execution to completed list\nstaticData.completedExecutions.push(executionId);\nconsole.log(`PROCESSING - Added execution: ${executionId}`);\n\n// Clean up old execution IDs (keep only last 100)\nif (staticData.completedExecutions.length > 100) {\n  staticData.completedExecutions = staticData.completedExecutions.slice(-100);\n}\n\n// Allow the workflow to continue with logging\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3880,
+        360
+      ],
+      "id": "ce19875c-8cd8-4c51-8fc6-2355afb23cc4",
+      "name": "Code"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        4220,
+        360
+      ],
+      "id": "b94dd936-39dd-472f-a92c-1d438d1a72dd",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "amount": 2
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        3700,
+        360
+      ],
+      "id": "0346abee-1cc0-4726-8449-1582c773aacf",
+      "name": "Wait1",
+      "webhookId": "ef12c721-e554-408a-8c1b-36828d1a5fd2"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.3,
+      "position": [
+        4440,
+        360
+      ],
+      "id": "baf89c93-8cd7-4533-be9b-4b0cf783ff74",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gets image from sheet": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Adds Prompt to sheets": {
+      "main": [
+        [
+          {
+            "node": "Code18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Execute Workflow1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Code17",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Code16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code3": {
+      "main": [
+        [
+          {
+            "node": "Merge31",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code4": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code5": {
+      "main": [
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code6": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge4": {
+      "main": [
+        [
+          {
+            "node": "download image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request5": {
+      "main": [
+        [
+          {
+            "node": "Code20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request6": {
+      "main": [
+        [
+          {
+            "node": "Merge34",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge5": {
+      "main": [
+        [
+          {
+            "node": "Execute Workflow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge6": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge7": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code17": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge10": {
+      "main": [
+        [
+          {
+            "node": "Adds Prompt to sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code18": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request18",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "If9",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request18": {
+      "main": [
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge11": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request19": {
+      "main": [
+        [
+          {
+            "node": "Merge10",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Merge12",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge16",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge12": {
+      "main": [
+        [
+          {
+            "node": "Merge34",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code19": {
+      "main": [
+        []
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Merge15",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge13",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge13": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code7": {
+      "main": [
+        [
+          {
+            "node": "If3",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "HTTP Request7",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If3": {
+      "main": [
+        [
+          {
+            "node": "Merge17",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request7": {
+      "main": [
+        [
+          {
+            "node": "Merge14",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge14": {
+      "main": [
+        [
+          {
+            "node": "Code21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge15": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request20",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request20": {
+      "main": [
+        [
+          {
+            "node": "Merge4",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge16": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request21",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request21": {
+      "main": [
+        [
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "download image": {
+      "main": [
+        [
+          {
+            "node": "Code6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge17": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request22": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code8": {
+      "main": [
+        [
+          {
+            "node": "If5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge37",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If5": {
+      "main": [
+        [
+          {
+            "node": "Merge19",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge37",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request8": {
+      "main": [
+        [
+          {
+            "node": "Code22",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge19": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request23",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request23": {
+      "main": [
+        [
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "If9": {
+      "main": [
+        [
+          {
+            "node": "Merge30",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "Merge29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge29": {
+      "main": [
+        [
+          {
+            "node": "Code29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge30": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request29",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request29": {
+      "main": [
+        [
+          {
+            "node": "Merge11",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "HTTP Request14": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge31": {
+      "main": [
+        [
+          {
+            "node": "Code4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code16": {
+      "main": [
+        [
+          {
+            "node": "Merge31",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge34": {
+      "main": [
+        [
+          {
+            "node": "Code19",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Merge6",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge37": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request8",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow1": {
+      "main": [
+        [
+          {
+            "node": "Code8",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge7",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow2": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields5": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request14",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2cc15442-6902-48a2-9bc1-f333b69da819",
+  "meta": {
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "H3Zyu6MCbgsPGDl0",
+  "tags": []
+}

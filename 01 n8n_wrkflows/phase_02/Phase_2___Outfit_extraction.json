@@ -1,0 +1,198 @@
+{
+  "name": "Phase 2 | Outfit extraction",
+  "nodes": [
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-04-17-thinking",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        300
+      ],
+      "id": "ec88ce4c-bae8-40bf-bd78-675a7b43ef53",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Outfit\": \"\",\n\t\"Accessories\": \"\"\n}\n\n\n\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        -60,
+        420
+      ],
+      "id": "26c01589-fcc6-4e4d-b82b-409ee9a8c2f0",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        240
+      ],
+      "id": "15fb804e-eb9b-48a5-9dbc-81561b23897f",
+      "name": "Auto-fixing Output Parser1"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        420
+      ],
+      "id": "ff4b00df-0ece-4f47-8cfd-34a3a783798b",
+      "name": "Google Gemini Chat Model3",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "UpLQ2CLSMB2oJQnX",
+          "name": "Sri"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please analyze this image and extract only the clothing and accessory details according to the instructions provided. Focus on describing the garments' style, colors, patterns, textures, fit, and any distinctive features. Also include all accessories worn by the model. Remember to ignore the background, pose, lighting, and footwear.\n\nyou must use http node to view the image",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Step 1: Clothing Extraction Instructions\n\n## Your Task\nAnalyze clothing in images and extract only the essential garment details needed for fashion photography prompts.\n\n## What to Extract FROM INPUT IMAGE\n\n### Garment Types and Details\n- Identify each piece of clothing (shirt, dress, pants, jacket, etc.)\n- Note specific garment style (button-up, polo, midi dress, skinny jeans, blazer, etc.)\n- Record garment construction details (pleated, fitted, oversized, cropped, etc.)\n\n### Colors, Patterns, and Textures\n- **Colors:** Primary and accent colors, color combinations\n- **Patterns:** Floral, striped, plaid, geometric, solid, etc.\n- **Textures:** Cotton, denim, silk, knit, leather, lace, etc.\n- **Finishes:** Matte, glossy, distressed, washed, etc.\n\n### Specific Garment Features\n- **Necklines:** V-neck, crew neck, scoop neck, off-shoulder, etc.\n- **Sleeves:** Long, short, sleeveless, puffed, bell, rolled, etc.\n- **Length:** Cropped, regular, long, midi, maxi, mini, etc.\n- **Fit:** Fitted, loose, oversized, tailored, relaxed, etc.\n- **Details:** Buttons, zippers, pockets, belts, tucks, etc.\n\n### Accessories Worn by Model\n- Jewelry (necklaces, earrings, bracelets, rings)\n- Bags or purses\n- Belts\n- Hats or headwear\n- Scarves\n- Sunglasses\n- Watches\n\n## What to COMPLETELY IGNORE\n\n### Visual Elements to Skip\n- Background settings or environments\n- Model's pose or body position\n- Model's facial expression or appearance\n- Lighting conditions or mood\n- Camera angles or composition\n- Any people in the background\n\n### Footwear Exception\n- **DO NOT extract footwear from the input image**\n- Footwear will be selected separately based on outfit compatibility\n- Ignore any shoes, boots, sandals, or barefoot styling in the source image\n\n## Output Format\n\nProvide your analysis in the following structured format:\n\n**Outfit:** \"[Complete detailed description of all clothing items with materials, colors, patterns, fit, and styling details]\"\n\n**Accessories:** \"[Complete detailed description of all accessories including jewelry, bags, hats, belts, etc.]\"\n\nif ERROR! u cant process the image u must return with same format but values as\n**Outfit:** \"[unable to]\"\n**Accessories:** \"[unable to]\"\n\n## Example Outputs\n\n**Example 1:**\n**Outfit:** \"Crisp white cotton button-up shirt with classic collar and rolled sleeves tucked into high-waisted medium wash blue denim jeans with straight leg fit\"\n**Accessories:** \"Delicate gold chain necklace and small gold hoop earrings\"\n\n**Example 2:**\n**Outfit:** \"Flowing floral print midi dress in coral and white pattern featuring sweetheart neckline and short puffed sleeves with A-line silhouette in lightweight fabric\"\n**Accessories:** \"Wide-brimmed natural straw hat\"\n\n**Example 3:**\n**Outfit:** \"Oversized cream cable-knit sweater with dropped shoulders and ribbed cuffs worn over black high-waisted leather mini skirt\"\n**Accessories:** \"Layered silver chain necklaces, chunky silver rings, and black leather crossbody bag with gold hardware\"\n\n## Quality Check\nBefore finalizing your extraction, ensure you have:\n- ✓ Described every visible garment in detail\n- ✓ Captured all colors and patterns accurately  \n- ✓ Noted fabric textures and finishes\n- ✓ Listed all distinctive features\n- ✓ Included every accessory worn by the model\n- ✓ Ignored background, lighting, pose, and footwear\n- ✓ Used specific, descriptive language rather than generic terms"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "5c63ac10-343e-4f86-af8e-fae57699c6fb",
+      "name": "Outfit extraction",
+      "alwaysOutputData": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        0
+      ],
+      "id": "0a3cd892-c0ff-4480-82e6-09533472cdcb",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        120,
+        0
+      ],
+      "id": "70a1ac62-cbaf-42aa-9979-65dbcd6a7727",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-fixing Output Parser1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Outfit extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Outfit extraction": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "b9302d7f-2319-418e-8306-82609ba22f6d",
+  "meta": {
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "cwp7W4Ckgsa2PpST",
+  "tags": []
+}

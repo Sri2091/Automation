@@ -1,0 +1,171 @@
+{
+  "name": "Phase 2 | Footwear",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Select footwear for:\n\n**Outfit:** \"{{ $json.output.Outfit }}\"\n**Accessories:** \"{{ $json.output.Accessories }}\"\n\nChoose the best footwear option that complements this outfit style.",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=## Your Task\nSelect footwear that complements and enhances the outfit style, regardless of the photography theme.\n\n**CRITICAL RULE: Footwear must ALWAYS match the outfit style first, before considering theme.**\n\n## Selection Hierarchy\n\n1. **First Priority:** What does the outfit require? (dress = heels/sandals, athletic = sneakers)\n2. **Second Priority:** What variations work with the theme? (beach dress = sandals over heels)\n3. **Never:** Force inappropriate footwear just to match theme\n\n## Why Outfit-First Footwear Matters\n\n- Mismatched footwear destroys outfit credibility\n- Hiking boots with a sundress looks wrong regardless of \"outdoor\" theme\n- Heels with athletic wear is inappropriate even in \"sophisticated\" settings\n- The outfit dictates the footwear possibilities\n- Good footwear choice completes the look; bad choice ruins the entire image\n\n## Footwear Selection by Garment Type\n\n### Dress-Based Selections\n\n**Midi/Maxi Dresses:**\n- Heeled sandals (strappy, block heel, wedge)\n- Wedges (espadrille, cork, platform)\n- Ankle boots (heeled, flat, Western style)\n- Ballet flats (classic, pointed toe, metallic)\n\n**Mini Dresses:**\n- Heels (stiletto, block heel, platform)\n- Ankle boots (combat, Chelsea, heeled)\n- Sneakers (for casual styles only - white leather, canvas)\n- Sandals (heeled, gladiator, strappy)\n\n**Formal Dresses:**\n- Heels (pumps, stilettos, block heel)\n- Strappy sandals (metallic, satin, leather)\n- Elegant flats (pointed toe, embellished)\n\n**Casual Sundresses:**\n- Sandals (flat, low wedge, slides)\n- Espadrilles (rope sole, canvas)\n- White sneakers (leather, canvas, minimal)\n\n### Top & Bottom Combinations\n\n**Formal/Tailored Pieces:**\n- Dress shoes (oxfords, brogues, loafers)\n- Heels (pumps, block heel, pointed toe)\n- Loafers (leather, suede, chain detail)\n- Oxford shoes (classic, platform, patent)\n\n**Jeans + Dressy Top:**\n- Loafers (penny, tassel, horse bit)\n- Ankle boots (heeled, flat, pointed)\n- Heeled sandals (block heel, wedge)\n- Ballet flats (leather, patent, metallic)\n\n**Jeans + Casual Top:**\n- Sneakers (white, canvas, retro)\n- Casual boots (combat, Western, work)\n- Sandals (flat, sporty, slides)\n\n**Shorts:**\n- Sandals (flat, wedge, gladiator)\n- Sneakers (canvas, leather, colorful)\n- Espadrilles (flat, wedge, tie-up)\n- **Never:** Heavy boots with shorts\n\n**Athletic Wear:**\n- Sports shoes (running, training, tennis)\n- Athletic sneakers (performance, lifestyle)\n- **Only athletic footwear with athletic clothing**\n\n### Special Considerations\n\n**Skirts:**\n- Match formality level\n- Formal skirts = heels, dress flats\n- Casual skirts = sneakers, sandals, boots\n\n**Vintage/Retro Outfits:**\n- Period-appropriate footwear\n- 1950s = kitten heels, saddle shoes\n- 1970s = platform sandals, boots\n- 1990s = chunky sneakers, combat boots\n\n**All-White Outfits:**\n- White footwear preferred\n- Nude/tan as secondary choice\n- Avoid dark colors that break the monochrome\n\n## Common Footwear Mistakes to AVOID\n\n❌ **Never Do These:**\n- Hiking boots with dresses/skirts\n- Athletic shoes with formal wear\n- Heavy boots with summer dresses\n- Formal heels with athletic wear\n- Winter boots with summer outfits\n- Flip-flops with formal clothing\n- Stilettos with casual shorts\n\n## Quick Reference Guide\n\n**If Outfit Includes:**\n- **Dress** → Heels, sandals, or flats (based on dress style)\n- **Jeans** → Sneakers, boots, or loafers (based on top formality)\n- **Shorts** → Sandals, sneakers, or espadrilles\n- **Athletic wear** → Athletic shoes only\n- **Formal pieces** → Dress shoes or heels only\n- **Skirts** → Match skirt's formality level\n\n## Footwear Color Guidelines\n\n**Universal Colors:**\n- **Nude/Tan:** Universally flattering, elongates legs\n- **Black:** Classic, works with most colors\n- **White:** Fresh, perfect for casual/summer looks\n- **Metallic:** Special occasions, adds glamour\n\n**Color Matching Rules:**\n- Match shoe color to outfit's dominant neutral\n- Pick up accent colors from the outfit\n- Monochrome outfits = match or contrast thoughtfully\n- Bright outfits = neutral shoes to balance\n\n## Seasonal Considerations\n\n**Summer Outfits:**\n- Open-toe shoes preferred\n- Sandals, espadrilles, canvas sneakers\n- Light colors and breathable materials\n- **No heavy boots with summer clothing**\n\n**Winter Outfits:**\n- Closed-toe shoes required\n- Boots, pumps, loafers\n- Darker colors and substantial materials\n- **No sandals with winter clothing**\n\n**Transitional Weather:**\n- Ankle boots, loafers, low boots\n- Medium weight materials\n- Versatile colors (tan, brown, navy)\n\n## Selection Process\n\n### Step 1: Analyze the Outfit\n- What's the formality level?\n- What's the dominant garment (dress, pants, skirt)?\n- What's the overall style aesthetic?\n- What season/weather does it suggest?\n\n### Step 2: Determine Appropriate Categories\n- List 3-4 footwear types that work with this outfit\n- Consider the outfit's color palette\n- Think about proportions and styling\n\n### Step 3: Make Final Selection\n- Choose the option that best completes the look\n- Consider comfort and practicality for the setting\n- Ensure the choice enhances rather than competes\n\n## Output Format\n\nonly return with one best option!\n\n**Selected Footwear:** \"[Specific shoe description with color, style, and material details]\"\n\nif ERROR! u cant process the outfit u must return with same format but values as\n\n**Selected Footwear:** \"[unable to]\"\n\n## Example Selections\n\n**Example 1:**\n*Outfit: Crisp white button-up + high-waisted jeans*\n**Selected Footwear:** \"Nude leather ballet flats with pointed toe\"\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        60,
+        -60
+      ],
+      "id": "4c397e4d-98e6-4cc2-bd24-fceef3702b99",
+      "name": "Footwear",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash-preview-05-20",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        60,
+        160
+      ],
+      "id": "a27fa0c5-ad80-46d3-8993-b7e94a0e5bf6",
+      "name": "Google Gemini Chat Model4",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "9yxCHdoHv3CEy9Ue",
+          "name": "BR"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"Selected_Footwear\": \"\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        260
+      ],
+      "id": "88b3ca91-b459-401d-8167-55f86fd6e49b",
+      "name": "Structured Output Parser2"
+    },
+    {
+      "parameters": {
+        "options": {
+          "prompt": "Instructions:\n--------------\n{instructions}\n--------------\nCompletion:\n--------------\n{completion}\n--------------\n\nAbove, the Completion did not satisfy the constraints given in the Instructions.\nError:\n--------------\n{error}\n--------------\n\nPlease try again. Please only respond with an answer that satisfies the constraints laid out in the Instructions:"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserAutofixing",
+      "typeVersion": 1,
+      "position": [
+        220,
+        120
+      ],
+      "id": "c2865353-f892-4d1f-898d-823a8845c4d9",
+      "name": "Auto-fixing Output Parser2"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -140,
+        -60
+      ],
+      "id": "0624fa47-6a90-4a66-8259-8ccfe2064bdb",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        420,
+        -60
+      ],
+      "id": "14bbe0a1-d95d-47da-b267-d490914b2fbc",
+      "name": "No Operation, do nothing"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Gemini Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Auto-fixing Output Parser2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-fixing Output Parser2": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Footwear",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Footwear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Footwear": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9542a37a-a132-4b25-b01b-2bf56412ed10",
+  "meta": {
+    "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
+  },
+  "id": "wWO26VYV7uPS02Hf",
+  "tags": []
+}
