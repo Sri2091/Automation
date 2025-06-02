@@ -2,17 +2,6 @@
   "name": "Phase 2 | Master testing",
   "nodes": [
     {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        920,
-        420
-      ],
-      "id": "6edcea2d-a75f-47d4-b0c6-b1918ef278e9",
-      "name": "When clicking ‘Test workflow’"
-    },
-    {
       "parameters": {
         "mode": "combine",
         "combineBy": "combineByPosition",
@@ -21,8 +10,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        7500,
-        500
+        8060,
+        600
       ],
       "id": "c1c7b1ae-f210-4540-95b4-1cd17a8ad52f",
       "name": "Merge",
@@ -39,7 +28,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        8100,
+        8760,
         520
       ],
       "id": "ea29bff9-7023-4c22-9205-3851df2d43b8",
@@ -67,8 +56,8 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        1320,
-        620
+        1280,
+        600
       ],
       "id": "92134b0f-905f-4c66-8941-7fbad785f061",
       "name": "Gets image from sheet",
@@ -175,7 +164,7 @@
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        8940,
+        9600,
         540
       ],
       "id": "685f6324-d8db-484d-9570-d6fc0ef29d15",
@@ -198,7 +187,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2980,
+        3420,
         600
       ],
       "id": "a8528ec1-920c-434f-92b9-1edc08b23b38",
@@ -215,7 +204,7 @@
       "typeVersion": 1,
       "position": [
         1500,
-        620
+        600
       ],
       "id": "6dc5e19b-0f9d-49b3-9404-4337c8a88b5d",
       "name": "Split Out"
@@ -225,8 +214,8 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        10100,
-        1400
+        10740,
+        1220
       ],
       "id": "2958a9e7-603e-4b69-999a-2a95ba109897",
       "name": "Wait",
@@ -262,7 +251,7 @@
       "typeVersion": 2.2,
       "position": [
         1820,
-        620
+        600
       ],
       "id": "f96b6431-4c07-411e-831e-e9116bdfbb31",
       "name": "If"
@@ -272,8 +261,8 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        2000,
-        760
+        1820,
+        740
       ],
       "id": "43562631-0530-4bbd-94de-6528651ab33a",
       "name": "No Operation, do nothing1"
@@ -310,8 +299,8 @@
       "type": "n8n-nodes-base.googleSheetsTrigger",
       "typeVersion": 1,
       "position": [
-        920,
-        620
+        740,
+        600
       ],
       "id": "e2310897-0771-49a7-a979-7413c250d91c",
       "name": "Google Sheets Trigger",
@@ -340,7 +329,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        6020,
+        6680,
         680
       ],
       "id": "f233eede-d9f9-434e-a0cf-fd27081a7f4b",
@@ -364,8 +353,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        7300,
-        640
+        7960,
+        700
       ],
       "id": "96585498-675d-4dde-ba42-fb59e630cd09",
       "name": "Edit Fields1"
@@ -387,8 +376,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        7920,
-        720
+        8620,
+        620
       ],
       "id": "24ad39a1-9f64-48e0-a035-ad352402d4c3",
       "name": "Edit Fields2"
@@ -410,7 +399,7 @@
       "type": "n8n-nodes-base.aggregate",
       "typeVersion": 1,
       "position": [
-        8300,
+        8960,
         520
       ],
       "id": "562db396-5bda-488d-a3c1-1f95eed8376c",
@@ -420,7 +409,7 @@
       "parameters": {
         "httpMethod": "POST",
         "path": "ad44fb78-e0fc-43fa-9003-77f8ef6693b8",
-        "responseMode": "responseNode",
+        "responseMode": "lastNode",
         "options": {
           "allowedOrigins": "*"
         }
@@ -428,25 +417,12 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2,
       "position": [
-        920,
-        840
+        740,
+        820
       ],
       "id": "3ae0bd3c-ab9d-4d1c-b3ab-47e74b0c3850",
       "name": "Webhook",
       "webhookId": "ad44fb78-e0fc-43fa-9003-77f8ef6693b8"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        2000,
-        600
-      ],
-      "id": "3deb5251-1fb6-41a8-9123-eb177a1bf92e",
-      "name": "Limit",
-      "alwaysOutputData": true,
-      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -484,7 +460,7 @@
       "typeVersion": 3.4,
       "position": [
         1660,
-        620
+        600
       ],
       "id": "e46c16f0-3ea0-4bd2-bb53-2713f24c8d3b",
       "name": "Edit Fields3"
@@ -495,14 +471,14 @@
         "url": "http://host.docker.internal:8001/log",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"message\": \"success\",\n  \"workflow_id\": \"{{ $workflow.id }}\",\n  \"workflow_name\": \"{{ $workflow.name }} | {{ $workflow.active }}  \",\n  \"level\": \"GOT {{ $json.count }} ROWS FROM SHEET\",\n  \"data\": {\n    \"No.of Rows\": \"{{ $json.count }} test\"\n  }\n}",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}\n",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1600,
-        360
+        1440,
+        420
       ],
       "id": "725bba7f-f728-4e24-8dd9-c9cde3a51f98",
       "name": "HTTP Request"
@@ -514,8 +490,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1460,
-        360
+        1260,
+        420
       ],
       "id": "a11659e6-c647-4ee5-9c60-6b5aa33e500b",
       "name": "Code2"
@@ -532,8 +508,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1120,
-        620
+        960,
+        820
       ],
       "id": "7e9b919d-f2e0-43af-9450-4504be382fcf",
       "name": "HTTP Request2"
@@ -545,8 +521,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1980,
-        240
+        2520,
+        260
       ],
       "id": "c0cf226e-1947-4ca0-a53e-600ce244c184",
       "name": "Code3"
@@ -563,8 +539,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2660,
-        260
+        3020,
+        300
       ],
       "id": "b682d624-4541-44c6-a72b-084fed2f34f5",
       "name": "HTTP Request4"
@@ -576,8 +552,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2500,
-        260
+        2860,
+        300
       ],
       "id": "7bfd5418-3d4e-43b9-af23-e9a99f992429",
       "name": "Code4"
@@ -594,21 +570,21 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3700,
-        1260
+        4200,
+        980
       ],
       "id": "24b398ea-18bc-495b-afd4-024017a73b1f",
       "name": "HTTP Request5"
     },
     {
       "parameters": {
-        "jsCode": "// Get persistent data storage for the workflow\nconst staticData = $getWorkflowStaticData('node'); \n// Initialize if not already set\nstaticData.loopCount = (staticData.loopCount || 0) + 1;\n\nconst loop = staticData.loopCount; \nconst first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop Started`,\n          data: `Loop_number ${loop}`\n        }\n      }\n    }\n  ];\n}\n\n\n"
+        "jsCode": "\nconst loop = $input.first().json.index; \nconst first = $input.first();\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\n\nif (isEmpty) {\n  return [\n    {\n      json: {\n        response: {\n          message: \"error\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop error`,\n          data: {}\n        }\n      }\n    }\n  ];\n} else {\n  return [\n    {\n      json: {\n        response: {\n          message: \"success\",\n          workflow_id: $workflow.id,\n          workflow_name: `${$workflow.name} | ${$workflow.active}`,\n          level: `${loop} Loop Started`,\n          data: `Loop_number ${loop}`\n        }\n      }\n    }\n  ];\n}\n\n\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3380,
-        1240
+        3860,
+        940
       ],
       "id": "8b65d5ae-db47-4424-911b-e683fe0dcf1c",
       "name": "Code5"
@@ -625,8 +601,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4620,
-        1180
+        5280,
+        1060
       ],
       "id": "9375ccaa-bc21-453c-97d0-f273545cb905",
       "name": "HTTP Request6"
@@ -638,8 +614,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4160,
-        1100
+        4960,
+        1000
       ],
       "id": "73c11df2-ca2d-4581-af42-532342755022",
       "name": "Code6"
@@ -651,7 +627,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        3960,
+        4620,
         640
       ],
       "id": "6631a0b6-3c4d-4fa0-b86f-8729977d5ad5",
@@ -664,7 +640,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        4900,
+        5560,
         660
       ],
       "id": "518a256c-5e2b-43a9-8dde-64dbadb83154",
@@ -677,7 +653,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        5840,
+        6500,
         680
       ],
       "id": "10d47e5f-2613-45a9-b3d1-1b3bd4bb5a6b",
@@ -690,8 +666,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        7160,
-        660
+        7800,
+        700
       ],
       "id": "3d34771a-01bb-4c45-9d35-91e4bdb66e09",
       "name": "Merge7"
@@ -703,8 +679,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        8420,
-        720
+        9080,
+        680
       ],
       "id": "dd04ba07-ebeb-4814-8a63-b72a2752ea9f",
       "name": "Code17"
@@ -716,7 +692,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        8740,
+        9400,
         540
       ],
       "id": "98caecdb-00f0-4d96-8f9d-f9b50a8595f2",
@@ -734,8 +710,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        9320,
-        980
+        9880,
+        840
       ],
       "id": "1cdce2da-4fe1-45ff-9a02-38c111efd737",
       "name": "HTTP Request18"
@@ -747,8 +723,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9100,
-        980
+        9740,
+        780
       ],
       "id": "3e8f5765-b2be-4282-bdc0-c4c1147a5558",
       "name": "Code18"
@@ -760,7 +736,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        9960,
+        10340,
         560
       ],
       "id": "53217460-8f51-4403-8c6f-d2c9c717e8d5",
@@ -778,8 +754,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        8600,
-        720
+        9260,
+        680
       ],
       "id": "71149437-9c00-4846-99f3-d0163183a8d1",
       "name": "HTTP Request19"
@@ -813,8 +789,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        4500,
-        1020
+        5160,
+        900
       ],
       "id": "d74b000c-184b-4994-bda2-10ca87152455",
       "name": "If1"
@@ -826,8 +802,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4920,
-        1160
+        5580,
+        1040
       ],
       "id": "eb3ae41d-99e5-436c-847b-bc02b5657161",
       "name": "Code19"
@@ -839,8 +815,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        4480,
-        1160
+        5140,
+        1040
       ],
       "id": "ccdd2f1e-5448-41ba-9590-e4731e928290",
       "name": "Merge12"
@@ -873,8 +849,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        3560,
-        1120
+        4060,
+        840
       ],
       "id": "647997e3-465c-45a7-841a-76bd8295b8da",
       "name": "If2"
@@ -887,8 +863,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        3560,
-        1260
+        4060,
+        980
       ],
       "id": "7e3f3a9c-99a3-4c10-bbf9-e9bfec7b40fd",
       "name": "Merge13"
@@ -900,8 +876,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3840,
-        1260
+        4340,
+        980
       ],
       "id": "84e98659-fb3c-4fd2-bfe7-f9a61c149c24",
       "name": "Code20"
@@ -913,8 +889,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5200,
-        1000
+        5880,
+        860
       ],
       "id": "787f8556-c3ec-4549-9879-cc0caecc0b30",
       "name": "Code7"
@@ -946,8 +922,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        5360,
-        1000
+        6040,
+        860
       ],
       "id": "0ac80e55-e770-4bc0-9f83-b629d5ebb106",
       "name": "If3"
@@ -959,8 +935,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        5500,
-        1120
+        6120,
+        1000
       ],
       "id": "ffd1cced-170e-4354-ad6a-79e9c11c2e20",
       "name": "Merge14"
@@ -977,8 +953,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        5300,
-        1140
+        5980,
+        1000
       ],
       "id": "7d2fa902-2a7f-4ad1-952f-fd258ad507b9",
       "name": "HTTP Request7"
@@ -990,8 +966,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5660,
-        1120
+        6280,
+        1000
       ],
       "id": "b593e107-89b7-46c7-b3cc-6828456699a6",
       "name": "Code21"
@@ -1003,8 +979,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        3740,
-        1120
+        4240,
+        840
       ],
       "id": "1a275a83-adb0-4e9e-af55-880564534d55",
       "name": "Merge15"
@@ -1021,8 +997,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        3880,
-        1120
+        4400,
+        840
       ],
       "id": "58a6b86f-3437-47bc-8da2-16ca3774f3b7",
       "name": "HTTP Request20"
@@ -1034,8 +1010,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        4680,
-        1020
+        5340,
+        900
       ],
       "id": "e97ba307-bf93-47e9-b7d4-63c50a6554c4",
       "name": "Merge16"
@@ -1052,8 +1028,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4840,
-        1020
+        5500,
+        900
       ],
       "id": "08a627af-5c1f-4dcf-aaea-6f48e8e32d33",
       "name": "HTTP Request21"
@@ -1066,7 +1042,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4540,
+        5020,
         640
       ],
       "id": "332733a5-ddb1-4f2d-a1aa-34fb15f4baa8",
@@ -1081,8 +1057,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        5540,
-        960
+        6220,
+        860
       ],
       "id": "8eb15112-fdfa-4c99-9b70-f599f2d5a9d5",
       "name": "Merge17"
@@ -1099,8 +1075,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        5700,
-        960
+        6360,
+        860
       ],
       "id": "eb228414-0a17-475d-aba6-ade72b7ce590",
       "name": "HTTP Request22"
@@ -1112,8 +1088,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6400,
-        1020
+        7060,
+        880
       ],
       "id": "924389a2-6613-4b13-b420-76eafe0e49af",
       "name": "Code8"
@@ -1145,8 +1121,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        6580,
-        1040
+        7200,
+        880
       ],
       "id": "3a51bad5-a286-402f-b928-0a7580454ee9",
       "name": "If5"
@@ -1163,8 +1139,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        6820,
-        1220
+        7400,
+        1040
       ],
       "id": "da3f2266-0270-4777-971e-46ab704d7be1",
       "name": "HTTP Request8"
@@ -1176,8 +1152,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        6960,
-        1220
+        7540,
+        1040
       ],
       "id": "4689e29a-d0eb-4432-89de-b1b1acc3e220",
       "name": "Code22"
@@ -1189,8 +1165,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        6780,
-        1040
+        7380,
+        880
       ],
       "id": "aa450600-456a-459c-bcd9-b5264b212af0",
       "name": "Merge19"
@@ -1207,8 +1183,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        6920,
-        1040
+        7540,
+        880
       ],
       "id": "461f9545-b314-4a3b-bb89-6d6e67ee09c4",
       "name": "HTTP Request23"
@@ -1240,8 +1216,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        9380,
-        820
+        9880,
+        700
       ],
       "id": "6f36cdb0-6407-4337-bd11-2673afda0cc9",
       "name": "If9"
@@ -1253,8 +1229,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        9520,
-        960
+        10040,
+        840
       ],
       "id": "ddf90e4f-4f0a-437d-a1b7-397bd38533a6",
       "name": "Merge29"
@@ -1266,8 +1242,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        9680,
-        960
+        10180,
+        840
       ],
       "id": "a8a1af02-8f2c-4789-8be0-aa91f223db22",
       "name": "Code29"
@@ -1279,8 +1255,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        9560,
-        800
+        10040,
+        700
       ],
       "id": "4fd1b50d-824e-440a-9003-490c313d65f0",
       "name": "Merge30"
@@ -1297,8 +1273,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        9720,
-        800
+        10180,
+        700
       ],
       "id": "f1252e38-b8fd-493b-a94e-8ab7813097d6",
       "name": "HTTP Request29"
@@ -1315,7 +1291,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        4020,
+        4680,
         360
       ],
       "id": "5ddaf2a6-516f-4e40-a184-7084ec9313f1",
@@ -1332,8 +1308,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        2360,
-        260
+        2740,
+        300
       ],
       "id": "2e7073c1-cee1-417d-b3df-17c643688329",
       "name": "Merge31"
@@ -1345,7 +1321,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1980,
+        2540,
         380
       ],
       "id": "0a6af3d7-2a23-438d-8e2b-32269886ea59",
@@ -1358,8 +1334,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        4760,
-        1180
+        5420,
+        1060
       ],
       "id": "d8691982-e511-425e-963b-b2590d2f9b68",
       "name": "Merge34"
@@ -1370,7 +1346,7 @@
           "__rl": true,
           "value": "cwp7W4Ckgsa2PpST",
           "mode": "list",
-          "cachedResultName": "Outfit extractor"
+          "cachedResultName": "Phase 2 | Outfit extraction"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1387,7 +1363,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        5120,
+        5780,
         660
       ],
       "id": "7dbb9fda-8a60-4867-9f34-030272c03e95",
@@ -1400,8 +1376,8 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.1,
       "position": [
-        6660,
-        1220
+        7240,
+        1040
       ],
       "id": "f32be96b-fb12-47cb-a17e-f8ad1cf04bd8",
       "name": "Merge37"
@@ -1429,8 +1405,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        6220,
-        840
+        6940,
+        680
       ],
       "id": "05529812-ecd9-4eda-8c3d-e0e021b30c83",
       "name": "Execute Workflow1"
@@ -1441,7 +1417,7 @@
           "__rl": true,
           "value": "xOk31j3rA5zvJvVX",
           "mode": "list",
-          "cachedResultName": "prompt generator"
+          "cachedResultName": "Phase 2 | prompt generator"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -1458,8 +1434,8 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        7760,
-        500
+        8260,
+        600
       ],
       "id": "98270749-58d5-4d3c-b291-832e78854b0d",
       "name": "Execute Workflow2"
@@ -1481,8 +1457,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        10300,
-        1400
+        10900,
+        1220
       ],
       "id": "23db1beb-d333-4940-a0ab-75f7d9fcbda5",
       "name": "Edit Fields5"
@@ -1494,7 +1470,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3880,
+        4540,
         360
       ],
       "id": "ce19875c-8cd8-4c51-8fc6-2355afb23cc4",
@@ -1505,7 +1481,7 @@
       "type": "n8n-nodes-base.noOp",
       "typeVersion": 1,
       "position": [
-        4220,
+        4880,
         360
       ],
       "id": "b94dd936-39dd-472f-a92c-1d438d1a72dd",
@@ -1518,7 +1494,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        3700,
+        4360,
         360
       ],
       "id": "0346abee-1cc0-4726-8449-1582c773aacf",
@@ -1527,36 +1503,202 @@
     },
     {
       "parameters": {
+        "jsCode": "const first = $input.first();\nconst itemcount = $input.first().json.Limit_Rows;\nconst emptyrows = $input.first().json.Empty_Rows\n\nconst isEmpty = !first || Object.keys(first.json || {}).length === 0;\n\nreturn [\n    {\n      json: {\n        response: {\n          total_rows: itemcount,\n          processed_rows: 0,\n          message: `Starting workflow with ${itemcount} rows`\n        }\n      }\n    }\n  ];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2720,
+        140
+      ],
+      "id": "30c7f4da-655f-4f45-951b-f105f915d931",
+      "name": "Code23"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/rows/set",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($input.all()[0].json.response, null, 2) }}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2880,
+        140
+      ],
+      "id": "f5affab5-a76f-4157-ab97-9408a63fdbd9",
+      "name": "HTTP Request9"
+    },
+    {
+      "parameters": {
+        "jsCode": "// n8n Code Node - Dynamic Item Limiter\n// This node limits items based on a value from previous node\n\n// Get the limit value from previous node\n// Modify 'limitValue' to match your field name from previous node\nconst limitFromPreviousNode = $input.first().json.body.customValue// Change 'limitValue' to your field name\nconst itemscount = $input.all().length;\n\n// Handle empty/null/undefined values by setting limit to 0\nlet LIMIT;\nif (limitFromPreviousNode === null || \n    limitFromPreviousNode === undefined || \n    limitFromPreviousNode === '' || \n    limitFromPreviousNode === 0) {\n  LIMIT = itemscount;\n} else {\n  // Convert to integer and ensure it's a valid positive number\n  LIMIT = parseInt(limitFromPreviousNode) || 0;\n  LIMIT = Math.max(0, LIMIT); // Ensure non-negative\n}\n\nconst OFFSET = 0; // Number of items to skip from the beginning (optional)\n\n// Get input items\nconst inputItems = $input.all();\n\n// If limit is 0, return empty array\nif (LIMIT === 0) {\n  return [];\n}\n\n// Apply offset and limit\nconst limitedItems = inputItems.slice(OFFSET, OFFSET + LIMIT);\n\n// Return the limited items\nreturn limitedItems.map(item => ({\n  json: item.json,\n  binary: item.binary || {}\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2440,
+        600
+      ],
+      "id": "2481e2ac-23d2-40d6-85f4-97498fedaef6",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d150a1f3-02ad-42d7-82b1-738fa2df952c",
+              "name": "body.customValue",
+              "value": "={{ $('Webhook').item.json.body.customValue }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1580,
+        820
+      ],
+      "id": "2eb1af04-8283-48de-8a58-8176b83cc721",
+      "name": "Edit Fields4"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        2220,
+        600
+      ],
+      "id": "dc22f54e-2964-4651-aa66-2c4a6c927bb6",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "path": "0698ef7c-72de-41a8-8083-de15773021ac",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        760,
+        1060
+      ],
+      "id": "208c75cc-64e9-45ce-b2f0-7f614c8c4445",
+      "name": "Webhook1",
+      "webhookId": "0698ef7c-72de-41a8-8083-de15773021ac"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n    \"active\": true,\n    \"message\": \"Workflow running smoothly\"\n}",
         "options": {}
       },
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.3,
       "position": [
-        4440,
-        360
+        960,
+        1060
       ],
-      "id": "baf89c93-8cd7-4533-be9b-4b0cf783ff74",
-      "name": "Respond to Webhook"
+      "id": "39984077-ec6c-4999-9463-d29b97cbf89a",
+      "name": "Respond to Webhook1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get the current index from workflow static data (persistent storage)\nlet currentIndex = $getWorkflowStaticData('global').index || 0;\n\n// Increment the index (starts at 1 for first run)\ncurrentIndex++;\n\n// Save the updated index back to static data\n$getWorkflowStaticData('global').index = currentIndex;\n\n// Return the current index\nreturn {\n  index: currentIndex\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3620,
+        1200
+      ],
+      "id": "7e7ab8f2-61ab-4b93-ab41-7e2b9b404dd2",
+      "name": "Code10"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        740,
+        400
+      ],
+      "id": "98abb1ff-3036-4ad8-94a4-3a7707635972",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:8001/rows/completed",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "completed_rows",
+              "value": "={{ $json.index }}"
+            },
+            {
+              "name": "row_number",
+              "value": "={{ $json.row_number }}"
+            },
+            {
+              "name": "gen_col",
+              "value": "={{ $json[\"Gen-col\"] }}"
+            },
+            {
+              "name": "message",
+              "value": "=Row {{ $json.row_number }} processing completed "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        11520,
+        1280
+      ],
+      "id": "7bdad649-1094-4c5e-9a9c-f7f12a80cc76",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "numberInputs": 3,
+        "options": {
+          "includeUnpaired": true
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        11340,
+        1280
+      ],
+      "id": "c046e181-4e6b-4887-af54-9911713b82dc",
+      "name": "Merge3"
     }
   ],
   "pinData": {},
   "connections": {
-    "When clicking ‘Test workflow’": {
-      "main": [
-        [
-          {
-            "node": "Gets image from sheet",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "HTTP Request2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Merge": {
       "main": [
         [
@@ -1632,9 +1774,14 @@
             "index": 0
           },
           {
-            "node": "Code5",
+            "node": "Code10",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 2
           }
         ]
       ]
@@ -1665,12 +1812,7 @@
       "main": [
         [
           {
-            "node": "Limit",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Code3",
+            "node": "Merge2",
             "type": "main",
             "index": 0
           }
@@ -1687,11 +1829,6 @@
     "Google Sheets Trigger": {
       "main": [
         [
-          {
-            "node": "Gets image from sheet",
-            "type": "main",
-            "index": 0
-          },
           {
             "node": "HTTP Request2",
             "type": "main",
@@ -1758,33 +1895,11 @@
       "main": [
         [
           {
-            "node": "Gets image from sheet",
-            "type": "main",
-            "index": 0
-          },
-          {
             "node": "HTTP Request2",
             "type": "main",
             "index": 0
           }
         ]
-      ]
-    },
-    "Limit": {
-      "main": [
-        [
-          {
-            "node": "Code16",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        []
       ]
     },
     "Edit Fields3": {
@@ -2378,6 +2493,11 @@
             "node": "Merge31",
             "type": "main",
             "index": 1
+          },
+          {
+            "node": "Code23",
+            "type": "main",
+            "index": 0
           }
         ]
       ]
@@ -2451,9 +2571,9 @@
       "main": [
         [
           {
-            "node": "Loop Over Items1",
+            "node": "Merge3",
             "type": "main",
-            "index": 0
+            "index": 1
           }
         ]
       ]
@@ -2482,9 +2602,133 @@
     },
     "No Operation, do nothing": {
       "main": [
+        []
+      ]
+    },
+    "Code23": {
+      "main": [
         [
           {
-            "node": "Respond to Webhook",
+            "node": "HTTP Request9",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code16",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields4": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Code3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook1": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields4",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Gets image from sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code10": {
+      "main": [
+        [
+          {
+            "node": "Code5",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge3": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
             "type": "main",
             "index": 0
           }
@@ -2496,7 +2740,7 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "2cc15442-6902-48a2-9bc1-f333b69da819",
+  "versionId": "7b56448c-1e80-4a54-8f36-6392a6b1a9e1",
   "meta": {
     "instanceId": "ca033a4d92476214a7b66cfdbe053fca39109d5560a0b66321aa8a888d37e02d"
   },

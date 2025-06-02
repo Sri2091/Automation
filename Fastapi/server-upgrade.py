@@ -1,5 +1,7 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware 
 from pydantic import BaseModel
 from typing import Optional, Dict, List, Any
 from datetime import datetime
@@ -7,6 +9,15 @@ import asyncio
 import json
 
 app = FastAPI(title="n8n Workflow Logger", description="Real-time logging server for n8n workflows")
+
+# ✅ ADD CORS MIDDLEWARE
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with specific origins
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["*"],
+)
 
 # In-memory storage for logs
 logs: List[Dict] = []
@@ -339,6 +350,9 @@ async def reset_rows_count():
     
     print(f"[{timestamp}] Rows count reset")
     return {"status": "success", "message": "Rows count reset", "timestamp": timestamp}
+
+# app.mount("/dashboard", StaticFiles(directory="dashboard"), name="static")
+
 
 if __name__ == "__main__":
     import uvicorn

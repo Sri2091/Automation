@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        /* Your existing CSS - keeping it exactly the same */
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #f7f8fa;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100%;
+            background-color: #ffffff;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            background-color: #fff;
+            z-index: 10;
+        }
+
+        .page-tabs a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            padding: 10px 15px;
+            margin-right: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .page-tabs a.active,
+        .page-tabs a:hover {
+            color: #000;
+            background-color: #f0f0f0;
+        }
+        
+        .page-tabs a.active {
+            font-weight: 600;
+        }
+
+        .connection-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .connected { background-color: #d4edda; color: #155724; }
+        .disconnected { background-color: #f8d7da; color: #721c24; }
+        .completed { background-color: #fff3cd; color: #856404; }
+
+        .main-content-area {
+            flex: 1;
+            padding: 30px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+        
+        .page-view {
+            display: none;
+        }
+
+        .page-view.active {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .dashboard-header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        .action-button {
+            background-color: #2d3748;
+            color: white;
+            border: none;
+            padding: 15px 45px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .action-button:hover {
+            background-color: #1a202c;
+        }
+
+        .action-button:disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .clear-btn {
+            background-color: #dc3545;
+            margin-left: 10px;
+        }
+
+        .clear-btn:hover {
+            background-color: #c82333;
+        }
+
+        .reset-btn {
+            background-color: #ffc107;
+            color: #000;
+            margin-left: 10px;
+        }
+
+        .reset-btn:hover {
+            background-color: #e0a800;
+        }
+
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+            flex-shrink: 0;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.09);
+            cursor: pointer;
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .card-header span:first-child {
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .card-header .icon {
+            font-size: 18px;
+            color: #888;
+        }
+
+        .card-body .value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .card-body .sub-text {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .card-body .sub-text.positive {
+            color: #38a169;
+        }
+
+        .home-page-split-layout {
+            display: flex;
+            gap: 30px;
+            flex: 1;
+            min-height: 0;
+            overflow: visible;
+        }
+
+        .logs-column {
+            flex: 1;
+            min-width: 400px;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .logs-column h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 0 0 15px 0;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .log-entries {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 #f7fafc;
+        }
+
+        .log-entries::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .log-entries::-webkit-scrollbar-track {
+            background: #f7fafc;
+            border-radius: 3px;
+        }
+
+        .log-entries::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .log-entries::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        .log-item {
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            border-left: 4px solid #ccc;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            flex-shrink: 0;
+        }
+
+        .log-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            font-size: 20px;
+            font-weight: 700;
+            border-radius: 6px 6px 0 0;
+        }
+
+        .log-item.success .log-item-header { background-color: #e6fffa; color: #257866;}
+        .log-item.error .log-item-header { background-color: #fff5f5; color: #c53030;}
+        .log-item.warning .log-item-header { background-color: #fffaf0; color: #b47611;}
+        .log-item.info .log-item-header { background-color: #e6f7ff; color: #0967a1;}
+
+        .log-item-body {
+            padding: 12px 15px;
+        }
+
+        .log-status {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .success-label { background-color: #c6f6d5; color: #2f855a; border: 1px solid #9ae6b4;}
+        .error-label { background-color: #fed7d7; color: #c53030; border: 1px solid #feb2b2;}
+        .warning-label { background-color: #feebc8; color: #975a16; border: 1px solid #fbd38d;}
+        .info-label { background-color: #bee3f8; color: #2a69ac; border: 1px solid #90cdf4;}
+
+        .log-details p {
+            margin: 2px 0 5px;
+            font-size: 12px;
+            color: #555;
+            word-break: break-word;
+        }
+
+        .log-id {
+            font-size: 10px;
+            color: #777;
+            font-family: 'Courier New', monospace;
+        }
+
+        .log-message {
+            font-size: 12px;
+            color: #444;
+            background-color: #f0f0f0;
+            padding: 8px 10px;
+            border-radius: 4px;
+            margin-top: 8px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .log-code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-x: auto;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
+
+        .log-timestamp{
+            font-size: 12px;
+        }
+
+        .log-item.success { border-left-color: #68d391; }
+        .log-item.error { border-left-color: #fc8181; }
+        .log-item.warning { border-left-color: #f6e05e; }
+        .log-item.info { border-left-color: #63b3ed; }
+
+        .sheets-selector-column {
+            flex: 0 0 320px;
+            min-width: 280px;
+            max-width: 350px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .sheets-selector-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .selector-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 25px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .selector-icon {
+            font-size: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .custom-select-wrapper {
+            position: relative;
+        }
+
+        .custom-select-wrapper select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background-color: #ffffff;
+            font-size: 14px;
+            color: #111827;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .custom-select-wrapper select:focus {
+            outline: none;
+            border-color: #2d3748;
+            box-shadow: 0 0 0 3px rgba(45, 55, 72, 0.1);
+        }
+
+        .custom-select-wrapper select:disabled {
+            background-color: #f3f4f6;
+            color: #9ca3af;
+            cursor: not-allowed;
+            border-color: #e5e7eb;
+        }
+
+        .custom-select-wrapper::after {
+            content: '▼';
+            font-size: 10px;
+            color: #6b7281;
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .sheet-action-button {
+            width: 100%;
+            margin-top: auto;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sheet-action-button:disabled {
+            background-color: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .logs-page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+        }
+
+        .logs-page-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stats-bar {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #495057;
+            flex-shrink: 0;
+        }
+
+        .full-logs-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e0 #f7fafc;
+        }
+
+        .full-logs-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .full-logs-container::-webkit-scrollbar-track {
+            background: #f7fafc;
+            border-radius: 3px;
+        }
+
+        .full-logs-container::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+
+        .full-logs-container::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0;
+        }
+
+        .no-logs {
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+        }
+
+        .log-item.new-log {
+            animation: newLogEntrance 0.8s ease-out;
+        }
+
+        .log-item.new-log.success-entry {
+            animation: newLogEntranceSuccess 0.8s ease-out;
+        }
+
+        .log-item.new-log.error-entry {
+            animation: newLogEntranceError 0.8s ease-out;
+        }
+
+        @keyframes newLogEntrance {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes newLogEntranceSuccess {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            50% {
+                background: #e8f5e8;
+                box-shadow: 0 0 20px rgba(76, 175, 80, 0.4);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+                background: #f9f9f9;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            }
+        }
+
+        @keyframes newLogEntranceError {
+            0% {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            50% {
+                background: #ffebee;
+                box-shadow: 0 0 20px rgba(244, 67, 54, 0.4);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+                background: #f9f9f9;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            }
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-indicator.active {
+            background-color: #38a169;
+            animation: pulseGreen 2s infinite;
+        }
+
+        .status-indicator.inactive {
+            background-color: #e53e3e;
+            animation: pulseRed 2s infinite;
+        }
+
+        .status-indicator.checking {
+            background-color: #ffa500;
+            animation: pulseOrange 1s infinite;
+        }
+
+        @keyframes pulseGreen {
+            0% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(56, 161, 105, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0); }
+        }
+
+        @keyframes pulseRed {
+            0% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(229, 62, 62, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 62, 62, 0); }
+        }
+
+        @keyframes pulseOrange {
+            0% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.7); }
+            70% { box-shadow: 0 0 0 8px rgba(255, 165, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 165, 0, 0); }
+        }
+        /* Toggle component styles */
+        .workflow-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .inline-toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e0;
+            transition: 0.3s;
+            border-radius: 20px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #2d3748;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+
+        .number-input {
+            width: 60px;
+            padding: 6px 8px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .number-input:enabled {
+            border-color: #2d3748;
+        }
+
+        .number-input:disabled {
+            background-color: #f3f4f6;
+            color: #9ca3af;
+            border-color: #e5e7eb;
+        }
+
+        .input-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="top-bar">
+            <nav class="page-tabs">
+                <a href="#" data-page="home" class="active">Home</a>
+                <a href="#" data-page="logs">Logs</a>
+            </nav>
+            <div>
+                <span id="status" class="connection-status disconnected">Connecting...</span>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            <div id="home-content" class="page-view active">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <div class="workflow-controls">
+                        <div class="inline-toggle-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="custom-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <input type="number" id="custom-value" class="number-input" value="100" min="1" max="10000"
+                                disabled>
+                            <span class="input-label">rows</span>
+                        </div>
+                        <button class="action-button" id="start-workflow-btn" onclick="startWorkflow()" disabled>Trigger
+                            Workflow</button>
+                    </div>
+                </div>
+
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Workflow Status</span>
+                            <span class="icon">⚙️</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value">
+                                <span class="status-indicator checking" id="workflow-indicator"></span>
+                                <span id="workflow-status-text">Checking...</span>
+                            </div>
+                            <div class="sub-text" id="workflow-sub-text">Connecting to n8n...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Total Rows to Process</span>
+                            <span class="icon">📋</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value" id="total-rows-count">0</div>
+                            <div class="sub-text" id="rows-status">Waiting for workflow data...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Sales</span>
+                            <span class="icon">🛒</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value">+12,234</div>
+                            <div class="sub-text positive">+19% from last month</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Active Now</span>
+                            <span class="icon">⚡</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value">+573</div>
+                            <div class="sub-text">+201 since last hour</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home-page-split-layout">
+                    <div class="logs-column">
+                        <h2>Latest Activity Logs</h2>
+                        <div class="log-entries" id="home-log-entries">
+                            <div class="no-logs">Connecting to log server...</div>
+                        </div>
+                    </div>
+
+                    <div class="sheets-selector-column">
+                        <div class="sheets-selector-container">
+                            <h3 class="selector-title">
+                                <span class="selector-icon"></span> Select Document & Sheet
+                            </h3>
+                            
+                            <div class="form-group">
+                                <label for="google-doc-select">Google Sheets Document</label>
+                                <div class="custom-select-wrapper">
+                                    <select id="google-doc-select" name="google-doc">
+                                        <option value="">Select a document</option>
+                                        <option value="doc1">Sales Report Q1 2025</option>
+                                        <option value="doc2">Marketing Campaign Tracker</option>
+                                        <option value="doc3">Inventory List - Main Warehouse</option>
+                                        <option value="doc4">Employee Performance Data</option>
+                                        <option value="doc5">Budget Analysis 2025</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="sheet-select">Sheet</label>
+                                <div class="custom-select-wrapper">
+                                    <select id="sheet-select" name="sheet-name" disabled>
+                                        <option value="">Select a document first</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button class="action-button sheet-action-button" id="link-sheet-btn" disabled>
+                                Link Sheet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="logs-content" class="page-view">
+                <div class="logs-page-header">
+                    <h1>Application Logs</h1>
+                    <div class="logs-page-controls">
+                        <button class="action-button" onclick="loadLogs()">Refresh</button>
+                        <button class="action-button clear-btn" onclick="clearLogs()">Clear All</button>
+                    </div>
+                </div>
+                <div class="stats-bar" id="stats-bar">
+                    Connecting to log server...
+                </div>
+                <div class="full-logs-container" id="full-logs-container">
+                    <div class="no-logs">Connecting to log server...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // ✅ CORRECTED: Global variables with proper initialization
+        let ws = null;
+        let allLogs = [];
+        let workflowCompleted = false;
+        let isWorkflowRunning = false;
+        let totalRows = 0;
+        let processedRows = 0;
+
+        // ✅ CORRECTED: Connection management variables
+        let isConnecting = false;
+        let reconnectTimeout = null;
+        let connectionAttempts = 0;
+        const MAX_RECONNECT_ATTEMPTS = 5;
+
+        // Workflow connection
+        let workflowCheckInterval;
+        const WEBHOOK_URL = 'http://192.168.0.97:5678/webhook/035f7711-1d10-4fc6-b71b-d02a60272fd7';
+        const WORKFLOW_TRIGGER_URL = 'http://192.168.0.97:5678/webhook-test/ad44fb78-e0fc-43fa-9003-77f8ef6693b8';
+
+        // ✅ CORRECTED: WebSocket connection with proper management
+        function connectWebSocket() {
+            console.log('🔌 Attempting WebSocket connection...');
+            
+            // Prevent multiple simultaneous connection attempts
+            if (isConnecting) {
+                console.log('⏸️ Connection attempt already in progress, skipping...');
+                return;
+            }
+            
+            // Close existing connection if it exists and is not closed
+            if (ws && ws.readyState !== WebSocket.CLOSED && ws.readyState !== WebSocket.CLOSING) {
+                console.log('🔗 Closing existing WebSocket connection...');
+                ws.close(1000, 'Creating new connection');
+                ws = null;
+            }
+            
+            // Check if we've exceeded max attempts
+            if (connectionAttempts >= MAX_RECONNECT_ATTEMPTS) {
+                console.log('❌ Max reconnection attempts reached. Stopped trying to reconnect.');
+                document.getElementById('status').textContent = 'Connection Failed';
+                document.getElementById('status').className = 'connection-status disconnected';
+                return;
+            }
+            
+            isConnecting = true;
+            connectionAttempts++;
+            
+            console.log(`🔄 Connection attempt ${connectionAttempts}/${MAX_RECONNECT_ATTEMPTS}`);
+            
+            try {
+                const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+                ws = new WebSocket(`${protocol}//localhost:8001/ws`);
+                
+                ws.onopen = function() {
+                    console.log('✅ Connected to log server successfully!');
+                    document.getElementById('status').textContent = 'Live';
+                    document.getElementById('status').className = 'connection-status connected';
+                    
+                    // Reset on successful connection
+                    isConnecting = false;
+                    connectionAttempts = 0;
+                    
+                    // Clear any pending reconnection
+                    if (reconnectTimeout) {
+                        clearTimeout(reconnectTimeout);
+                        reconnectTimeout = null;
+                    }
+                };
+                
+                ws.onmessage = function(event) {
+                    try {
+                        const data = JSON.parse(event.data);
+                        
+                        if (data.type === 'all_logs') {
+                            allLogs = data.logs;
+                            displayLogsInHome(allLogs);
+                            displayLogsInLogsPage(allLogs);
+                        } else if (data.type === 'new_log') {
+                            allLogs.push(data.log);
+                            if (allLogs.length > 1000) {
+                                allLogs.shift();
+                            }
+                            displayLogsInHome(allLogs, true);
+                            displayLogsInLogsPage(allLogs, true);
+                        } else if (data.type === 'logs_cleared') {
+                            allLogs = [];
+                            workflowCompleted = false;
+                            displayLogsInHome(allLogs);
+                            displayLogsInLogsPage(allLogs);
+                        } else if (data.type === 'workflow_completed') {
+                            workflowCompleted = true;
+                            isWorkflowRunning = false;
+                            document.getElementById('status').textContent = 'Completed';
+                            document.getElementById('status').className = 'connection-status completed';
+                            enableStartButton();
+                        } else if (data.type === 'workflow_reset') {
+                            workflowCompleted = false;
+                            document.getElementById('status').textContent = 'Live';
+                            document.getElementById('status').className = 'connection-status connected';
+                        } else if (data.type === 'rows_updated') {
+                            totalRows = data.total_rows;
+                            processedRows = data.processed_rows;
+                            updateRowsCard(data);
+                        } else if (data.type === 'rows_reset') {
+                            totalRows = 0;
+                            processedRows = 0;
+                            updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Waiting for workflow data...'});
+                        }
+                    } catch (error) {
+                        console.error('Error parsing WebSocket message:', error);
+                    }
+                };
+                
+                ws.onclose = function(event) {
+                    console.log('❌ WebSocket connection closed. Code:', event.code, 'Reason:', event.reason);
+                    isConnecting = false;
+                    ws = null;
+                    
+                    document.getElementById('status').textContent = 'Disconnected';
+                    document.getElementById('status').className = 'connection-status disconnected';
+                    
+                    // Only attempt reconnection if we haven't exceeded max attempts
+                    if (connectionAttempts < MAX_RECONNECT_ATTEMPTS) {
+                        console.log(`⏰ Attempting to reconnect in 3 seconds... (${connectionAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
+                        
+                        // Clear any existing timeout
+                        if (reconnectTimeout) {
+                            clearTimeout(reconnectTimeout);
+                        }
+                        
+                        reconnectTimeout = setTimeout(() => {
+                            reconnectTimeout = null;
+                            connectWebSocket();
+                        }, 3000);
+                    } else {
+                        console.log('❌ Max reconnection attempts reached. Connection stopped.');
+                    }
+                };
+                
+                ws.onerror = function(error) {
+                    console.error('❌ WebSocket error:', error);
+                    isConnecting = false;
+                    document.getElementById('status').textContent = 'Error';
+                    document.getElementById('status').className = 'connection-status disconnected';
+                };
+                
+            } catch (error) {
+                console.error('❌ Error creating WebSocket:', error);
+                isConnecting = false;
+            }
+        }
+
+        // ✅ CORRECTED: Clean up connections when page is unloaded
+        window.addEventListener('beforeunload', function() {
+            console.log('🧹 Page unloading - cleaning up WebSocket connection');
+            
+            // Clear any timeouts
+            if (reconnectTimeout) {
+                clearTimeout(reconnectTimeout);
+                reconnectTimeout = null;
+            }
+            if (workflowCheckInterval) {
+                clearInterval(workflowCheckInterval);
+                workflowCheckInterval = null;
+            }
+            
+            // Close WebSocket connection
+            if (ws && ws.readyState === WebSocket.OPEN) {
+                ws.close(1000, 'Page unloading');
+                ws = null;
+            }
+        });
+
+        // ✅ CORRECTED: Reset connection attempts when user manually refreshes
+        window.addEventListener('focus', function() {
+            // Reset connection attempts when window regains focus
+            if (connectionAttempts >= MAX_RECONNECT_ATTEMPTS && (!ws || ws.readyState === WebSocket.CLOSED)) {
+                console.log('🔄 Window focused - resetting connection attempts');
+                connectionAttempts = 0;
+                connectWebSocket();
+            }
+        });
+
+        // Workflow status checking
+        async function checkWorkflowStatus() {
+            try {
+                const response = await fetch(WEBHOOK_URL);
+                const data = await response.json();
+                updateWorkflowStatus(data.active, data.message || 'Workflow running');
+            } catch (error) {
+                console.error('Error checking workflow status:', error);
+                updateWorkflowStatus(false, 'Connection failed');
+            }
+        }
+
+        async function startWorkflow() {
+            const startBtn = document.getElementById('start-workflow-btn');
+            
+            startBtn.disabled = true;
+            startBtn.textContent = 'Starting...';
+            isWorkflowRunning = true;
+            
+            try {
+                const isCustomEnabled = document.getElementById('custom-toggle').checked;
+                const customValue = isCustomEnabled ? parseInt(document.getElementById('custom-value').value) || 1 : "";
+                const response = await fetch(WORKFLOW_TRIGGER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        trigger: 'manual',
+                        timestamp: new Date().toISOString(),
+                        customValue: customValue
+                    })
+                });
+                
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('Workflow started successfully:', result);
+                    
+                    startBtn.textContent = 'Running...';
+                    startBtn.style.backgroundColor = '#ffc107';
+                    startBtn.style.color = '#000';
+                    
+                    setTimeout(checkWorkflowStatus, 1000);
+                    
+                } else {
+                    throw new Error('Failed to start workflow');
+                }
+                
+            } catch (error) {
+                console.error('Error starting workflow:', error);
+                
+                startBtn.textContent = 'Error';
+                startBtn.style.backgroundColor = '#e53e3e';
+                isWorkflowRunning = false;
+                
+                setTimeout(() => {
+                    enableStartButton();
+                }, 3000);
+            }
+        }
+
+        function enableStartButton() {
+            const startBtn = document.getElementById('start-workflow-btn');
+            startBtn.disabled = false;
+            startBtn.textContent = 'Trigger Workflow';
+            startBtn.style.backgroundColor = '';
+            startBtn.style.color = '';
+        }
+
+        function updateStartButtonState() {
+            const startBtn = document.getElementById('start-workflow-btn');
+            if (isWorkflowRunning) {
+                startBtn.disabled = true;
+                startBtn.textContent = 'Running...';
+                startBtn.style.backgroundColor = '#ffc107';
+                startBtn.style.color = '#000';
+            } else {
+                enableStartButton();
+            }
+        }
+
+        function updateRowsCard(data) {
+            const totalRowsElement = document.getElementById('total-rows-count');
+            const rowsStatusElement = document.getElementById('rows-status');
+            
+            if (totalRowsElement) {
+                totalRowsElement.textContent = data.total_rows.toLocaleString();
+            }
+            
+            if (rowsStatusElement) {
+                if (data.total_rows === 0) {
+                    rowsStatusElement.textContent = data.message || 'Waiting for workflow data...';
+                    rowsStatusElement.className = 'sub-text';
+                } else if (data.processed_rows > 0) {
+                    const percentage = data.percentage || ((data.processed_rows / data.total_rows) * 100);
+                    if (data.processed_rows >= data.total_rows) {
+                        rowsStatusElement.textContent = `✅ All ${data.total_rows.toLocaleString()} rows completed`;
+                        rowsStatusElement.className = 'sub-text positive';
+                    } else {
+                        rowsStatusElement.textContent = `${data.processed_rows.toLocaleString()}/${data.total_rows.toLocaleString()} processed (${percentage.toFixed(1)}%)`;
+                        rowsStatusElement.className = 'sub-text positive';
+                    }
+                } else {
+                    rowsStatusElement.textContent = `Ready to process ${data.total_rows.toLocaleString()} rows`;
+                    rowsStatusElement.className = 'sub-text';
+                }
+            }
+        }
+
+        async function loadRowsCount() {
+            try {
+                const response = await fetch('http://localhost:8001/rows');
+                if (response.ok) {
+                    const data = await response.json();
+                    totalRows = data.total_rows;
+                    processedRows = data.processed_rows;
+                    updateRowsCard({
+                        total_rows: data.total_rows,
+                        processed_rows: data.processed_rows,
+                        percentage: data.percentage
+                    });
+                } else {
+                    updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Server not responding'});
+                }
+            } catch (error) {
+                console.error('Error loading rows count:', error);
+                updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Unable to connect to server'});
+            }
+        }
+
+        function updateWorkflowStatus(isActive, message) {
+            const indicator = document.getElementById('workflow-indicator');
+            const statusText = document.getElementById('workflow-status-text');
+            const subText = document.getElementById('workflow-sub-text');
+            
+            if (isActive) {
+                indicator.className = 'status-indicator active';
+                statusText.textContent = 'Active';
+                subText.textContent = message;
+                subText.className = 'sub-text active';
+            } else {
+                indicator.className = 'status-indicator inactive';
+                statusText.textContent = 'Inactive';
+                subText.textContent = message;
+                subText.className = 'sub-text inactive';
+            }
+        }
+
+        function displayLogsInHome(logs, isNewLog = false) {
+            const container = document.getElementById('home-log-entries');
+            
+            if (logs.length === 0) {
+                container.innerHTML = '<div class="no-logs">No logs yet. Waiting for n8n workflows...</div>';
+                return;
+            }
+
+            const recentLogs = logs.slice(-4).reverse();
+            
+            if (isNewLog && logs.length > 0) {
+                const latestLog = logs[logs.length - 1];
+                const existingLogs = container.querySelectorAll('.log-item');
+                
+                if (existingLogs.length >= 4) {
+                    existingLogs[existingLogs.length - 1].remove();
+                }
+                
+                const div = createLogElement(latestLog, true);
+                container.insertBefore(div, container.firstChild);
+                
+                setTimeout(() => {
+                    div.classList.remove('new-log', 'success-entry', 'error-entry');
+                }, 800);
+            } else {
+                container.innerHTML = '';
+                recentLogs.forEach(log => {
+                    const div = createLogElement(log, false);
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function displayLogsInLogsPage(logs, isNewLog = false) {
+            const container = document.getElementById('full-logs-container');
+            const statsBar = document.getElementById('stats-bar');
+            
+            const uniqueWorkflows = new Set(logs.filter(log => log.workflow_id).map(log => log.workflow_id)).size;
+            const recentLogs = logs.filter(log => {
+                const logTime = new Date(log.timestamp);
+                const now = new Date();
+                return (now - logTime) < 300000;
+            }).length;
+            
+            const completionStatus = workflowCompleted ? ' | 🟡 WORKFLOW COMPLETED' : '';
+            statsBar.innerHTML = `
+                Stats: ${logs.length} total logs | 
+                ${uniqueWorkflows} active workflows | 
+                ${recentLogs} logs in last 5 minutes${completionStatus}
+            `;
+            
+            if (logs.length === 0) {
+                container.innerHTML = '<div class="no-logs">No logs yet. Waiting for n8n workflows...</div>';
+                return;
+            }
+
+            if (isNewLog && logs.length > 0) {
+                const latestLog = logs[logs.length - 1];
+                const div = createLogElement(latestLog, true);
+                container.insertBefore(div, container.firstChild);
+                
+                setTimeout(() => {
+                    div.classList.remove('new-log', 'success-entry', 'error-entry');
+                }, 800);
+                
+                const logElements = container.querySelectorAll('.log-item');
+                if (logElements.length > 100) {
+                    logElements[logElements.length - 1].remove();
+                }
+            } else {
+                container.innerHTML = '';
+                logs.slice().reverse().forEach(log => {
+                    const div = createLogElement(log, false);
+                    container.appendChild(div);
+                });
+            }
+        }
+
+        function createLogElement(log, isNew = false) {
+            const div = document.createElement('div');
+            
+            let logLevel = log.level ? log.level.toLowerCase() : 'info';
+            
+            if (log.message && log.message.toLowerCase().includes('error')) {
+                logLevel = 'error';
+            } else if (log.message && log.message.toLowerCase().includes('success')) {
+                logLevel = 'success';
+            } else if (log.message && log.message.toLowerCase().includes('warning')) {
+                logLevel = 'warning';
+            }
+            
+            let animationClass = '';
+            if (isNew) {
+                if (logLevel === 'success') {
+                    animationClass = ' new-log success-entry';
+                } else if (logLevel === 'error') {
+                    animationClass = ' new-log error-entry';
+                } else {
+                    animationClass = ' new-log';
+                }
+            }
+            
+            div.className = `log-item ${logLevel}${animationClass}`;
+            
+            const timestamp = new Date(log.timestamp).toLocaleString();
+            
+            let html = `
+                <div class="log-item-header">
+                    <span class="log-title">${log.level || 'Log Entry'}</span>
+                    <span class="log-timestamp">${timestamp}</span>
+                </div>
+                <div class="log-item-body">
+                    <span class="log-status ${logLevel}-label">${logLevel}</span>
+            `;
+            
+            html += '<div class="log-details">';
+            if (log.workflow_id || log.workflow_name || log.node_name) {
+                
+                if (log.workflow_name) {
+                    html += `<p>${log.workflow_name}</p>`;
+                }
+                
+                if (log.workflow_id && log.workflow_id !== log.workflow_name) {
+                    html += `<p class="log-id">ID: ${log.workflow_id}</p>`;
+                }
+                
+                if (log.node_name) {
+                    html += `<p>Node: ${log.node_name}</p>`;
+                }
+            }
+            html += '</div>';
+            
+            if (log.data) {
+                if (typeof log.data === 'string') {
+                    html += `<div class="log-message">${log.data}</div>`;
+                } else {
+                    html += `<pre class="log-code-block">${JSON.stringify(log.data, null, 2)}</pre>`;
+                }
+            }
+            
+            html += '</div>';
+            div.innerHTML = html;
+            return div;
+        }
+
+        async function loadLogs() {
+            try {
+                const response = await fetch('http://localhost:8001/logs');
+                const data = await response.json();
+                allLogs = data.logs || [];
+                workflowCompleted = data.workflow_completed || false;
+                displayLogsInHome(allLogs);
+                displayLogsInLogsPage(allLogs);
+            } catch (error) {
+                console.error('Error loading logs:', error);
+            }
+        }
+
+        async function clearLogs() {
+            if (confirm('Are you sure you want to clear all logs? This cannot be undone.')) {
+                try {
+                    allLogs = [];
+                    displayLogsInHome(allLogs);
+                    displayLogsInLogsPage(allLogs);
+                    
+                    const response = await fetch('http://localhost:8001/logs', {
+                        method: 'DELETE'
+                    });
+                    
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Logs cleared successfully:', result);
+                    } else {
+                        console.log('Server not responding, but logs cleared locally');
+                    }
+                    
+                } catch (error) {
+                    console.log('Server not available, but logs cleared locally:', error);
+                }
+            }
+        }
+
+        // ✅ CORRECTED: Document ready event - ONLY CALL connectWebSocket ONCE
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Dashboard initializing...');
+            
+            const tabs = document.querySelectorAll('.page-tabs a');
+            const pageViews = document.querySelectorAll('.page-view');
+            const customToggle = document.getElementById('custom-toggle');
+            const customValueInput = document.getElementById('custom-value');
+            customToggle.addEventListener('change', function() {
+            customValueInput.disabled = !this.checked;
+            });
+
+            // ✅ SINGLE WebSocket connection call - THIS IS THE KEY FIX
+            connectWebSocket();
+            
+            // Load initial data after a short delay
+            setTimeout(() => {
+                if (allLogs.length === 0) {
+                    loadLogs();
+                }
+                loadRowsCount();
+            }, 2000);
+
+            // Start workflow status checking
+            workflowCheckInterval = setInterval(checkWorkflowStatus, 10000);
+            checkWorkflowStatus();
+            updateStartButtonState();
+            
+            // Tab switching functionality
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const targetPageId = this.getAttribute('data-page') + '-content';
+                    pageViews.forEach(view => view.classList.remove('active'));
+                    
+                    const targetPage = document.getElementById(targetPageId);
+                    if (targetPage) {
+                        targetPage.classList.add('active');
+                    }
+                });
+            });
+
+            // Sheet selector functionality
+            const googleDocSelect = document.getElementById('google-doc-select');
+            const sheetSelect = document.getElementById('sheet-select');
+            const linkSheetBtn = document.getElementById('link-sheet-btn');
+
+            const sheetData = {
+                'doc1': ['Q1 Summary', 'Monthly Breakdown', 'Regional Data', 'Projections'],
+                'doc2': ['Campaign Overview', 'Social Media', 'Email Campaigns', 'Analytics'],
+                'doc3': ['Main Inventory', 'Low Stock Items', 'Supplier Info', 'Order History'],
+                'doc4': ['Performance Metrics', 'Reviews', 'Goals', 'Training Records'],
+                'doc5': ['Income Statement', 'Expenses', 'Forecasts', 'Variance Analysis']
+            };
+
+            googleDocSelect.addEventListener('change', function() {
+                const selectedDoc = this.value;
+                sheetSelect.innerHTML = '<option value="">Select a sheet</option>';
+                
+                if (selectedDoc && sheetData[selectedDoc]) {
+                    sheetSelect.disabled = false;
+                    sheetData[selectedDoc].forEach(sheet => {
+                        const option = document.createElement('option');
+                        option.value = sheet.toLowerCase().replace(/\s+/g, '-');
+                        option.textContent = sheet;
+                        sheetSelect.appendChild(option);
+                    });
+                } else {
+                    sheetSelect.disabled = true;
+                    linkSheetBtn.disabled = true;
+                }
+            });
+
+            sheetSelect.addEventListener('change', function() {
+                linkSheetBtn.disabled = !this.value;
+            });
+
+            linkSheetBtn.addEventListener('click', function() {
+                const selectedDoc = googleDocSelect.options[googleDocSelect.selectedIndex].text;
+                const selectedSheet = sheetSelect.options[sheetSelect.selectedIndex].text;
+                
+                if (selectedDoc && selectedSheet) {
+                    alert(`Linking to:\nDocument: ${selectedDoc}\nSheet: ${selectedSheet}`);
+                }
+            });
+            
+            console.log('✅ Dashboard initialization complete - ONE WebSocket connection established');
+        });
+    </script>
+</body>
+</html>
