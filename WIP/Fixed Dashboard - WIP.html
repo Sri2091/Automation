@@ -936,25 +936,18 @@
     </div>
 
     <script>
-        // ✅ SIMPLE FIX: Global variables with proper initialization
         let ws = null;
         let allLogs = [];
         let workflowCompleted = false;
         let isWorkflowRunning = false;
         let totalRows = 0;
-        let processedRows = 0;
 
-        // ✅ SIMPLE FIX: Connection management variables
         let isConnecting = false;
         let reconnectTimeout = null;
         let connectionAttempts = 0;
         const MAX_RECONNECT_ATTEMPTS = 5;
 
         let completedRows = 0;
-        let workflowTriggered = false;
-        let processingStarted = false;
-        let isProcessing = false;
-        let hasError = false;
 
         // Workflow connection with status checking
         let workflowCheckInterval;
@@ -963,21 +956,16 @@
 
         // WebSocket connection with proper management
         function connectWebSocket() {
-            console.log('🔌 Attempting WebSocket connection...');
-            
             if (isConnecting) {
-                console.log('⏸️ Connection attempt already in progress, skipping...');
                 return;
             }
             
             if (ws && ws.readyState !== WebSocket.CLOSED && ws.readyState !== WebSocket.CLOSING) {
-                console.log('🔗 Closing existing WebSocket connection...');
                 ws.close(1000, 'Creating new connection');
                 ws = null;
             }
             
             if (connectionAttempts >= MAX_RECONNECT_ATTEMPTS) {
-                console.log('❌ Max reconnection attempts reached. Stopped trying to reconnect.');
                 document.getElementById('status').textContent = 'Connection Failed';
                 document.getElementById('status').className = 'connection-status disconnected';
                 return;
@@ -986,14 +974,11 @@
             isConnecting = true;
             connectionAttempts++;
             
-            console.log(`🔄 Connection attempt ${connectionAttempts}/${MAX_RECONNECT_ATTEMPTS}`);
-            
             try {
                 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
                 ws = new WebSocket(`ws://192.168.0.97:8001/ws`);
                 
                 ws.onopen = function() {
-                    console.log('✅ Connected to log server successfully!');
                     document.getElementById('status').textContent = 'Live';
                     document.getElementById('status').className = 'connection-status connected';
                     
@@ -1007,6 +992,7 @@
                 };
                 
                 ws.onmessage = function(event) {
+                    // Handles incoming WebSocket messages and updates UI accordingly
                     try {
                         const data = JSON.parse(event.data);
 
@@ -1026,7 +1012,6 @@
                             }
 
                         } else if (data.type === 'error_detected') {
-                            hasError = true;
                             updateWorkflowStatus('error', 'Error detected in workflow');
 
                             // Add red-pulse, then revert to green
@@ -1039,7 +1024,6 @@
                             }
 
                         } else if (data.type === 'processing_completed') {
-                            isProcessing = false;
                             updateWorkflowStatus('completed', 'All rows completed');
 
                             // Success glow for dot
@@ -1096,13 +1080,11 @@
                         }
 
                     } catch (error) {
-                        console.error('Error parsing WebSocket message:', error);
                     }
                 };
 
                 
                 ws.onclose = function(event) {
-                    console.log('❌ WebSocket connection closed. Code:', event.code, 'Reason:', event.reason);
                     isConnecting = false;
                     ws = null;
                     
@@ -1110,8 +1092,6 @@
                     document.getElementById('status').className = 'connection-status disconnected';
                     
                     if (connectionAttempts < MAX_RECONNECT_ATTEMPTS) {
-                        console.log(`⏰ Attempting to reconnect in 3 seconds... (${connectionAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
-                        
                         if (reconnectTimeout) {
                             clearTimeout(reconnectTimeout);
                         }
@@ -1121,19 +1101,16 @@
                             connectWebSocket();
                         }, 3000);
                     } else {
-                        console.log('❌ Max reconnection attempts reached. Connection stopped.');
                     }
                 };
                 
                 ws.onerror = function(error) {
-                    console.error('❌ WebSocket error:', error);
                     isConnecting = false;
                     document.getElementById('status').textContent = 'Error';
                     document.getElementById('status').className = 'connection-status disconnected';
                 };
                 
             } catch (error) {
-                console.error('❌ Error creating WebSocket:', error);
                 isConnecting = false;
             }
         }
@@ -1199,33 +1176,6 @@
             }
         }
 
-        function updateStatusFromServer(data) {
-            if (data.has_error) {
-                updateWorkflowStatus('error', 'Error detected in workflow');
-            } else if (data.is_processing) {
-                updateWorkflowStatus('processing', 'Processing rows - green pulse active');
-            } else if (data.processing_started) {
-                updateWorkflowStatus('completed', 'Processing completed');
-            } else if (data.workflow_triggered) {
-                updateWorkflowStatus('waiting', 'Workflow triggered - waiting for processing');
-            } else {
-                updateWorkflowStatus('inactive', 'Ready to start');
-            }
-        }
-
-        function resetAllStatus() {
-            workflowTriggered = false;
-            processingStarted = false;
-            isProcessing = false;
-            hasError = false;
-            completedRows = 0;
-            updateWorkflowStatus('inactive', 'Ready to start');
-            // Reset card animation
-            document.getElementById('rows-completed-card').className = 'card';
-            resetButtonToReady();
-        }
-
-        // ✅ SIMPLE FIX: Clean button reset function
         function resetButtonToReady() {
             const startBtn = document.getElementById('start-workflow-btn');
             isWorkflowRunning = false;
@@ -1233,38 +1183,29 @@
             startBtn.textContent = 'Trigger Workflow';
             startBtn.style.backgroundColor = '';
             startBtn.style.color = '';
-            console.log('🔄 Button reset to ready state');
         }
 
-        // ✅ FIXED: Workflow status checking that doesn't interfere with button
         async function checkWorkflowStatus() {
             try {
                 const response = await fetch(WEBHOOK_URL);
                 const data = await response.json();
                 
-                // ALWAYS update workflow status card regardless of button state
                 updateWorkflowStatus(data.active, data.message || 'Workflow status checked');
                 
-                // ⚠️ IMPORTANT: Don't disable button based on workflow status
-                // Button should only be disabled during manual workflow execution
-                
-                // Only help with stuck button recovery when workflow is truly inactive
+                // Helps reset the button if it gets stuck in a 'Running...' state
+                // and the workflow is confirmed to be inactive on the server.
                 if (!isWorkflowRunning && !data.active) {
                     const startBtn = document.getElementById('start-workflow-btn');
                     if (startBtn.textContent === 'Running...' && startBtn.disabled) {
-                        console.log('🔄 Workflow status check: Resetting stuck button');
                         resetButtonToReady();
                     }
                 }
                 
             } catch (error) {
-                console.error('Error checking workflow status:', error);
                 updateWorkflowStatus(false, 'Connection failed');
             }
         }
         window.addEventListener('beforeunload', function() {
-            console.log('🧹 Page unloading - cleaning up WebSocket connection');
-            
             if (reconnectTimeout) {
                 clearTimeout(reconnectTimeout);
                 reconnectTimeout = null;
@@ -1279,13 +1220,11 @@
         // Reset connection attempts when user manually refreshes
         window.addEventListener('focus', function() {
             if (connectionAttempts >= MAX_RECONNECT_ATTEMPTS && (!ws || ws.readyState === WebSocket.CLOSED)) {
-                console.log('🔄 Window focused - resetting connection attempts');
                 connectionAttempts = 0;
                 connectWebSocket();
             }
         });
 
-        // ✅ SIMPLE FIX: Simplified workflow start function
         async function startWorkflow() {
             const startBtn = document.getElementById('start-workflow-btn');
             
@@ -1296,7 +1235,6 @@
             
             // Prevent double-clicking
             if (isWorkflowRunning) {
-                console.log('⏸️ Workflow already running, ignoring click');
                 return;
             }
             
@@ -1321,16 +1259,12 @@
                 });
                 
                 if (response.ok) {
-                    console.log('✅ Workflow started successfully');
-                    
                     startBtn.textContent = 'Running...';
                     startBtn.style.backgroundColor = '#ffc107';
                     startBtn.style.color = '#000';
                     
-                    // ✅ SIMPLE FIX: Auto-reset after 30 seconds if no completion message
                     setTimeout(() => {
                         if (isWorkflowRunning) {
-                            console.log('⏰ Auto-resetting button after 30 seconds');
                             resetButtonToReady();
                         }
                     }, 30000);
@@ -1340,8 +1274,6 @@
                 }
                 
             } catch (error) {
-                console.error('❌ Error starting workflow:', error);
-                
                 startBtn.textContent = 'Error - Click to Retry';
                 startBtn.style.backgroundColor = '#e53e3e';
                 isWorkflowRunning = false;
@@ -1400,7 +1332,6 @@
                     updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Server not responding'});
                 }
             } catch (error) {
-                console.error('Error loading rows count:', error);
                 updateRowsCard({total_rows: 0, processed_rows: 0, message: 'Unable to connect to server'});
             }
         }
@@ -1501,9 +1432,10 @@
             }
         }
 
+        // Creates an HTML element for a single log entry.
         function createLogElement(log, isNew = false) {
             const div = document.createElement('div');
-            
+
             let logLevel = log.level ? log.level.toLowerCase() : 'info';
             
             if (log.message && log.message.toLowerCase().includes('error')) {
@@ -1538,7 +1470,8 @@
                     <span class="log-status ${logLevel}-label">${logLevel}</span>
             `;
             
-            html += '<div class="log-details">';
+            html += `
+                <div class="log-details">`;
             if (log.workflow_id || log.workflow_name || log.node_name) {
                 
                 if (log.workflow_name) {
@@ -1553,17 +1486,21 @@
                     html += `<p>Node: ${log.node_name}</p>`;
                 }
             }
-            html += '</div>';
+            html += `
+                </div>`;
             
             if (log.data) {
                 if (typeof log.data === 'string') {
-                    html += `<div class="log-message">${log.data}</div>`;
+                    html += `
+                <div class="log-message">${log.data}</div>`;
                 } else {
-                    html += `<pre class="log-code-block">${JSON.stringify(log.data, null, 2)}</pre>`;
+                    html += `
+                <pre class="log-code-block">${JSON.stringify(log.data, null, 2)}</pre>`;
                 }
             }
             
-            html += '</div>';
+            html += `
+                </div>`;
             div.innerHTML = html;
             return div;
         }
@@ -1577,7 +1514,6 @@
                 displayLogsInHome(allLogs);
                 displayLogsInLogsPage(allLogs);
             } catch (error) {
-                console.error('Error loading logs:', error);
             }
         }
 
@@ -1594,51 +1530,51 @@
                     
                     if (response.ok) {
                         const result = await response.json();
-                        console.log('Logs cleared successfully:', result);
                     } else {
-                        console.log('Server not responding, but logs cleared locally');
                     }
                     
                 } catch (error) {
-                    console.log('Server not available, but logs cleared locally:', error);
                 }
             }
         }
 
         // Document ready event
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 Dashboard initializing...');
+            // DOM Element Selections
             const tabs = document.querySelectorAll('.page-tabs a');
             const pageViews = document.querySelectorAll('.page-view');
             const customToggle = document.getElementById('custom-toggle');
             const customValueInput = document.getElementById('custom-value');
-            // Change the initial workflow status from "Checking..." to "Waiting..."
+            const startBtn = document.getElementById('start-workflow-btn');
+            const googleDocSelect = document.getElementById('google-doc-select');
+            const sheetSelect = document.getElementById('sheet-select');
+            const linkSheetBtn = document.getElementById('link-sheet-btn');
+
+            // Initial UI Setup
             document.getElementById('workflow-status-text').textContent = 'Waiting...';
             document.getElementById('workflow-sub-text').textContent = 'Ready to start';
             document.getElementById('workflow-indicator').className = 'status-indicator waiting';
+            startBtn.disabled = false;
             
+            // Establish WebSocket connection
+            connectWebSocket();
+
+            // Event listener for custom row toggle
             customToggle.addEventListener('change', function() {
                 customValueInput.disabled = !this.checked;
             });
-
-            // Single WebSocket connection call
-            connectWebSocket();
             
-            // ✅ FIXED: Enable button immediately when dashboard loads
-            const startBtn = document.getElementById('start-workflow-btn');
-            startBtn.disabled = false;
-            
-            // Load initial data after a short delay
+            // Load initial data for dashboard cards after a short delay
             setTimeout(() => {
                 if (allLogs.length === 0) {
-                    loadLogs();
+                    loadLogs(); // Load all logs if not already populated
                 }
-                loadRowsCount();
+                loadRowsCount(); // Load count of rows to process
             }, 2000);
 
-            // ✅ RESTORED: Start workflow status checking (fixed version)
+            // Periodically check workflow status and perform an initial check
             workflowCheckInterval = setInterval(checkWorkflowStatus, 10000);
-            setTimeout(checkWorkflowStatus, 1000); // Initial check after 1 second
+            setTimeout(checkWorkflowStatus, 1000);
             
             // Tab switching functionality
             tabs.forEach(tab => {
@@ -1658,10 +1594,6 @@
             });
 
             // Sheet selector functionality
-            const googleDocSelect = document.getElementById('google-doc-select');
-            const sheetSelect = document.getElementById('sheet-select');
-            const linkSheetBtn = document.getElementById('link-sheet-btn');
-
             const sheetData = {
                 'doc1': ['Q1 Summary', 'Monthly Breakdown', 'Regional Data', 'Projections'],
                 'doc2': ['Campaign Overview', 'Social Media', 'Email Campaigns', 'Analytics'],
@@ -1701,7 +1633,6 @@
                 }
             });
             
-            console.log('✅ Dashboard initialization complete - Simple button management active');
         });
     </script>
 </body>
