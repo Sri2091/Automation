@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="top-bar">
+            <nav class="page-tabs">
+                <a href="#" data-page="home" class="active">Home</a>
+                <a href="#" data-page="logs">Logs</a>
+            </nav>
+            <div>
+                <span id="status" class="connection-status disconnected">Connecting...</span>
+            </div>
+        </header>
+
+        <main class="main-content-area">
+            <div id="home-content" class="page-view active">
+                <div class="dashboard-header">
+                    <h1>Dashboard</h1>
+                    <div class="workflow-controls">
+                        <div class="inline-toggle-group">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="custom-toggle">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <input type="number" id="custom-value" class="number-input" value="100" min="1" max="10000"
+                                disabled>
+                            <span class="input-label">rows</span>
+                        </div>
+                        <button class="action-button" id="start-workflow-btn" onclick="startWorkflow()" disabled>Trigger
+                            Workflow</button>
+                    </div>
+                </div>
+
+                <div class="summary-cards">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Workflow Status</span>
+                            <span class="icon">⚙️</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value">
+                                <span class="status-indicator checking" id="workflow-indicator"></span>
+                                <span id="workflow-status-text">Checking...</span>
+                            </div>
+                            <div class="sub-text" id="workflow-sub-text">Connecting to n8n...</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Total Rows to Process</span>
+                            <span class="icon">📋</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value" id="total-rows-count">0</div>
+                            <div class="sub-text" id="rows-status">Waiting for workflow data...</div>
+                        </div>
+                    </div>
+                    <div class="card" id="rows-completed-card">
+                        <div class="card-header">
+                            <span>Rows Completed</span>
+                            <span class="status-dot" id="completed-status-dot"></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value" id="completed-rows-count">0</div>
+                            <div class="sub-text" id="completed-rows-status">No rows completed yet</div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Active Now</span>
+                            <span class="icon">⚡</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="value">+573</div>
+                            <div class="sub-text">+201 since last hour</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home-page-split-layout">
+                    <div class="logs-column">
+                        <h2>Latest Activity Logs</h2>
+                        <div class="log-entries" id="home-log-entries">
+                            <div class="no-logs">Connecting to log server...</div>
+                        </div>
+                    </div>
+
+                    <div class="sheets-selector-column">
+                        <div class="sheets-selector-container">
+                            <h3 class="selector-title">
+                                <span class="selector-icon"></span> Select Document & Sheet
+                            </h3>
+
+                            <div class="form-group">
+                                <label for="google-doc-select">Google Sheets Document</label>
+                                <div class="custom-select-wrapper">
+                                    <select id="google-doc-select" name="google-doc">
+                                        <option value="">Select a document</option>
+                                        <option value="doc1">Sales Report Q1 2025</option>
+                                        <option value="doc2">Marketing Campaign Tracker</option>
+                                        <option value="doc3">Inventory List - Main Warehouse</option>
+                                        <option value="doc4">Employee Performance Data</option>
+                                        <option value="doc5">Budget Analysis 2025</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sheet-select">Sheet</label>
+                                <div class="custom-select-wrapper">
+                                    <select id="sheet-select" name="sheet-name" disabled>
+                                        <option value="">Select a document first</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button class="action-button sheet-action-button" id="link-sheet-btn" disabled>
+                                Link Sheet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="logs-content" class="page-view">
+                <div class="logs-page-header">
+                    <h1>Application Logs</h1>
+                    <div class="logs-page-controls">
+                        <button class="action-button" onclick="loadLogs()">Refresh</button>
+                        <button class="action-button clear-btn" onclick="clearLogs()">Clear All</button>
+                    </div>
+                </div>
+                <div class="stats-bar" id="stats-bar">
+                    Connecting to log server...
+                </div>
+                <div class="full-logs-container" id="full-logs-container">
+                    <div class="no-logs">Connecting to log server...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/main.js" defer></script>
+</body>
+</html>
