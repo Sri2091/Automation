@@ -806,6 +806,271 @@
             background-color: #38a169;
             animation: iconPulseSuccess 1s ease-in-out;
         }
+
+/* Basic Dark Theme Body Styles */
+.dark-theme {
+    background-color: #1a1a1a; /* Or #121212 */
+    color: #e0e0e0;
+}
+
+.dark-theme .container {
+    background-color: #1a1a1a; /* Match body */
+}
+
+/* Top Bar */
+.dark-theme .top-bar {
+    background-color: #2b2b2b;
+    border-bottom: 1px solid #404040;
+}
+
+.dark-theme .page-tabs a {
+    color: #aaaaaa;
+}
+
+.dark-theme .page-tabs a:hover {
+    color: #e0e0e0;
+    background-color: #383838; /* Subtle hover for tabs */
+}
+
+.dark-theme .page-tabs a.active {
+    color: #ffffff;
+    background-color: #007bff; /* Or a more subtle dark active like #404040 */
+}
+
+.dark-theme .connection-status.connected { background-color: #28a745; color: #ffffff; }
+.dark-theme .connection-status.disconnected { background-color: #dc3545; color: #ffffff; }
+.dark-theme .connection-status.completed { background-color: #ffc107; color: #1e1e1e; } /* Dark text on yellow */
+.dark-theme .connection-status.processing { background-color: #17a2b8; color: #ffffff; }
+.dark-theme .connection-status { /* Default for connecting */
+    background-color: #4f4f4f;
+    color: #e0e0e0;
+}
+
+
+/* Main Content & Headers */
+.dark-theme .dashboard-header h1 {
+    color: #f5f5f5;
+}
+.dark-theme .logs-column h2 {
+    color: #f5f5f5;
+}
+.dark-theme .selector-title {
+    color: #f5f5f5;
+}
+.dark-theme .logs-page-header h1 {
+    color: #f5f5f5;
+}
+
+
+/* Cards */
+.dark-theme .card {
+    background-color: #2b2b2b;
+    border: 1px solid #404040;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Softer shadow for dark */
+}
+.dark-theme .card:hover {
+    border-color: #555555;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+.dark-theme .card-header span:first-child { /* Card titles */
+    color: #cccccc;
+}
+.dark-theme .card-header .icon {
+    color: #aaaaaa;
+}
+.dark-theme .card-body .value {
+    color: #f5f5f5;
+}
+.dark-theme .card-body .sub-text {
+    color: #aaaaaa;
+}
+.dark-theme .card-body .sub-text.positive { /* Keep green for positive text */
+    color: #38a169;
+}
+
+/* Buttons */
+.dark-theme .action-button { /* Primary action button */
+    background-color: #007bff;
+    color: #ffffff;
+}
+.dark-theme .action-button:hover {
+    background-color: #0056b3;
+}
+.dark-theme .action-button:disabled {
+    background-color: #4f4f4f;
+    color: #aaaaaa;
+}
+
+.dark-theme .clear-btn {
+    background-color: transparent;
+    color: #ff6b6b; /* Brighter red for dark */
+    border: 1px solid #ff6b6b;
+}
+.dark-theme .clear-btn:hover {
+    background-color: #ff6b6b;
+    color: #1e1e1e; /* Dark text on hover */
+}
+.dark-theme .reset-btn {
+    background-color: transparent;
+    color: #ffd166; /* Brighter yellow */
+    border: 1px solid #ffd166;
+}
+.dark-theme .reset-btn:hover {
+    background-color: #ffd166;
+    color: #1e1e1e; /* Dark text on hover */
+}
+
+/* Forms & Inputs */
+.dark-theme .form-group label {
+    color: #cccccc;
+}
+.dark-theme .custom-select-wrapper select,
+.dark-theme .number-input {
+    background-color: #333333;
+    color: #e0e0e0;
+    border: 1px solid #404040;
+}
+.dark-theme .custom-select-wrapper select:focus,
+.dark-theme .number-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+.dark-theme .custom-select-wrapper select:disabled,
+.dark-theme .number-input:disabled {
+    background-color: #4f4f4f;
+    color: #999999;
+    border-color: #5a5a5a;
+}
+.dark-theme .custom-select-wrapper::after { /* Dropdown arrow */
+    color: #aaaaaa;
+}
+.dark-theme .input-label { /* "rows" label */
+     color: #aaaaaa;
+}
+
+/* Toggle Switch */
+.dark-theme .toggle-slider {
+    background-color: #4f4f4f;
+}
+.dark-theme input:checked + .toggle-slider {
+    background-color: #007bff;
+}
+.dark-theme .toggle-slider:before { /* The switch knob */
+    background-color: #e0e0e0;
+}
+
+
+/* Log Entries */
+.dark-theme .log-entries,
+.dark-theme .full-logs-container {
+    background-color: #2b2b2b;
+    border: 1px solid #404040;
+    scrollbar-color: #555555 #2b2b2b; /* For Firefox */
+}
+
+.dark-theme .log-entries::-webkit-scrollbar,
+.dark-theme .full-logs-container::-webkit-scrollbar {
+    width: 8px;
+}
+.dark-theme .log-entries::-webkit-scrollbar-track,
+.dark-theme .full-logs-container::-webkit-scrollbar-track {
+    background: #2b2b2b;
+}
+.dark-theme .log-entries::-webkit-scrollbar-thumb,
+.dark-theme .full-logs-container::-webkit-scrollbar-thumb {
+    background: #555555;
+    border-radius: 4px;
+}
+.dark-theme .log-entries::-webkit-scrollbar-thumb:hover,
+.dark-theme .full-logs-container::-webkit-scrollbar-thumb:hover {
+    background: #777777;
+}
+
+.dark-theme .log-item {
+    background-color: #333333; /* Slightly different from card bg for definition */
+    border-left-width: 4px; /* Ensure it's visible */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+/* Keep existing border-left-color for success, error, warning, info */
+.dark-theme .log-item.success .log-item-header { color: #68d391; background-color: transparent;}
+.dark-theme .log-item.error .log-item-header { color: #fc8181; background-color: transparent;}
+.dark-theme .log-item.warning .log-item-header { color: #f6e05e; background-color: transparent;}
+.dark-theme .log-item.info .log-item-header { color: #63b3ed; background-color: transparent;}
+
+.dark-theme .log-item-header { /* Default header color if no status */
+    color: #e0e0e0;
+}
+
+.dark-theme .log-status { /* Status labels like SUCCESS, ERROR */
+    background-color: #4f4f4f; /* Darker chip background */
+    border: 1px solid #5a5a5a;
+}
+/* Keep specific text colors for labels for recognizability, e.g., .success-label { color: #2f855a; } */
+/* Need to ensure these have enough contrast or adjust them */
+.dark-theme .success-label { color: #68d391; border-color: #68d391; background-color: rgba(104, 211, 145, 0.1); }
+.dark-theme .error-label { color: #fc8181; border-color: #fc8181; background-color: rgba(252, 129, 129, 0.1); }
+.dark-theme .warning-label { color: #f6e05e; border-color: #f6e05e; background-color: rgba(246, 224, 94, 0.1); }
+.dark-theme .info-label { color: #63b3ed; border-color: #63b3ed; background-color: rgba(99, 179, 237, 0.1); }
+
+
+.dark-theme .log-details p {
+    color: #bbbbbb;
+}
+.dark-theme .log-id {
+    color: #999999;
+}
+.dark-theme .log-message { /* Code-like messages */
+    background-color: #222222;
+    color: #cccccc;
+    border: 1px solid #383838;
+}
+.dark-theme .log-code-block { /* JSON data */
+    background-color: #222222;
+    color: #e2e8f0; /* Keep similar to light for syntax */
+    border: 1px solid #383838;
+}
+.dark-theme .no-logs {
+    color: #aaaaaa;
+    background-color: #2b2b2b; /* Match card/container background */
+}
+
+/* Sheets Selector Column */
+.dark-theme .sheets-selector-column {
+    background-color: #2b2b2b;
+    border: 1px solid #404040;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.dark-theme .sheet-action-button { /* Inherits .action-button styles, ensure it looks good */
+}
+
+/* Stats Bar on Logs Page */
+.dark-theme .stats-bar {
+    background-color: #222222;
+    border: 1px solid #383838;
+    color: #bbbbbb;
+}
+
+/* Status Indicator Dots (General) */
+.dark-theme .status-indicator { /* Default state */
+    /* May not need change if background is transparent and only animation is shadow */
+}
+/* Pulse animations use box-shadow, which might need color adjustments for dark theme */
+/* Keyframes pulseGreen, pulseRed, pulseOrange might need rgba adjustments for the shadow */
+/* Example for pulseGreen: */
+/* @keyframes pulseGreenDark {
+    0% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(56, 161, 105, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(56, 161, 105, 0); }
+} */
+/* And then apply this animation in .dark-theme .status-indicator.active */
+/* This part is complex and might need iterative refinement if the current pulses look off. */
+/* For now, I'll assume the existing pulse animations are acceptable or will be fine-tuned later. */
+
+.dark-theme .status-dot { /* Default gray dot */
+    background-color: #5a5a5a;
+}
+/* Keep pulse-green, pulse-red, pulse-success as is, their background-color is direct */
+
     </style>
 </head>
 <body>
@@ -815,7 +1080,8 @@
                 <a href="#" data-page="home" class="active">Home</a>
                 <a href="#" data-page="logs">Logs</a>
             </nav>
-            <div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button id="theme-toggle-btn" class="action-button" style="padding: 8px 15px; font-size: 12px;">Toggle Theme</button>
                 <span id="status" class="connection-status disconnected">Connecting...</span>
             </div>
         </header>
@@ -1645,6 +1911,43 @@
                     alert(`Linking to:\nDocument: ${selectedDoc}\nSheet: ${selectedSheet}`);
                 }
             });
+
+            // Theme Toggle Logic
+            const themeToggleButton = document.getElementById('theme-toggle-btn');
+            const bodyElement = document.body; // Or the main container if .dark-theme is applied there
+
+            // Function to apply the saved theme or default to light
+            function applyInitialTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    bodyElement.classList.add('dark-theme');
+                    if (themeToggleButton) themeToggleButton.textContent = 'Light Mode'; // Update button text
+                } else {
+                    bodyElement.classList.remove('dark-theme'); // Default to light
+                    if (themeToggleButton) themeToggleButton.textContent = 'Dark Mode'; // Update button text
+                }
+            }
+
+            // Function to toggle theme
+            function toggleTheme() {
+                if (bodyElement.classList.contains('dark-theme')) {
+                    bodyElement.classList.remove('dark-theme');
+                    localStorage.setItem('theme', 'light');
+                    if (themeToggleButton) themeToggleButton.textContent = 'Dark Mode';
+                } else {
+                    bodyElement.classList.add('dark-theme');
+                    localStorage.setItem('theme', 'dark');
+                    if (themeToggleButton) themeToggleButton.textContent = 'Light Mode';
+                }
+            }
+
+            // Add event listener to the button
+            if (themeToggleButton) {
+                themeToggleButton.addEventListener('click', toggleTheme);
+            }
+
+            // Apply initial theme on page load
+            applyInitialTheme();
             
         });
     </script>
