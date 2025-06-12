@@ -1,43 +1,47 @@
-from fastapi import FastAPI, File, UploadFile, HTTPException, status
-# from fastapi.staticfiles import StaticFiles
+import os
+import glob
+from pathlib import Path
 
-import base64
-from PIL import Image
-from io import BytesIO
+def rename_images_in_folder(folder_path, prefix="cosmos"):
+    """
+    Force rename all image files in a folder to cosmos_1, cosmos_2, etc.
+    """
+    # Common image extensions
+    image_extensions = ['*.jpg', '*.jpeg', '*.png', '*.gif', '*.bmp', '*.tiff', '*.webp']
+    
+    # Get all image files
+    image_files = []
+    for ext in image_extensions:
+        image_files.extend(glob.glob(os.path.join(folder_path, ext), recursive=False))
+        image_files.extend(glob.glob(os.path.join(folder_path, ext.upper()), recursive=False))
+    
+    # Sort files for consistent ordering
+    image_files.sort()
+    
+    if not image_files:
+        print("No image files found.")
+        return
+    
+    print(f"Renaming {len(image_files)} files...")
+    
+    # First pass: rename to temporary names to avoid conflicts
+    temp_files = []
+    for i, old_path in enumerate(image_files):
+        temp_name = f"temp_rename_{i}_{os.path.basename(old_path)}"
+        temp_path = os.path.join(folder_path, temp_name)
+        os.rename(old_path, temp_path)
+        temp_files.append(temp_path)
+    
+    # Second pass: rename to final names
+    for i, temp_path in enumerate(temp_files):
+        file_ext = Path(temp_path).suffix.lower()
+        new_filename = f"{prefix}_{i+1}{file_ext}"
+        new_path = os.path.join(folder_path, new_filename)
+        os.rename(temp_path, new_path)
+        print(f"Renamed to: {new_filename}")
 
+# Usage
+folder_path = input("Folder path: ").strip().strip('"\'')
+prefix = input("Prefix (default: cosmos): ").strip() or "cosmos"
 
-
-app =  FastAPI()
-# app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-@app.get("/")
-async def root():
-    return {
-        "message" : "Connected to FastAPI backend!!!"
-    }
-
-
-@app.post("/upload")
-async def upload_func( file: UploadFile = File(...)):
-    # base64_string = data["base64"]
-    # valid_types = ["gen", "fill"]
-    try:
-        # if type.lower() not in valid_types:
-        #     raise HTTPException(
-        #         status_code=status.HTTP_406_NOT_ACCEPTABLE,
-        #         detail="not a valid folder type, should be gen / fill!!"
-        #     )
-
-        # save_name = f"static/{type.lower()}/{file.filename}"
-        save_name = f"/workspace/ComfyUI/input/{file.filename}"
-        contents = await file.read()
-        pil_image = Image.open(BytesIO(contents))
-        pil_image.save(save_name, "PNG")
-        return {
-            "message" : f"http://192.168.0.84:8000/{save_name}",
-            "filename": file.filename, 
-            "content_type": file.content_type
-        }
-    except Exception as e:
-        print(e)
+rename_images_in_folder(folder_path, prefix)
