@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>Ripple Links - AI Photography Revolution</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #fff;
+            --secondary: #0a0a0a;
+            --accent: rgba(255, 255, 255, 0.7);
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(0, 0, 0, 0.08); /* NEW: Border for light theme */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            padding: 2rem 4rem;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 200;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            position: relative;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative; 
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background Slideshow */
+        .slideshow-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: transform 0.2s ease-out;
+        }
+
+         .slide {
+            position: absolute;
+            width: 110%;
+            height: 110%;
+            top: -5%;
+            left: -5%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2.5s ease-in-out;
+            animation: kenburns 20s linear infinite alternate;
+        }
+
+        @keyframes kenburns {
+            from { transform: scale(1); }
+            to { transform: scale(1.1); }
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.2) 100%);
+            z-index: 1;
+        }
+
+        /* Hero Content */
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            padding-left: 4rem;
+            max-width: 800px;
+            transition: transform 0.2s ease-out;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 100;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .hero-title span {
+            display: block;
+            animation: titleSlide 1s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+            animation-delay: calc(var(--i) * 0.15s);
+            transform: translateY(100%);
+        }
+
+        @keyframes titleSlide {
+            to { transform: translateY(0); }
+        }
+
+        .hero-subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            animation-delay: 0.6s;
+            margin-bottom: 3rem;
+            color: var(--accent);
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .feature-pills, .stats-row {
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        .feature-pills { display: flex; gap: 1rem; margin-bottom: 3rem; animation-delay: 0.8s; }
+        .stats-row { display: flex; gap: 3rem; animation-delay: 1s; }
+
+        .pill {
+            padding: 0.6rem 1.2rem; background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--border); border-radius: 30px; font-size: 0.75rem;
+            letter-spacing: 0.1em; white-space: nowrap; transition: all 0.3s ease;
+        }
+        .pill:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: 100; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        .stat-label { font-size: 0.7rem; letter-spacing: 0.2em; opacity: 0.6; text-transform: uppercase; }
+        
+        .slide-nav {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .slide-nav.is-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .nav-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: rgba(255, 255, 255, 0.3);
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .nav-dot:hover { background: rgba(255, 255, 255, 0.6); transform: scale(1.2); }
+        .nav-dot.active { background: #fff; transform: scale(1.2); }
+
+        .menu-btn {
+            position: fixed; top: 2rem; right: 4rem; width: 30px; height: 30px;
+            display: none; flex-direction: column; justify-content: center;
+            gap: 6px; cursor: pointer; z-index: 101; mix-blend-mode: difference;
+        }
+        .menu-line { width: 100%; height: 1px; background: var(--primary); transition: all 0.3s ease; }
+
+        .brands-section { padding: 8rem 2rem; background-color: #000; }
+        .brands-title {
+            text-align: center; font-weight: 200; font-size: 0.9rem; letter-spacing: 0.3em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 3rem;
+        }
+        .logo-scroller {
+            max-width: 1600px; margin: 0 auto; overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+        }
+        .scroller-inner { display: flex; gap: 4rem; width: max-content; flex-wrap: nowrap; animation: scroll 40s linear infinite; }
+        .logo-scroller img { height: 35px; filter: brightness(0) invert(1) opacity(0.6); transition: all 0.3s ease; }
+        .logo-scroller:hover .scroller-inner { animation-play-state: paused; }
+        .logo-scroller img:hover { filter: brightness(0) invert(1) opacity(1); }
+        @keyframes scroll { to { transform: translateX(-50%); } }
+
+        /* === IMMERSIVE SHOWCASE SECTION: 35/65 SPLIT LAYOUT === */
+        .immersive-showcase-section {
+            height: 100vh; 
+            background-color: var(--secondary);
+            display: flex;
+            flex-direction: row; 
+            align-items: center;
+            padding: 2rem 4rem; 
+            overflow: hidden;
+            transition: background-color 0.5s ease; /* Smooth color transition */
+        }
+
+        /* The content column */
+        .showcase-content-left {
+            flex-basis: 35%;
+            padding-right: 4rem;
+        }
+
+        .showcase-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 100;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            transition: color 0.5s ease;
+        }
+
+        .showcase-subtitle {
+            font-size: clamp(1rem, 2vw, 1.1rem);
+            font-weight: 300;
+            color: var(--accent);
+            line-height: 1.7;
+            max-width: 50ch;
+            transition: color 0.5s ease;
+        }
+
+        /* The images column */
+        .showcase-images-right {
+            flex-basis: 65%;
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            aspect-ratio: 4 / 5;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0) 30%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .image-label {
+            position: absolute;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 6px;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--primary);
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            transition-delay: 0.1s;
+        }
+
+        /* Hover states */
+        .image-wrapper:hover .image-placeholder { transform: scale(1.03); }
+        .image-wrapper:hover .image-placeholder::before { opacity: 1; }
+        .image-wrapper:hover .image-label { opacity: 1; transform: translateY(0); }
+        .showcase-images-right:hover .image-wrapper:not(:hover) { 
+            transform: scale(0.98); 
+            filter: brightness(0.6); 
+        }
+
+        /* === NEW: LIGHT THEME STYLES === */
+        .immersive-showcase-section.is-light {
+            background-color: var(--primary);
+        }
+        .is-light .showcase-title {
+            color: var(--secondary);
+        }
+        .is-light .showcase-subtitle {
+            color: rgba(10, 10, 10, 0.7); /* Darker accent for light bg */
+        }
+        .is-light .image-wrapper {
+            border-color: var(--border-light);
+        }
+        .is-light .image-label {
+            /* Keep label dark for contrast on image */
+            background: rgba(0, 0, 0, 0.5); 
+            color: var(--primary);
+        }
+        /* Swap padding for reversed layout */
+        .is-light .showcase-content-left {
+            padding-right: 0;
+            padding-left: 4rem;
+        }
+
+
+        /* Scroll-triggered animation classes */
+        [data-view-animate] {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1s cubic-bezier(0.645, 0.045, 0.355, 1), transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+        }
+        
+        [data-view-animate].is-visible { opacity: 1; transform: translateY(0); }
+        .showcase-images-right [data-view-animate]:nth-child(2) { transition-delay: 0.2s; }
+
+
+        /* === HERO GALLERY CSS === */
+        .hero-gallery-section {
+            padding: 4rem 0;
+            background-color: var(--secondary);
+            overflow: hidden;
+        }
+        .gallery-scroller {
+            overflow: hidden;
+            -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+            mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+        }
+        .gallery-scroller-inner {
+            display: flex;
+            gap: 2rem;
+            width: max-content;
+            animation: scroll-gallery 60s linear infinite;
+        }
+        .gallery-scroller:hover .gallery-scroller-inner {
+            animation-play-state: paused;
+        }
+        .gallery-scroller-inner img {
+            height: 65vh; 
+            max-height: 600px;
+            aspect-ratio: 4/5;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+        .gallery-scroller-inner img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1);
+        }
+
+        @keyframes scroll-gallery {
+            to { transform: translateX(-50%); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) { 
+             .immersive-showcase-section {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                padding: 6rem 2rem;
+                gap: 4rem;
+             }
+             .showcase-content-left {
+                flex-basis: auto;
+                padding-right: 0 !important; /* Use important to override inline padding swap */
+                padding-left: 0 !important;
+                text-align: center;
+             }
+             .showcase-subtitle {
+                margin-inline: auto;
+             }
+             .showcase-images-right {
+                flex-basis: auto;
+                width: 100%;
+                flex-direction: column; 
+             }
+             .image-wrapper {
+                width: 100%;
+                max-width: 350px;
+             }
+             /* NEW: Reverse order for light section on mobile */
+             .is-light {
+                flex-direction: column-reverse;
+             }
+        } 
+        @media (max-width: 768px) { 
+             .gallery-scroller-inner img { height: 50vh; }
+        } 
+        @media (max-width: 480px) { 
+            .immersive-showcase-section { padding: 4rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">RIPPLE LINKS</div>
+            <ul class="nav-links">
+                <li><a href="#lifestyle">Lifestyle</a></li>
+                <li><a href="#catalogue">Catalogue</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="menu-btn">
+                <div class="menu-line"></div>
+                <div class="menu-line"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="slideshow-container">
+            <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1484704849700-f032a568e944?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=2000&q=80')"></div>
+            <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=2000&q=80')"></div>
+        </div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span style="--i: 0">AI Ecommerce</span>
+                <span style="--i: 1">Photography</span>
+            </h1>
+            <p class="hero-subtitle">EFFORTLESS IMAGERY • ELEVATED CONVERSIONS</p>
+            <div class="feature-pills">
+                <div class="pill">One-Click Enhancement</div>
+                <div class="pill">Background Removal</div>
+                <div class="pill">Style Transfer</div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number">10K+</div>
+                    <div class="stat-label">Products Enhanced</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3sec</div>
+                    <div class="stat-label">Processing Time</div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-nav">
+            <!-- nav dots... -->
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <h2 class="brands-title">Trusted by industry leading brands</h2>
+        <div class="logo-scroller">
+            <div class="scroller-inner">
+                <img src="https://logoipsum.com/logo/logo-5.svg" alt="Client Logo 1"><img src="https://logoipsum.com/logo/logo-13.svg" alt="Client Logo 2"><img src="https://logoipsum.com/logo/logo-15.svg" alt="Client Logo 3"><img src="https://logoipsum.com/logo/logo-23.svg" alt="Client Logo 4"><img src="https://logoipsum.com/logo/logo-24.svg" alt="Client Logo 5"><img src="https://logoipsum.com/logo/logo-32.svg" alt="Client Logo 6"><img src="https://logoipsum.com/logo/logo-39.svg" alt="Client Logo 7">
+                <img src="https://logoipsum.com/logo/logo-5.svg" alt="Client Logo 1" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-13.svg" alt="Client Logo 2" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-15.svg" alt="Client Logo 3" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-23.svg" alt="Client Logo 4" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-24.svg" alt="Client Logo 5" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-32.svg" alt="Client Logo 6" aria-hidden="true"><img src="https://logoipsum.com/logo/logo-39.svg" alt="Client Logo 7" aria-hidden="true">
+            </div>
+        </div>
+    </section>
+
+    <!-- Immersive Showcase Section 1 (Lifestyle) -->
+    <section class="immersive-showcase-section" id="lifestyle">
+        <div class="showcase-content-left" data-view-animate>
+            <h2 class="showcase-title">Transform Your Vision</h2>
+            <p class="showcase-subtitle">
+                From a simple product shot to a compelling lifestyle scene. 
+                Our AI understands context, light, and shadow to create magic.
+            </p>
+        </div>
+        <div class="showcase-images-right">
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=800&q=80');"></div>
+                <div class="image-label">Input</div>
+            </div>
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=800&q=80');"></div>
+                <div class="image-label">Output</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Immersive Showcase Section 2 (Catalogue) - LIGHT THEME & REVERSED -->
+    <section class="immersive-showcase-section is-light" id="catalogue">
+        <div class="showcase-images-right">
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=800&q=80');"></div>
+                <div class="image-label">Input</div>
+            </div>
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=80');"></div>
+                <div class="image-label">Output</div>
+            </div>
+        </div>
+        <div class="showcase-content-left" data-view-animate>
+            <h2 class="showcase-title">See Products in Context</h2>
+            <p class="showcase-subtitle">
+                Generate flawless on-model imagery without expensive photoshoots. Define your model, style, and setting to bring your catalogue to life.
+            </p>
+        </div>
+    </section>
+
+    <!-- Immersive Showcase Section 3 (Product) - DARK THEME -->
+    <section class="immersive-showcase-section" id="product">
+        <div class="showcase-content-left" data-view-animate>
+            <h2 class="showcase-title">Pixel-Perfect Product Shots</h2>
+            <p class="showcase-subtitle">
+                Create an infinite variety of high-resolution, studio-quality images on clean backgrounds. Perfect for product listings and marketplaces.
+            </p>
+        </div>
+        <div class="showcase-images-right">
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?w=800&q=80');"></div>
+                <div class="image-label">Input</div>
+            </div>
+            <div class="image-wrapper" data-view-animate>
+                <div class="image-placeholder" style="background-image: url('https://images.unsplash.com/photo-1629198688000-71f21d31b017?w=800&q=80');"></div>
+                <div class="image-label">Output</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Gallery Section -->
+    <section class="hero-gallery-section">
+        <div class="gallery-scroller">
+            <div class="gallery-scroller-inner">
+                <!-- Image sets... -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // All Javascript remains the same
+        const slides = document.querySelectorAll('.slide');
+        const navDotsContainer = document.querySelector('.slide-nav');
+        if (slides.length > 0 && navDotsContainer) {
+            // JS for slideshow
+            const navDots = document.querySelectorAll('.nav-dot');
+            const slideshowContainer = document.querySelector('.slideshow-container');
+            const heroContent = document.querySelector('.hero-content');
+            const heroSection = document.querySelector('.hero');
+            const slideNavContainer = document.querySelector('.slide-nav');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+            let autoSlideInterval;
+            function updateSlide(slideIndex) {
+                if (!slides[currentSlide] || !navDots[currentSlide]) return;
+                slides[currentSlide].classList.remove('active');
+                navDots[currentSlide].classList.remove('active');
+                currentSlide = slideIndex;
+                slides[currentSlide].classList.add('active');
+                navDots[currentSlide].classList.add('active');
+            }
+            function nextSlide() {
+                const nextIndex = (currentSlide + 1) % totalSlides;
+                updateSlide(nextIndex);
+            }
+            function startAutoSlide() {
+                stopAutoSlide();
+                autoSlideInterval = setInterval(nextSlide, 5000);
+            }
+            function stopAutoSlide() {
+                clearInterval(autoSlideInterval);
+            }
+            heroSection.addEventListener('mouseenter', () => {
+                slideNavContainer.classList.add('is-visible');
+            });
+            heroSection.addEventListener('mouseleave', () => {
+                slideNavContainer.classList.remove('is-visible');
+            });
+            navDots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    updateSlide(index);
+                    stopAutoSlide();
+                    startAutoSlide();
+                });
+            });
+            heroSection.addEventListener('mousemove', (e) => {
+                const { clientX, clientY } = e;
+                const x = (clientX / window.innerWidth - 0.5) * 2;
+                const y = (clientY / window.innerHeight - 0.5) * 2;
+                const slideIntensity = 15;
+                const contentIntensity = 8;
+                slideshowContainer.style.transform = `translateX(${x * slideIntensity}px) translateY(${y * slideIntensity}px)`;
+                heroContent.style.transform = `translateX(${x * contentIntensity}px) translateY(${y * contentIntensity}px)`;
+            });
+            document.addEventListener('keydown', (e) => {
+                const restart = () => { stopAutoSlide(); startAutoSlide(); };
+                if (e.key === 'ArrowRight') { nextSlide(); restart(); }
+                if (e.key === 'ArrowLeft') {
+                    const prevIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+                    updateSlide(prevIndex);
+                    restart();
+                }
+            });
+            startAutoSlide();
+        }
+
+        const animatedElements = document.querySelectorAll('[data-view-animate]');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        animatedElements.forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
