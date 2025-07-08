@@ -1,0 +1,42 @@
+    node.prototype.getExtraMenuOptions = function (_, options) {
+      if (this.imgs) {
+        // If this node has images then we add an open in new tab item
+        let img
+        if (this.imageIndex != null) {
+          // An image is selected so select that
+          img = this.imgs[this.imageIndex]
+        } else if (this.overIndex != null) {
+          // No image is selected but one is hovered
+          img = this.imgs[this.overIndex]
+        }
+        if (img) {
+          options.unshift(
+            {
+              content: 'Open Image',
+              callback: () => {
+                const url = new URL(img.src)
+                url.searchParams.delete('preview')
+                window.open(url, '_blank')
+              }
+            },
+            ...getCopyImageOption(img),
+            {
+              content: 'Save Image',
+              callback: () => {
+                const a = document.createElement('a')
+                const url = new URL(img.src)
+                url.searchParams.delete('preview')
+                a.href = url.toString()
+                a.setAttribute(
+                  'download',
+                  // @ts-expect-error fixme ts strict error
+                  new URLSearchParams(url.search).get('filename')
+                )
+                document.body.append(a)
+                a.click()
+                requestAnimationFrame(() => a.remove())
+              }
+            }
+          )
+        }
+      }
